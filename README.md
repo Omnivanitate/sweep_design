@@ -52,7 +52,7 @@
 Более расширенное описание работы библиотеки в файле manual.ipynb. 
 Остальные примеры содержатся в папке examples.
 
-```
+```python
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -70,19 +70,19 @@ plt.plot(t_sw, a_sw)
 plt.xlabel('Time, s')
 plt.ylabel('Amplitude')
 plt.title('Sweep-signal')
-```python  
+```
 
 ![sweep_with_matplotlib](https://user-images.githubusercontent.com/89973180/156033978-ccc8de40-9f6b-4bb1-b59f-7a3ea41d2f64.png "Linear Sweep") 
 
 или используя для визуализации пакет ```viewrelation.view``` по умолчанию, основанный на использовании библиотек ipywidget и bokeh  
 
-```
+```python
 from compose_signals.c_sweep import ComposedSweep
 from viewrelation.view import get_viewer_ipywidgets_bokeh
 c_sw = ComposedSweep(sw)
 bokeh_view = get_viewer_ipywidgets_bokeh()
 bokeh_view.add(c_sw)
 bokeh_view.show()
-```python
+```
 
 ![sweep_with_ipywidgets_bokeh](https://user-images.githubusercontent.com/89973180/156037232-c3b11ec4-f653-44a2-be20-ec87f481d9b7.png "Linear Sweep GUI")
