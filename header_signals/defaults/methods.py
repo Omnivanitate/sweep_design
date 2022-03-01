@@ -1,0 +1,23 @@
+from typing import Union, Callable, Optional, Tuple
+
+from header_signals.base_header import NamedBase
+
+Num = Union[float, int, complex]
+InName = Union[NamedBase, str, Callable[[], str]]
+
+def make_name(name: Optional[InName], func: Callable[..., str], *args) -> InName:
+    if name is not None: 
+        return name
+    def call() -> str:
+        return func(*args)
+    return call
+
+def make_category(named_relation: NamedBase, category: Optional[str], 
+                    getter_func: Callable[[str], str] = None) -> str:
+    if category is None:
+        if getter_func is None:
+            return named_relation.category
+        else:
+            return getter_func(named_relation.category)
+    return category
+

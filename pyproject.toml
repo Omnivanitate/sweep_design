@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "sweep_design"
+version = "0.1.0"
+description = "The project is designed to create simple and complex sweep signals."
+authors = ["Vladislav <serebraykov.vs@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.11"
+numpy = "^1.22.2"
+scipy = "^1.8.0"
+notebook = "^6.4.8"
+ipywidgets = "^7.6.5"
+bokeh = "^2.4.2"
+jupyterlab = "^3.2.9"
+matplotlib = "^3.5.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
