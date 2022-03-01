@@ -74,7 +74,7 @@ plt.title('Sweep-signal')
 
 ![sweep_with_matplotlib](https://user-images.githubusercontent.com/89973180/156033978-ccc8de40-9f6b-4bb1-b59f-7a3ea41d2f64.png "Linear Sweep") 
 
-или используя для визуализации пакет ```viewrelation.view``` по умолчанию, основанный на использовании библиотек ipywidget и bokeh  
+или используя для визуализации пакет ```viewrelation.view```, по умолчанию основанный на использовании библиотек ipywidget и bokeh  
 
 ```python
 from compose_signals.c_sweep import ComposedSweep
