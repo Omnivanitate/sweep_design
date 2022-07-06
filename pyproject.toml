@@ -7,15 +7,22 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.11"
-numpy = "^1.22.2"
 scipy = "^1.8.0"
 notebook = "^6.4.8"
 ipywidgets = "^7.6.5"
 bokeh = "^2.4.2"
 jupyterlab = "^3.2.9"
 matplotlib = "^3.5.1"
+jupyter-bokeh = "^3.0.4"
+loguru = "^0.6.0"
+EMD-signal = "^1.2.2"
+numpy = "^1.22.3"
+screeninfo = "^0.8"
 
 [tool.poetry.dev-dependencies]
+mypy = "^0.942"
+black = {version = "^22.6.0", allow-prereleases = true}
+pdoc3 = "^0.10.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
