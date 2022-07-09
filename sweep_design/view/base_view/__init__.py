@@ -1,1 +1,1 @@
-'''Base for view. '''
+"""Base for view. """

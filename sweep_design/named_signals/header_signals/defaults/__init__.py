@@ -1,1 +1,1 @@
-'''Defaults methods and veriable.'''
+"""Defaults methods and veriable."""

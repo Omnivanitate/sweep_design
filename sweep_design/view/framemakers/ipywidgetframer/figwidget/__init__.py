@@ -1,1 +1,1 @@
-'''Bokeh and matplotlib for view.'''
+"""Bokeh and matplotlib for view."""

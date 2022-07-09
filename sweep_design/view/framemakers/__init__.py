@@ -1,1 +1,1 @@
-'''Specific view class.'''
+"""Specific view class."""

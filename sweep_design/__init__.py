@@ -1,4 +1,4 @@
-'''The project is intended for designing sweep signals.
+"""The project is intended for designing sweep signals.
 
 > The package is written in `Python` for creating and developing sweep signals 
 of varying complexity. It contains not only tools for creation, but also 
@@ -57,11 +57,11 @@ instead
 from sweep_design.math_signals.math_relation import Relation
 ```
 But both variants are correct.
-'''
+"""
 
 from .math_signals import Relation as Relation
-from .math_signals import Signal as Signal 
-from .math_signals import Spectrum as Spectrum 
+from .math_signals import Signal as Signal
+from .math_signals import Spectrum as Spectrum
 from .math_signals import Sweep as Sweep
 from .math_signals import UncalculatedSweep as UncalculatedSweep
 from .math_signals import ApriorUncalculatedSweep as ApriorUncalculatedSweep

@@ -1,4 +1,4 @@
-'''The core of representation of project.
+"""The core of representation of project.
 
 - - - 
 
@@ -172,7 +172,7 @@ For convenience, you can import functions in the following way
 from sweep_design.math_signals.prepared_sweeps import get_linear_sweep
 ```
 
-'''
+"""
 
 from .math_relation import Relation as Relation
 from .math_signal import Spectrum as Spectrum

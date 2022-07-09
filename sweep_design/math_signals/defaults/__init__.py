@@ -1,1 +1,1 @@
-'''Default classes, exceptions, protocls and etc.'''
+"""Default classes, exceptions, protocls and etc."""

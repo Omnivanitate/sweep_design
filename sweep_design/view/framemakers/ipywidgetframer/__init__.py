@@ -1,1 +1,1 @@
-'''ipywidget for view.'''
+"""ipywidget for view."""

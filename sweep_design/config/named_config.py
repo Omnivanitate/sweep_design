@@ -8,9 +8,9 @@ class NamedConfig:
 
     **NAMING_BY_ASSIGNMENT_CREATE**: `bool`
     > If `True` then my_relation = `NamedRelation`(...) and `str`(my_relation) ==
-    'my_relation', otherwise false then my_relation = `NamedRelation`(...) and 
-    `str`(my_relation) == 'R_1' using 
-    `sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name` 
+    'my_relation', otherwise false then my_relation = `NamedRelation`(...) and
+    `str`(my_relation) == 'R_1' using
+    `sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name`
     with parameter 1.
 
     > In both situations, if name param name is specified, then
@@ -26,7 +26,7 @@ class NamedConfig:
     > my_relation = `NamedRelation`(..., name = 'MyName')
     > sum_relation = my_relation + my_relation
     > `str`(sum_relation) == 'MyName + MyName'
-    using default method 
+    using default method
     `sweep_design.named_signals.header_signals.defaults.names.make_default_names_operations`
 
     > otherwise if `True` then result was `str`(sum_relation) == 'sum_relation'
@@ -40,8 +40,8 @@ class NamedConfig:
 
     **extract_input**
     > The method to convert input data to tuple of `numpy.ndarray`
-    **x** and **y**.  
-    > Default methods is from 
+    **x** and **y**.
+    > Default methods is from
     `sweep_design.named_signals.defaults.methods.extract_input`
 
     > It's a simple method, but you can override them yourself.
@@ -50,11 +50,11 @@ class NamedConfig:
     >> **x**: `Any`
        **y**: `Any`
 
-    > **output**:  
-    >> `Typle`[  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-        ]  
+    > **output**:
+    >> `Typle`[
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+        ]
 
     The above methods can be overridden with your own here, or you can import the
     class `NamedConfig` somewhere and override it there.

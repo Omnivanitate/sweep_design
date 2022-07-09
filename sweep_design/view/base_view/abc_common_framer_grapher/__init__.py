@@ -1,1 +1,1 @@
-'''Abstracts.'''
+"""Abstracts."""

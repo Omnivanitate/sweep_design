@@ -25,14 +25,14 @@ class Config:
     > The methods returns a function that takes a new x sequence and
     return a new y sequence.
 
-    > **new_x** = `numpy.ndarray`  
+    > **new_x** = `numpy.ndarray`
     > **new_y** = `numpy.ndarray`
 
     > Method derived from default function:
     >> sweep_design.math_signals.defaults.methods.interpolate_extrapolate
 
     > **input**:
-    >> **x**: `numpy.ndarray`  
+    >> **x**: `numpy.ndarray`
     >> **y**: `numpy.ndarray`
 
     > **output**:
@@ -49,9 +49,9 @@ class Config:
     >> `sweep_design.math_signals.defaults.methods.math_operation`
 
     > **input**:
-    >> **x**: `numpy.ndarray`  
-    >> **y1**: `numpy.ndarray`  
-    >> **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]  
+    >> **x**: `numpy.ndarray`
+    >> **y1**: `numpy.ndarray`
+    >> **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]
     >> **name_operation**: `sweep_design.math_signals.defaults.base_structures.MathOperation`
 
     > **output**:
@@ -63,7 +63,7 @@ class Config:
     - - -
 
     **integrate_one_method**:
-    > Method for calculating the integral of a sequence on a segment.  
+    > Method for calculating the integral of a sequence on a segment.
     > Method derived from default function:
 
     >> `sweep_design.math_signals.defaults.methods.one_integrate`
@@ -78,44 +78,44 @@ class Config:
     - - -
 
     **integrate_method**:
-    > The method by which the integration is performed.  
+    > The method by which the integration is performed.
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.integrate`
 
     > **input**:
-    >> **x**: `numpy.ndarray`  
-    >> **y**: `numpy.ndarray`  
+    >> **x**: `numpy.ndarray`
+    >> **y**: `numpy.ndarray`
     >> d**x**: float - sequence sample rate x
 
     > **output**:
-    >> Tuple [  
-        **x**: `numpy.ndarray`,      
-        **y**: `numpy.ndarray`  
-    ]  
+    >> Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **differentiate_method**:
-    > The method by which differentiation is performed.  
+    > The method by which differentiation is performed.
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.differentiate`
 
     > **input**:
 
-    >> **x**: `numpy.ndarray`  
-    >> **y**: `numpy.ndarray`  
+    >> **x**: `numpy.ndarray`
+    >> **y**: `numpy.ndarray`
     >> **dx**: `float` - sequence sample rate **x**
 
     > **output**:
-    >>Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    >>Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **correlate_method**:
-    > The method by which the correlation is performed.  
+    > The method by which the correlation is performed.
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.correlate`
 
@@ -125,15 +125,15 @@ class Config:
     >> r2: Relation
 
     > **output**:
-    >> Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    >> Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **convolve_method**:
-    > The method by which the convolution is performed.  
+    > The method by which the convolution is performed.
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.convolve`
 
@@ -143,23 +143,23 @@ class Config:
     >> r2: Relation
 
     > **output**:
-    >> Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    >> Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **get_common_x**:
     > A method by which to find the common sequence of numbers along
-    > the x-axis, obtained from two other sequences along the x-axis.  
+    > the x-axis, obtained from two other sequences along the x-axis.
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.get_common_x`
 
     > **input**:
-    >> **x1**: `numpy.ndarray`  
-    >> **x2**: `numpy.ndarray`  
-    >> **dx1**: float  - sample rate first sequence  
+    >> **x1**: `numpy.ndarray`
+    >> **x2**: `numpy.ndarray`
+    >> **dx1**: float  - sample rate first sequence
     >> **dx2**: float  - sample rate second sequence
 
     > **output**:
@@ -168,39 +168,39 @@ class Config:
     - - -
 
     **spectrum2signal_method**:
-    > Method for converting a spectrum into a signal. (Using Fourier transform)  
+    > Method for converting a spectrum into a signal. (Using Fourier transform)
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
     > **input**:
-    >> **frequenc**: `numpy.ndarray`  
-    **specturm**: `numpy.ndarray`  
-    **start_time**: `float` = `None`  
+    >> **frequenc**: `numpy.ndarray`
+    **specturm**: `numpy.ndarray`
+    **start_time**: `float` = `None`
 
     > **output**:
-    >> Tuple [  
-        **time**: `numpy.ndarray`,  
-        **amplitude**: `numpy.ndarray`  
-    ]  
+    >> Tuple [
+        **time**: `numpy.ndarray`,
+        **amplitude**: `numpy.ndarray`
+    ]
 
     - - -
 
     **signal2spectrum_method**:
-    > Method for converting a signal into a spectrum. (Using Fourier transform)  
+    > Method for converting a signal into a spectrum. (Using Fourier transform)
     > Method derived from default function:
     >> `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
     > **input**:
 
-    >> **time**: `numpy.ndarray`  
-    >> **amplitude**: `numpy.ndarray`  
-    >> **is_start_zero** = `False`  
+    >> **time**: `numpy.ndarray`
+    >> **amplitude**: `numpy.ndarray`
+    >> **is_start_zero** = `False`
 
-    > **output**:  
-    >> Tuple [  
-        **frequency**: `numpy.ndarray`,  
-        **spectrum**: `numpy.ndarray`  
-    ]  
+    > **output**:
+    >> Tuple [
+        **frequency**: `numpy.ndarray`,
+        **spectrum**: `numpy.ndarray`
+    ]
 
     - - -
 

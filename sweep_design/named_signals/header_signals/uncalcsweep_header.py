@@ -8,21 +8,22 @@ from .defaults import names as dfn
 
 InName = Union[HeaderBase, str, Callable[[], str]]
 
+
 class NamedUncalcSweep(HeaderBase):
 
     _quantity = 1
 
     def __init__(self, name: InName = None, category: str = None) -> None:
-        
+
         if name is None:
             name = dfn.default_name_uncalc_sweep(NamedUncalcSweep._quantity)
             NamedUncalcSweep._quantity += 1
 
         if category is None:
-            category = 'c_sweep'
+            category = "c_sweep"
 
         super().__init__(name, category)
-    
+
     @property
     def category(self) -> str:
         return self._category
@@ -46,24 +47,28 @@ class NamedUncalcSweep(HeaderBase):
 
             def call() -> str:
                 return str(value)
+
             self._name = call
 
-    def __call__(self, time: np.ndarray, name: InName = None, category: str = None) -> HeaderSweep:
-        
+    def __call__(
+        self, time: np.ndarray, name: InName = None, category: str = None
+    ) -> HeaderSweep:
+
         if name is None:
-            dt = time[1]-time[0]
-            T = time[-1]-time[0]
+            dt = time[1] - time[0]
+            T = time[-1] - time[0]
             name = dfn.default_name_call_uncalc_sweep(dt, T, self)
-        
-        if category is None: 
+
+        if category is None:
             category = self.category
 
-        return HeaderSweep(name = name, category = category)
+        return HeaderSweep(name=name, category=category)
+
 
 class NamedApriorUcalcSweep(NamedUncalcSweep):
 
     _quantity = 1
-    
+
     def __init__(self, name: InName = None, category: str = None) -> None:
 
         if name is None:
@@ -71,6 +76,6 @@ class NamedApriorUcalcSweep(NamedUncalcSweep):
             NamedApriorUcalcSweep._quantity += 1
 
         if category is None:
-            category = 'c_sweep'
+            category = "c_sweep"
 
         super().__init__(name, category)

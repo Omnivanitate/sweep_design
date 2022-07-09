@@ -13,46 +13,50 @@ class HeaderSweep(HeaderSignal):
 
     _quantity = 1
     _make_default_name = dfn.default_sweep_name
+
     def __init__(self, name: InName = None, category: str = None) -> None:
-        
+
         if category is None:
-            category = 'sweep'
-        
+            category = "sweep"
+
         super().__init__(name, category)
 
     def get_a_t(self, name: InName = None, category: str = None) -> HeaderRelation:
-        if category is None: 
-            category='a_t'
-        name = make_name(name, dfn.make_default_a_t_name, self)        
-        category = make_category(self, category)        
+        if category is None:
+            category = "a_t"
+        name = make_name(name, dfn.make_default_a_t_name, self)
+        category = make_category(self, category)
         return HeaderRelation(name, category)
 
     def get_f_t(self, name: InName = None, category: str = None) -> HeaderRelation:
         if category is None:
-            category='f_t'
+            category = "f_t"
         name = make_name(name, dfn.make_default_f_t_name, self)
         category = make_category(self, category)
         return HeaderRelation(name, category)
-    
-    def get_spectrogram(self, name: InName = None, category: str = None) -> HeaderRelation:
+
+    def get_spectrogram(
+        self, name: InName = None, category: str = None
+    ) -> HeaderRelation:
         if category is None:
-            category='f_t'
+            category = "f_t"
         name = make_name(name, dfn.make_default_spectrogram_name, self)
         category = make_category(self, category)
         return HeaderRelation(name, category)
 
+
 class HeaderSpectrogram(HeaderBase):
-    
+
     _quantity = 1
 
     def __init__(self, name: InName = None, category: str = None) -> None:
-        
+
         if category is None:
-            category = 'time_frequebcy'
-        
+            category = "time_frequebcy"
+
         if name is None:
             name = dfn.make_spectrogram_name(HeaderSpectrogram._quantity)
-            HeaderSpectrogram._quantity+=1
+            HeaderSpectrogram._quantity += 1
 
         super().__init__(name, category)
 
@@ -79,10 +83,11 @@ class HeaderSpectrogram(HeaderBase):
 
             def call() -> str:
                 return str(value)
+
             self._name = call
 
     def __str__(self) -> str:
         return self.name()
 
     def __repr__(self) -> str:
-        return f'Name: {self.name()} category: {self.category}'
+        return f"Name: {self.name()} category: {self.category}"

@@ -1,1 +1,1 @@
-'''Header signals.'''
+"""Header signals."""

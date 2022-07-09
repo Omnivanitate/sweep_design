@@ -1,1 +1,1 @@
-'''Defaults methods for named_signals.'''
+"""Defaults methods for named_signals."""

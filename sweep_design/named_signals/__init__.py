@@ -1,4 +1,4 @@
-'''
+"""
 This module extends the `sweep_design.math_signals` module.
 
 Repeats classes methods from the `sweep_design.math_signals` module and using 
@@ -29,7 +29,7 @@ The purpose of creating this module is to simplify the work with many
 examples of signals, spectra, sweeps and relations. Simplify their 
 visualization, comparison and storage.
 
-'''
+"""
 
 from .named_relation import NamedRelation as NamedRelation
 from .named_signal import NamedSignal as NamedSignal, NamedSpectrum

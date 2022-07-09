@@ -1,4 +1,4 @@
-'''Module view.
+"""Module view.
 
 The module provides several functions to get simple `GUI` to visualize the 
 results in `jupyter notebook`.
@@ -141,15 +141,18 @@ method.
 An example can be seen in the `examples.pilot_rm_bp_view.ipynb` folder in 
 the project https://github.com/Omnivanitate/sweep_design
 
-'''
+"""
 
-from .view_general import get_general_view_bokeh_ipywidget as \
-                                        get_general_view_bokeh_ipywidget    
-from .view_general import get_general_view_matplotlib_ipywidget as \
-                                        get_general_view_matplotlib_ipywidget    
-from .view_pilot_rm_bp import get_pilot_rm_bp_view_bokeh_ipywidget as \
-                                        get_pilot_rm_bp_view_bokeh_ipywidget
-from .view_source import get_view_source_bokeh_ipywidget as \
-                                        get_view_source_bokeh_ipywidget
-from .view_sweep import get_view_sweep_bokeh_ipywidget as \
-                                        get_view_sweep_bokeh_ipywidget
+from .view_general import (
+    get_general_view_bokeh_ipywidget as get_general_view_bokeh_ipywidget,
+)
+from .view_general import (
+    get_general_view_matplotlib_ipywidget as get_general_view_matplotlib_ipywidget,
+)
+from .view_pilot_rm_bp import (
+    get_pilot_rm_bp_view_bokeh_ipywidget as get_pilot_rm_bp_view_bokeh_ipywidget,
+)
+from .view_source import (
+    get_view_source_bokeh_ipywidget as get_view_source_bokeh_ipywidget,
+)
+from .view_sweep import get_view_sweep_bokeh_ipywidget as get_view_sweep_bokeh_ipywidget
