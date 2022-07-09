@@ -4,9 +4,12 @@ import numpy as np
 
 from ..defaults import names as dn
 from ..relation_header import HeaderRelation
+from ....math_signals.defaults.base_structures import MathOperation
 
 class TestHeaderRelation(unittest.TestCase):
-
+    '''Test headers.
+    
+    '''
     def check_equal(self, r_named: HeaderRelation, name, category):
         self.assertEqual(str(r_named), name)
         self.assertEqual(r_named.category, category)
@@ -25,7 +28,6 @@ class TestHeaderRelation(unittest.TestCase):
     def test_init(self):
         
         self.check_equal(self.nr, self.name, self.category)
-        self.check_equal(self.dnr, self.dname, self.dcategory)
 
 
     def test_select_data(self):
@@ -80,13 +82,14 @@ class TestHeaderRelation(unittest.TestCase):
         self.check_equal(nr2, self.name, self.category)
 
     def test_operation(self):
-        list_operation = ['__add__', '__radd__', '__sub__', 
-        '__rsub__', '__mul__', '__rmul__', 
-        '__truediv__', '__rtruediv__', '__pow__', '__rpow__']
+        list_operation = [ MathOperation.ADD, MathOperation.RADD, MathOperation.SUB, 
+        MathOperation.RSUB, MathOperation.MUL, MathOperation.RMUL, 
+        MathOperation.TRUEDIV, MathOperation.RTRUEDIV, MathOperation.POW, 
+        MathOperation.RPOW]
         for k in list_operation:
             for m in [1., self.nr]:
                 with self.subTest(k=k, m=m):
-                    result = getattr(self.nr, k)(m)
+                    result = getattr(self.nr, k.value)(m)
                     self.check_equal(result, dn.make_default_names_operations(self.nr, m, k), self.nr.category)
 
     def test_equalize(self):

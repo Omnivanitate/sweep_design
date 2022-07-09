@@ -20,8 +20,8 @@ def make_default_names_operations(obj1: HeaderBase,
         '__rmul__': '({0} * {1})',
         '__rtruediv__': '({0} / {1})',
         '__rpow__': '({0}) ** {1})'
-    }    
-    return default_names_operations[MathOperation.value].format(obj1, obj2)
+    }
+    return default_names_operations[operation.value].format(obj1, obj2)
 
 def make_default_name_select_data(obj: HeaderBase, x_start: Num, 
                                     x_end: Num) -> str:
@@ -112,22 +112,6 @@ def make_default_amp_category_name(name) -> str:
 
 def default_sweep_name(name) -> str:
     return 'SW_{0}'.format(name)
-
-# @make_caller_2
-# def make_default_sweep_from_aprior_signal_name(name: str, obj:HeaderBase) -> str:
-#     return 'SW (AS({0})'.format(obj._name())
-
-# @make_caller_2
-# def make_default_call_sweep_name(name: str, obj: HeaderBase, dt: float, T: float) -> str:
-#     return '{0} dt:{1} T:{2}'.format(obj._name(), dt, T)
-
-# @make_caller_2
-# def make_default_sweep_fm_am_name(nmae: str, 
-#         obj1: Union[str, HeaderBase], obj2:  Union[str, HeaderBase]) -> str:
-#     name1 = obj1._name() if isinstance(obj1, NamedRelation) else obj1
-#     name2 = obj2._name() if isinstance(obj2, NamedRelation) else obj2
-#     return 'FM({0})&AM({1})'.format(name1, name2)
-
 
 def make_default_a_t_name(obj: HeaderBase) -> str:
     return 'a_t({0})'.format(obj)

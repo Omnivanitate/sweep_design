@@ -45,19 +45,23 @@ def one_integrate(y: np.ndarray, x: np.ndarray = None) -> float:
     return trapz(y, x)
 
 
-def integrate(x: np.ndarray, y: np.ndarray) -> Tuple[x, y]:
+def integrate(x: np.ndarray, y: np.ndarray, dx: float = None) -> Tuple[x, y]:
     '''Integration. 
         
     Using the scipy.integrate.cumtrapz function.
     '''
-    return x[1:], cumulative_trapezoid(y)*(x[1]-x[0])
+    if dx is None:
+        dx = x[1] - x[0]
+    return x[1:], cumulative_trapezoid(y)*(dx)
 
 
-def differentiate(x: np.ndarray, y: np.ndarray) -> Tuple[x, y]:
+def differentiate(x: np.ndarray, y: np.ndarray, dx: float = None) -> Tuple[x, y]:
     '''Differentiation.
 
     Using the numpy.diff function.'''
-    return x[:-1]+(x[1]-x[0])/2, np.diff(y)/(x[1]-x[0])
+    if dx is None:
+        dx = x[1] - x[0]
+    return x[:-1]+(dx)/2, np.diff(y)/(dx)
 
 def interpolate_extrapolate(x: np.ndarray, y: np.ndarray, bounds_error=False,
                             fill_value=0.) -> Callable[[x], y]:
@@ -68,13 +72,15 @@ def interpolate_extrapolate(x: np.ndarray, y: np.ndarray, bounds_error=False,
     '''
     return interp1d(x, y, bounds_error=bounds_error, fill_value=fill_value)
 
-def get_common_x(x1: np.ndarray, x2: np.ndarray) -> x:
+def get_common_x(x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None) -> x:
     '''Specifies the overall x-axis.
 
     Finds the general sample rate and beginning and end of sequence. 
     '''
-    dx1 = x1[1]-x1[0]
-    dx2 = x2[1]-x2[0]
+    if dx1 is None:
+        dx1 = x1[1]-x1[0]
+    if dx2 is None:
+        dx2 = x2[1]-x2[0]
     dx = dx1 if dx1 <= dx2 else dx2
     x_start = x1[0] if x1[0] <= x2[0] else x2[0]
     x_end = x1[-1] if x1[-1] >= x2[-1] else x2[-1]

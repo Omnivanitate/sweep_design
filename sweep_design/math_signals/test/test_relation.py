@@ -81,12 +81,12 @@ class PreTestRelation:
         r = relation_class(x, y) # type: Relation
         dr  = r.diff()
         dx, dy = dr.get_data()
-        assert_array_equal(dx, x[:-1]+(x[1]-x[0])/2)
+        assert_array_equal(dx, x[:-1]+(r.dx)/2)
         assert_array_equal(dy, np.diff(y))
 
         d2r = r.diff().diff()
         d2x, d2y = d2r.get_data()
-        assert_array_equal(d2x, x[:-2]+x[1]-x[0])
+        assert_array_equal(d2x, x[:-2]+r.dx)
         assert_array_equal(d2y, np.diff(np.diff(y)))
 
         ir = r.integrate()

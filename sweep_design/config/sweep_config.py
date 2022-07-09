@@ -8,80 +8,81 @@ class SweepConfig:
     > Several methods are defined for default calculations:
 
     **spectrogram_method_default**
-    > The method by which the spectrogram will be calculated.
+    > The method by which the spectrogram will be calculated.  
     > Method derived from default function:
-    >> sweep_disign.math_signals.defaults.sweep_methods.get_spectrogram()
+    >> `sweep_design.math_signals.defaults.sweep_methods.get_spectrogram`
 
-    > input:
-    >> time: np.ndarray
-       amplitude: np.ndarry
+    > **input**:
+    >> **time**: `numpy.ndarray`  
+    **amplitude**: np.ndarry
 
-    > output:
-    >> Tuple [
-    >> time: np.ndarray,
-    >> frequency: np.ndarray,
-    >> spectrogram: np.ndarray
-    ]
+    > **output**:
+    >> `Tuple` [  
+    >> **time**: `numpy.ndarray`,  
+    >> **frequency**: `numpy.ndarray`,  
+    >> **spectrogram**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     **get_f_t**
-    > The method by which frequency versus time will be calculated.
+    > The method by which frequency versus time will be calculated.  
     > Method derived from default function:
-    >> sweep_disign.math_signals.defaults.sweep_methods.get_f_t
+    >> `sweep_design.math_signals.defaults.sweep_methods.get_f_t`
 
-    > input:
-    >> time: np.ndarray
-    amplitude: np.ndarray
+    > **input**:
+    >> **time**: `numpy.ndarray`
+    **amplitude**: `numpy.ndarray`
 
-    > output:
-    >> Relation
+    > **output**:
+    >> `sweep_design.math_signals.math_relation.Relation`
 
     - - -
 
     **get_a_t**
-    > The method by which the time envelope of the signal will be calculated.
+    > The method by which the time envelope of the signal will be calculated.  
     > Method derived from default function:
-    >> sweep_disign.math_signals.defaults.sweep_methods.get_a_t
+    >> `sweep_design.math_signals.defaults.sweep_methods.get_a_t`
 
-    > input:
-    >> time: np.ndarray
-    amplitude: np.ndarray
+    > **input**:
+    >> **time**: `numpy.ndarray`
+    **amplitude**: `numpy.ndarray`
 
-    > output:
-    >> Relation
+    > **output**:
+    >> `sweep_design.math_signals.math_relation.Relation`
 
     - - -
 
     **integrate_function**
-    > A method for integrating a function rather than a sequence.
+    > A method for integrating a function rather than a sequence.  
     Method derived from default function:
-    >> sweep_disign.math_signals.defaults.sweep_methods.integrate_quad
+    >> `sweep_design.math_signals.defaults.sweep_methods.integrate_quad`
 
-    > input:
-    >> f_t_function: Callable[[time: np.ndarray], frequency: np.ndarray]
-    time: np.ndarray
+    > **input**:
+    >> **f_t_function**: `Callable`[[**time**: `numpy.ndarray`], 
+    **frequency**: `numpy.ndarray`]  
+    **time**: `numpy.ndarray`
 
-    > output:
-    >> y: np.ndarray
+    > **output**:
+    >> **y**: `numpy.ndarray`
 
     - - -
 
     **freq2time**
     > The simple method to extract the time envelope of a sweep signal and
-    the time-frequency function to generate a sweep signal from a priori data.
+    the time-frequency function to generate a sweep signal from a priori data.  
     Method derived from default function:
-    >> sweep_disign.math_signals.defaults.sweep_methods.simple_freq2time
+    >> `sweep_design.math_signals.defaults.sweep_methods.simple_freq2time`
 
-    > input:
-    >> spectrum: Spectrum
+    > **input**:
+    >> **spectrum**: `sweep_design.math_signals.math_signal.Spectrum`
 
-    > output:
-    >> Tuple [
-    >> time : np.ndarray,
-        frequency : np.ndarray,
-        envelope : np.ndarray
-        ]
+    > **output**:
+    >> Tuple [  
+    >> **time**: `numpy.ndarray`,  
+    **frequency**: `numpy.ndarray`,  
+    **envelope**: `numpy.ndarray`  
+    ]  
 
     - - -
 

@@ -1,24 +1,32 @@
 """The module contains simple functions for loading and saving data.
 
 Works with next formats:
-> * .txt - Methods `read_txt_file`, `write_txt_file`, `write_data`
-> * .mat - Methods `read_mat_file`, `wrire_mat_file`, `write_data`
+> * .txt - Methods: `sweep_design.dataio.read.read_txt.read_txt_file`, 
+    `sweep_design.dataio.write.write_txt.write_txt_file`, 
+    `sweep_design.dataio.write.write_data.write_data`
+> * .mat - Methods `sweep_design.dataio.read.read_mat.read_mat_file`, 
+    `sweep_design.dataio.write.write_mat.write_mat_file`, 
+    `sweep_design.dataio.write.write_data.write_data`
 
-If the format is different or exсluded, then it will be enterpreted as a txt file. 
+For `sweep_design.dataio.write.write_data.write_data`, if the format is 
+different or exсluded, then it will be enterpreted as a txt file. 
 
-For file_name you can use both absolute path and relative path.
+For `file_name` you can use both absolute path and relative path.
 If you use a raltive path, then the absolut path will consist from two parts:
-> first part is the default path DEFAULT_PATH from the config file from class Config,  
+> first part is the default path **DEFAULT_PATH** from the config file from class 
+`sweep_design.config.config.Config`,  
 > second part is the relative path.
 
 That is working to write and read.
 
-You can change DEFAULT_PATH in config file.
+You can change **DEFAULT_PATH** in config file.
 
-If file_name is not specified for the wroten file, then the default name 
-`'unnamed.(extension you chose)'` will be used for Relation instance you 
-want save. If this is instance of NamedRelation you want to store, then 
-the name will be `'str(instance of NamedRelation).(extension you chose)'`. 
+If `file_name` is not specified for the wroten file, then the default name 
+`unnamed.(extension you chose)` will be used for 
+`sweep_design.math_signals.math_relation.Relation` instance you want save. 
+If this is instance of  
+`sweep_design.named_signals.named_relation.NamedRelation` you want to store, 
+then the name will be `str(instance of NamedRelation).(extension you chose)`. 
 
 """
 

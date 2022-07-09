@@ -1,0 +1,1 @@
+'''Specific view class.'''

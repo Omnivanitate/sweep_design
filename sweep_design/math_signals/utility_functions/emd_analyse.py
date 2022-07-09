@@ -1,7 +1,6 @@
 from typing import Any, List
 
-from PyEMD import CEEMDAN
-
+from PyEMD import CEEMDAN, EMD
 from ..math_signal import Signal
 
 
@@ -26,7 +25,18 @@ def get_IMFs_ceemdan(
     https://en.wikipedia.org/wiki/Hilbert%E2%80%93Huang_transform#Techniques
     '''
     x, y = data.get_data()
-    emd = CEEMDAN(number_seedman, epsilon, ext_EMD, parallel, processes, noise_scale, noise_kind, range_thr, total_power_thr)
+    emd = CEEMDAN(number_seedman, epsilon, ext_EMD, parallel, processes=processes, noise_scale=noise_scale, noise_kind = noise_kind, range_thr = range_thr, total_power_thr = total_power_thr)
+    IMFs = emd(y)
+    result = [Signal(x, k) for k in IMFs]
+    return result
+
+
+def get_IMFs_emd(
+    data: Signal
+    ) -> List[Signal]:
+    
+    x, y = data.get_data()
+    emd = EMD()
     IMFs = emd(y)
     result = [Signal(x, k) for k in IMFs]
     return result

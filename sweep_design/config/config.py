@@ -15,8 +15,8 @@ class Config:
 
     - - -
 
-    **CONVERT2ARRAY** - If parameter is True, then converted input array to np.ndarray
-    in the constructor of class Relation.
+    **CONVERT2ARRAY** - If parameter is True, then converted **input** array to `numpy.ndarray`
+    in the constructor of class `Relation`.
 
     - - -
 
@@ -25,18 +25,18 @@ class Config:
     > The methods returns a function that takes a new x sequence and
     return a new y sequence.
 
-    > new_x = np.ndarray
-    > new_y = np.ndarray
+    > **new_x** = `numpy.ndarray`  
+    > **new_y** = `numpy.ndarray`
 
     > Method derived from default function:
     >> sweep_design.math_signals.defaults.methods.interpolate_extrapolate
 
-    > input:
-    >> x: np.ndarray
-    >> y: np.ndarray
+    > **input**:
+    >> **x**: `numpy.ndarray`  
+    >> **y**: `numpy.ndarray`
 
-    > output:
-    >> Callable[[new_x], new_y]
+    > **output**:
+    >> `Callable`[[**new_x**], **new_y**]
 
     - - -
 
@@ -46,161 +46,168 @@ class Config:
     and their unary operations (+=, -=, *=, /=).
 
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.operation
+    >> `sweep_design.math_signals.defaults.methods.math_operation`
 
-    > input:
-    >> x: np.ndarray
-    >> y1: np.ndarray
-    >> y2: Union[np.ndarray, float, int, complex]
-    >> name_operation: sweep_design.math_signals.defaults.base_structures.MathOperation
+    > **input**:
+    >> **x**: `numpy.ndarray`  
+    >> **y1**: `numpy.ndarray`  
+    >> **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]  
+    >> **name_operation**: `sweep_design.math_signals.defaults.base_structures.MathOperation`
 
-    > output:
-    >> Tuple [
-    >> x: np.ndarray,
-    >> y: np.ndarray
+    > **output**:
+    >> `Tuple` [
+    >> **x**: `numpy.ndarray`,
+    >> **y**: `numpy.ndarray`
     >>]
 
     - - -
 
     **integrate_one_method**:
-    > Method for calculating the integral of a sequence on a segment.
+    > Method for calculating the integral of a sequence on a segment.  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.one_integrate
 
-    > input:
-    >> x: np.ndarray
-    >> y: np.ndarray
+    >> `sweep_design.math_signals.defaults.methods.one_integrate`
 
-    > output:
-    >> float
+    > **input**:
+    >> **x**: `numpy.ndarray`
+    >> **y**: `numpy.ndarray`
+
+    > **output**:
+    >> `float`
 
     - - -
 
     **integrate_method**:
-    > The method by which the integration is performed.
+    > The method by which the integration is performed.  
     > Method derived from default function:
-    >>sweep_design.math_signals.defaults.methods.integrate
+    >> `sweep_design.math_signals.defaults.methods.integrate`
 
-    > input:
-    >> x: np.ndarray
-    >> y: np.ndarray
+    > **input**:
+    >> **x**: `numpy.ndarray`  
+    >> **y**: `numpy.ndarray`  
+    >> d**x**: float - sequence sample rate x
 
-    > output:
-    >> Tuple [
-        x: np.ndarray,
-        y: np.ndarray
-    ]
+    > **output**:
+    >> Tuple [  
+        **x**: `numpy.ndarray`,      
+        **y**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     **differentiate_method**:
-    > The method by which differentiation is performed.
+    > The method by which differentiation is performed.  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.differentiation
+    >> `sweep_design.math_signals.defaults.methods.differentiate`
 
-    > input:
-    >> x: np.ndarray
-    >> y: np.ndarray
+    > **input**:
 
-    > output:
-    >>Tuple [
-        x: np.ndarray,
-        y: np.ndarray
-    ]
+    >> **x**: `numpy.ndarray`  
+    >> **y**: `numpy.ndarray`  
+    >> **dx**: `float` - sequence sample rate **x**
+
+    > **output**:
+    >>Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     **correlate_method**:
-    > The method by which the correlation is performed
+    > The method by which the correlation is performed.  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.correlate
+    >> `sweep_design.math_signals.defaults.methods.correlate`
 
-    > input:
+    > **input**:
     >> cls: Relation
     >> r1: Relation
     >> r2: Relation
 
-    > output:
-    >> Tuple [
-        x: np.ndarray,
-        y: np.ndarray
-    ]
+    > **output**:
+    >> Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     **convolve_method**:
-    > The method by which the convolution is performed
+    > The method by which the convolution is performed.  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.convolve
+    >> `sweep_design.math_signals.defaults.methods.convolve`
 
-    > input:
+    > **input**:
     >> cls: Relation
     >> r1: Relation
     >> r2: Relation
 
-    > output:
-    >> Tuple [
-        x: np.ndarray,
-        y: np.ndarray
-    ]
+    > **output**:
+    >> Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     **get_common_x**:
     > A method by which to find the common sequence of numbers along
-    > the x-axis, obtained from two other sequences along the x-axis.
+    > the x-axis, obtained from two other sequences along the x-axis.  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.get_common_x
+    >> `sweep_design.math_signals.defaults.methods.get_common_x`
 
-    > input:
-    >> x1: np.ndarray
-    >> x2: np.ndarray
+    > **input**:
+    >> **x1**: `numpy.ndarray`  
+    >> **x2**: `numpy.ndarray`  
+    >> **dx1**: float  - sample rate first sequence  
+    >> **dx2**: float  - sample rate second sequence
 
-    > output:
-    >> x: np.ndarray
+    > **output**:
+    >> **x**: `numpy.ndarray`
 
     - - -
 
     **spectrum2signal_method**:
-    > Method for converting a spectrum into a signal. (Using Fourier transform)
+    > Method for converting a spectrum into a signal. (Using Fourier transform)  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.spectrum2sigmal
+    >> `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
-    > input:
-    >> frequenc: np.ndarray
-    specturm: np.ndarray
-    start_time: float = None
+    > **input**:
+    >> **frequenc**: `numpy.ndarray`  
+    **specturm**: `numpy.ndarray`  
+    **start_time**: `float` = `None`  
 
-    > output:
-    >> Tuple [
-        time: np.ndarray,
-        amplitude: np.ndarray
-    ]
+    > **output**:
+    >> Tuple [  
+        **time**: `numpy.ndarray`,  
+        **amplitude**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     **signal2spectrum_method**:
-    > Method for converting a signal into a spectrum. (Using Fourier transform)
+    > Method for converting a signal into a spectrum. (Using Fourier transform)  
     > Method derived from default function:
-    >> sweep_design.math_signals.defaults.methods.spectrum2sigmal
+    >> `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
-    > input:
-    >> time: np.ndarray
-    >> amplitude: np.ndarray
-    >> is_start_zero = False
+    > **input**:
 
-    > output:
-    >> Tuple [
-        frequency: np.ndarray,
-        spectrum: np.ndarray
-    ]
+    >> **time**: `numpy.ndarray`  
+    >> **amplitude**: `numpy.ndarray`  
+    >> **is_start_zero** = `False`  
+
+    > **output**:  
+    >> Tuple [  
+        **frequency**: `numpy.ndarray`,  
+        **spectrum**: `numpy.ndarray`  
+    ]  
 
     - - -
 
     The above methods can be overridden with your own here, or you can import the
-    class Config somewhere and override it there.
+    class `Config` somewhere and override it there.
     (They must be written according to the rules corresponding to
-    the input and output parameters)
+    the **input** and **output** parameters)
 
     """
 

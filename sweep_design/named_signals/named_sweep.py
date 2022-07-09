@@ -53,14 +53,14 @@ class NamedSweep(NamedSignal):
     def f_t(self) -> NamedRelation:
         if self._f_t is None:
             header = self.header.get_f_t()
-            self._f_t = NamedRelation(self.relation.f_t, name=header)
+            self._f_t = NamedRelation(self.relation.frequency_time, name=header)
         return self._f_t
 
     @property
     def a_t(self) -> NamedRelation:
         if self._a_t is None:
             header = self.header.get_a_t()
-            self._a_t = NamedRelation(self.relation.a_t, name=header)
+            self._a_t = NamedRelation(self.relation.amplitude_time, name=header)
         return self._a_t
     
     @property
@@ -74,11 +74,11 @@ class NamedSweep(NamedSignal):
     def set_f_t(self, name: InName = None, category: str = None) -> None:
         
         header = self.header.get_f_t(name, category)
-        self._f_t = NamedRelation(self.relation.f_t, name=header)
+        self._f_t = NamedRelation(self.relation.frequency_time, name=header)
         
     def set_a_t(self, name: InName = None, category: str = None) -> None:
         header = self.header.get_a_t(name, category)
-        self._a_t = NamedRelation(self.relation.a_t, name=header)
+        self._a_t = NamedRelation(self.relation.amplitude_time, name=header)
         
     def set_spectrogram(self, name: InName=None, 
                                         category: str = None) -> None:

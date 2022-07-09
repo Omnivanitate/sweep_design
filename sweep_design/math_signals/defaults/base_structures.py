@@ -19,8 +19,7 @@ class ConvertingError(Exception):
 class TypeFuncError(Exception):
 
     def __init__(self, *args: object) -> None:
-        message = f'operation "{args[0]}" did not complite with' \
-            'type {args[1]} and type {args[2]}'
+        message = f'operation "{args[0]}" did not complite with type {args[1]} and type {args[2]}'
         super().__init__(message)
 
 @runtime_checkable
@@ -28,12 +27,6 @@ class RelationProtocol(Protocol):
 
     @property
     def x(self) -> np.ndarray: ...
-
-    @property
-    def dx(self) -> float: ...
-
-    @property
-    def x_start(self) -> float: ...
 
     @property
     def y(self) -> np.ndarray: ...

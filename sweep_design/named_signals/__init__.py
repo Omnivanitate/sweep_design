@@ -1,23 +1,29 @@
 '''
-This module extends the math_signal module.
+This module extends the `sweep_design.math_signals` module.
 
-Repeats classes methods from the `sweep_design.math_signals` module and using composition 
-of the `math_signals classes`. These methods have the same purposes.
+Repeats classes methods from the `sweep_design.math_signals` module and using 
+composition of the math_signals classes. These methods have the same purposes.
 
-Almost every repeating method has additional parameters: 'name' and 'category'.
+Almost every repeating method has additional parameters: '**name**' 
+and '**category**'.
 
 How they will operate with each other is described by the 
 `sweep_design.named_signals.header_signals` module.
 
 The method used to create default names and categories is described in 
-`header_signals.defaults.names`
+`sweep_design.named_signals.header_signals.defaults.names`
 
-And the configuration file `named_config.py` (`sweep_design.config.sweep_config`) 
-contains important variables and methods that you can change.
+The configuration file `sweep_design.config.named_config` and 
+`sweep_design.config.named_config.NamedConfig` contains important variables 
+and methods that you can change.
 
-You can also simply create a `NamedRelation` class from an instance of 
-the `Relation` class by passing an instance of the `Relation` class 
-to the constructor of the `NamedRelation` class. Also works for others.
+You can also simply create a 
+`sweep_design.named_signals.named_relation.NamedRelation` class from an 
+instance of the `sweep_design.math_signals.math_relation.Relation` class by 
+passing an instance of the `sweep_design.math_signals.math_relation.Relation` 
+class to the constructor of the 
+`sweep_design.named_signals.named_relation.NamedRelation` class. Also 
+works for others.
 
 The purpose of creating this module is to simplify the work with many 
 examples of signals, spectra, sweeps and relations. Simplify their 
