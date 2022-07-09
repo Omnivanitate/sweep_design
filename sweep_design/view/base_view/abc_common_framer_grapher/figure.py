@@ -48,14 +48,6 @@ class CommonFigure(Generic[Figure], metaclass=ABCMeta):
         groups: Set[str], line_properties: Dict[str, Any]) -> None:
         pass
 
-    # @abstractmethod
-    # def bound_x_axis(self, other: 'CommonFigure') -> None:
-    #     pass
-
-    # @abstractmethod
-    # def bound_y_axis(self, other: 'CommonFigure') -> None:
-    #     pass
-
     def get_figure(self) -> Figure:
         return self._figure
 

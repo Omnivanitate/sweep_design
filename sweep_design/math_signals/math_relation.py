@@ -22,22 +22,24 @@ class Relation:
     the same, and the sampling rate must not change throughout the entire
     sequence. 
 
-    Properties:
-        ---------
-        x: Union[RelationProtocol, NDArray]
-            The Relation class, or a class derived from the Relation class, or 
-            an array_like object containing numbers(real or complex).
+    **Properties**:
+    > **x**: `Union[RelationProtocol, NDArray]` 
+    The Relation class, or a class derived from the Relation class, or 
+    an array_like object containing numbers(real or complex). 
 
-        y: NDArray = None 
-            None or array_like object containing real or complex numbers.
+    > **y**: `NDArray` = None. 
+    None or array_like object containing real or complex numbers.
 
-    For the instance of Relation class, define the basic mathematical operstions: 
-    additon (+), subtraction(-), multiplication(*), devision(/), 
-    expopnentiation (**) and their unary representation (+=, -=, *=, /=).
+    > **dx**: `float` = None.  
+    Sample rate x-axis.
+
+    For the instance of `Relation` class, define the basic mathematical operstions: 
+    *additon (+), subtraction(-), multiplication('*'), devision(/), 
+    expopnentiation ('*''*') and their unary representation (+=, -=, *=, /=).
     The result of the operation is a new instance of the Relation class.
 
-    Determining correlation and convolution between two instances 
-    (methods: correlate and convolve)
+    Determined correlation and convolution between two instances 
+    (methods: correlate and convolve).
 
     How those operations will be calculated determined by the methods described 
     in the Config class. Methods can be overridden if necessary 
@@ -51,13 +53,15 @@ class Relation:
     
     '''
 
-    def __init__(self, x: Union[RelationProtocol, NDArray], y: NDArray = None, **kwargs) -> None:
+    def __init__(self, x: Union[RelationProtocol, NDArray], y: NDArray = None, dx: float = None, **kwargs) -> None:
         
         self._math_operation = Config.math_operation
         self._interpolate_extrapolate_method = Config.interpolate_extrapolate_method
         self._integrate_one_method = Config.integrate_one_method
         self._integrate_method = Config.integrate_method
         self._differentiate_method = Config.differentiate_method
+
+        self._dx = dx
 
         if isinstance(x, RelationProtocol):
             self._x, self._y = x.get_data()
@@ -74,11 +78,29 @@ class Relation:
                 raise NotEqualError(x.size, y.size)
 
             self._x, self._y = x, y
-
+        
     @property
     def x(self) -> np.ndarray:
         return self._x.copy()
-    
+
+    @property
+    def dx(self) -> float:
+        if self._dx is not None:
+            return self._dx
+        diff_x = np.diff(self._x)
+        values, counts = np.unique(diff_x, return_counts=True)
+
+        num = values[np.argmax(counts)]
+        if num < 1:
+            self._dx = 1/round(1/num) 
+        else:
+            self._dx = round(num)
+        return self._dx
+
+    @dx.setter
+    def dx(self, value: float) -> None:
+        self._dx = value
+
     @property
     def y(self) -> np.ndarray:
         return self._y.copy()
@@ -99,11 +121,12 @@ class Relation:
         Calculated in terms of signal energy.
         '''
         x, y = self._x, self._y
-        return self._integrate_one_method(y**2, x)/(x[1]-x[0])
+        return self._integrate_one_method(y**2, x)/(self.dx)
 
     def select_data(
             self: R, x_start: Num = None, x_end: Num = None , **kwargs
             ) -> R:
+        '''Select data using x-axis.'''
             
         x, y = self.get_data()
         
@@ -126,12 +149,12 @@ class Relation:
 
     def diff(self: R, **kwargs) -> R:
         x, y = self.get_data()
-        result = self._differentiate_method(x, y)
+        result = self._differentiate_method(x, y, self.dx)
         return type(self)(*result, **kwargs)
 
     def integrate(self: R, **kwargs) -> R:
         x, y = self.get_data()
-        result = self._integrate_method(x, y)  
+        result = self._integrate_method(x, y, self.dx)  
         return type(self)(*result, **kwargs)
 
     def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -> R:
@@ -150,7 +173,7 @@ class Relation:
         if isinstance(comparation, np.ndarray):
             if all(comparation):
                 return r1, r2
-        x_new = Config.get_common_x(x1, x2)
+        x_new = Config.get_common_x(x1, x2, r1.dx, r2.dx)
         r1 = r1.interpolate_extrapolate(x_new)
         r2 = r2.interpolate_extrapolate(x_new)
         return r1, r2
@@ -178,7 +201,7 @@ class Relation:
                   name_operation: MathOperation) -> Tuple[np.ndarray, np.ndarray]:
         logging.debug(f'Type of a: {type(a)}')
         logging.debug(f'Type of b: {type(b)}')
-        if isinstance(b, Relation):
+        if isinstance(b, RelationProtocol):
             r1, r2 = Relation.equalize(a, b)
             x, y1 = r1.get_data()
             _, y2 = r2.get_data()
@@ -246,4 +269,11 @@ class Relation:
 
     def __len__(self) -> int:
         return self._x.size
-    
+
+    def __getitem__(self, item: Union[float, slice]):
+        if isinstance(item, float):
+            idx = (np.abs(self._x - item)).argmin()
+            return self._x[idx], self._y[idx]
+        if isinstance(item, slice):
+            return self.select_data(item.start, item.stop)
+        

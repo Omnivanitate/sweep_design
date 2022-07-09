@@ -1,0 +1,1 @@
+'''ipywidget for view.'''

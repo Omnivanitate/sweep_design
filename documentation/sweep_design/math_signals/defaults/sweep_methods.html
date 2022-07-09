@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sweep_design.math_signals.defaults.sweep_methods API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sweep_design.math_signals.defaults.sweep_methods</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import Any, Callable, Optional, Tuple, Union
+
+import numpy as np
+from scipy import integrate  # type: ignore
+from scipy.signal import hilbert, spectrogram  # type: ignore
+
+from ...config.config import Config
+from ..defaults.base_structures import BadInputError, RelationProtocol
+from ..math_relation import Relation
+from ..math_signal import Signal, Spectrum
+
+InterpolateTime = Callable[[np.ndarray], np.ndarray]
+CallFtatMethod = Callable[[Spectrum], Tuple[np.ndarray, np.ndarray, np.ndarray]]
+Ftat = Union[np.ndarray, Callable[[np.ndarray], np.ndarray]]
+Ftatr = Union[Relation, Ftat]
+
+frequency = np.ndarray
+time = np.ndarray
+spectrogram_ = np.ndarray
+envelope = np.ndarray
+
+theta = np.ndarray
+
+def simple_freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[time, frequency, envelope]:
+    &#39;&#39;&#39;The simple method to extract frequency modulation from a prior spectrum.
+    
+    Properties:
+    &gt; spectrum: Spectrum
+    
+    Returns:
+    &gt; Tuple [
+    &gt;&gt; time: np.ndarray,  
+    &gt;&gt; frequency: np.ndarray,  
+    &gt;&gt; amplitude_modulation: np.ndarray  
+    &gt;]
+
+    The amplitude modulation is constant.
+    &#39;&#39;&#39;
+    amplitude_spectrum = spectrum.get_amp_spectrum()
+    frequency, amplitude = amplitude_spectrum.get_data()
+    n_spec = amplitude ** 2
+    time = np.append([0.], ((n_spec[1:]+n_spec[:-1])/(frequency[1:]-frequency[:-1])).cumsum())
+    coef = amplitude_spectrum.get_norm()
+    amplitude_modulation = coef*np.ones(len(time))
+    return time, frequency, amplitude_modulation
+
+
+def pre_interpolate_time(x: Union[RelationProtocol, np.ndarray], y: np.ndarray = None) \
+        -&gt; InterpolateTime:
+    &#39;&#39;&#39;Thr interpolation of frequency and amplitude modulation functions.
+
+    The method returns the interpolation function for frequency modulation 
+    and amplitude envelope. Since the sampling step is not the same, 
+    it is required to bring the desired sweep signal to the time axis.
+    &#39;&#39;&#39;
+    if isinstance(x, Relation):
+        x, y = x.get_data()
+
+    def interpolate_time(time):
+        nT = x*(time[-1]/x[-1])
+        y2 = Config.interpolate_extrapolate_method(nT, y)
+        return y2(time)
+    return interpolate_time
+
+# conversion adaptive sweep spectra FROM Ampl(freq) TO Freq(time)
+
+def convert_freq2time(spectrum: &#39;Spectrum&#39;, convert_method: CallFtatMethod) \
+        -&gt; Tuple[InterpolateTime, InterpolateTime]:
+    &#39;&#39;&#39;The method consists in obtaining the functions of frequency and amplitude modulation.
+    
+    &#39;&#39;&#39;
+    nT, f, a_t = convert_method(spectrum)
+    # print(a_t)
+    return pre_interpolate_time(nT, f), pre_interpolate_time(nT, a_t)
+
+
+def get_info_from_aprior_data(t: Any, aprior_data: Any,
+        f_a_t_method: CallFtatMethod) -&gt; Tuple[InterpolateTime, InterpolateTime, &#39;Signal&#39;]:
+    &#39;&#39;&#39;Get the frequency and amplitude modulation function from a prior data.
+
+    &#39;&#39;&#39;
+    if isinstance(t, Spectrum):
+        aprior_signal = t.get_signal()
+        aprior_spectrum = t
+    elif isinstance(t, Relation):
+        aprior_signal = Signal(t)
+        aprior_spectrum = aprior_signal.get_spectrum()
+    elif isinstance(aprior_data, Spectrum):
+        aprior_signal = aprior_data.get_signal()
+        aprior_spectrum = aprior_data
+    elif isinstance(aprior_data, Signal):
+        aprior_signal = aprior_data
+        aprior_spectrum = aprior_data.get_spectrum()
+    elif isinstance(aprior_data, Relation):
+        aprior_spectrum = Spectrum(aprior_data)
+        aprior_signal = aprior_spectrum.get_signal()
+    else:
+        aprior_signal = Signal(t, aprior_data)
+        aprior_spectrum = aprior_signal.get_spectrum()
+    
+    f_t, a_t = convert_freq2time(aprior_spectrum, f_a_t_method)
+
+    return f_t, a_t, aprior_signal
+
+
+def _extract_x_t(t: Optional[np.ndarray], x_t: Ftatr) -&gt; Tuple[Optional[np.ndarray], InterpolateTime]:
+    
+    if not callable(x_t):
+        if isinstance(x_t, Relation):
+            t, _ = x_t.get_data()
+            b_x_t = pre_interpolate_time(x_t)
+        else:
+            if isinstance(t, np.ndarray) and isinstance(x_t, np.ndarray):
+                if t.size != x_t.size:
+                    calc_t = np.linspace(t[0], t[-1], x_t.size)
+                    x_t = Config.interpolate_extrapolate_method(
+                        calc_t, x_t)
+                    x_t = x_t(t)
+                b_x_t = pre_interpolate_time(t, x_t)
+            else:
+                raise BadInputError(&#39;Not enough data: t or x_t&#39;)
+    else: 
+        b_x_t = x_t    
+    return t, b_x_t
+
+def get_info_from_ftat(t: Optional[np.ndarray], f_t: Optional[Ftatr], 
+        a_t: Optional[Ftatr]) \
+            -&gt; Tuple[Optional[np.ndarray], InterpolateTime, InterpolateTime]:
+    &#39;&#39;&#39;
+    
+    &#39;&#39;&#39;
+    if f_t is None:
+        def linear_time(time: np.ndarray) -&gt; np.ndarray:
+            return time
+        f_t = linear_time
+
+    t1, f_t = _extract_x_t(t, f_t)
+
+    if a_t is None:
+        def const_one(time: np.ndarray) -&gt; np.ndarray:
+            return np.ones(len(time))
+        a_t = const_one
+
+    t2, a_t = _extract_x_t(t, a_t)
+
+    if t is None:
+        if t1 is None and t2 is not None:
+            t = t2
+        elif t2 is None and t1 is not None:
+            t = t1
+        elif t2 is not None and t1 is not None:
+            t = Config.get_common_x(t1, t2)        
+
+    return t, f_t, a_t
+
+#==============================================================================
+
+def get_spectrogram(nperseg=256, noverlap=128, nfft=2048) \
+        -&gt; Callable[[np.ndarray, np.ndarray], Tuple[time, frequency, spectrogram_]]:
+    &#39;&#39;&#39;Function to prepare a function that retrieves the spectrogram of the sweep signal.
+
+    &#39;&#39;&#39;
+    def extract(time: np.ndarray, amplitude: np.ndarray) \
+                                    -&gt; Tuple[time, frequency, spectrogram_]:
+        &#39;&#39;&#39;Function to get spectrogram of the sweep signal.
+        
+        Using the scipy.signal.spectrogram function.
+        &#39;&#39;&#39;
+
+        dt = time[1]-time[0]
+        frequency, spectrogram_time, spectrogram_ = spectrogram(amplitude, 1/(dt), nperseg=nperseg,
+                              noverlap=noverlap, nfft=nfft)
+
+        return spectrogram_time, frequency, spectrogram_
+
+    return extract
+
+
+def get_f_t(time: np.ndarray, amplitude: np.ndarray) -&gt; Relation:
+    &#39;&#39;&#39;Get time-frequency function from sweep signal using the Hilbert transformation.
+
+    Using the scipy.signal.hilbert function.
+    &#39;&#39;&#39;
+    analytical_signal = hilbert(amplitude)
+    result = np.append([0.], np.diff(np.unwrap(np.angle(analytical_signal)))/(2.0*np.pi)/(time[1]-time[0]))
+    return Relation(time, result)
+
+
+def get_a_t(time: np.ndarray, amplitude: np.ndarray) -&gt; Relation:
+    &#39;&#39;&#39;Get envelop from sweep signal using the Hilbert transformation.
+
+    Using the scipy.signal.hilbert function.
+    &#39;&#39;&#39;
+    analytical_signal = hilbert(amplitude)
+    return Relation(time, np.abs(analytical_signal))
+
+def integrate_quad(f_t_function: Callable[[time], frequency], time: np.ndarray) -&gt; theta:
+    &#39;&#39;&#39;Integration.
+
+    Integration of time-frequency function, using scipy.integrate.quad function.
+    &#39;&#39;&#39;
+    return np.append([0.], np.array(
+            [2*np.pi*integrate.quad(f_t_function, time[0], t)[0] for t in time[1:]]))    </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.convert_freq2time"><code class="name flex">
+<span>def <span class="ident">convert_freq2time</span></span>(<span>spectrum: Spectrum, convert_method: Callable[[<a title="sweep_design.math_signals.math_signal.Spectrum" href="../math_signal.html#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>], Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]]) ‑> Tuple[Callable[[numpy.ndarray], numpy.ndarray], Callable[[numpy.ndarray], numpy.ndarray]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The method consists in obtaining the functions of frequency and amplitude modulation.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_freq2time(spectrum: &#39;Spectrum&#39;, convert_method: CallFtatMethod) \
+        -&gt; Tuple[InterpolateTime, InterpolateTime]:
+    &#39;&#39;&#39;The method consists in obtaining the functions of frequency and amplitude modulation.
+    
+    &#39;&#39;&#39;
+    nT, f, a_t = convert_method(spectrum)
+    # print(a_t)
+    return pre_interpolate_time(nT, f), pre_interpolate_time(nT, a_t)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.get_a_t"><code class="name flex">
+<span>def <span class="ident">get_a_t</span></span>(<span>time: numpy.ndarray, amplitude: numpy.ndarray) ‑> <a title="sweep_design.math_signals.math_relation.Relation" href="../math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get envelop from sweep signal using the Hilbert transformation.</p>
+<p>Using the scipy.signal.hilbert function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_a_t(time: np.ndarray, amplitude: np.ndarray) -&gt; Relation:
+    &#39;&#39;&#39;Get envelop from sweep signal using the Hilbert transformation.
+
+    Using the scipy.signal.hilbert function.
+    &#39;&#39;&#39;
+    analytical_signal = hilbert(amplitude)
+    return Relation(time, np.abs(analytical_signal))</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.get_f_t"><code class="name flex">
+<span>def <span class="ident">get_f_t</span></span>(<span>time: numpy.ndarray, amplitude: numpy.ndarray) ‑> <a title="sweep_design.math_signals.math_relation.Relation" href="../math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get time-frequency function from sweep signal using the Hilbert transformation.</p>
+<p>Using the scipy.signal.hilbert function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_f_t(time: np.ndarray, amplitude: np.ndarray) -&gt; Relation:
+    &#39;&#39;&#39;Get time-frequency function from sweep signal using the Hilbert transformation.
+
+    Using the scipy.signal.hilbert function.
+    &#39;&#39;&#39;
+    analytical_signal = hilbert(amplitude)
+    result = np.append([0.], np.diff(np.unwrap(np.angle(analytical_signal)))/(2.0*np.pi)/(time[1]-time[0]))
+    return Relation(time, result)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.get_info_from_aprior_data"><code class="name flex">
+<span>def <span class="ident">get_info_from_aprior_data</span></span>(<span>t: Any, aprior_data: Any, f_a_t_method: Callable[[<a title="sweep_design.math_signals.math_signal.Spectrum" href="../math_signal.html#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>], Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]]) ‑> Tuple[Callable[[numpy.ndarray], numpy.ndarray], Callable[[numpy.ndarray], numpy.ndarray], <a title="sweep_design.math_signals.math_signal.Signal" href="../math_signal.html#sweep_design.math_signals.math_signal.Signal">Signal</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Get the frequency and amplitude modulation function from a prior data.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_info_from_aprior_data(t: Any, aprior_data: Any,
+        f_a_t_method: CallFtatMethod) -&gt; Tuple[InterpolateTime, InterpolateTime, &#39;Signal&#39;]:
+    &#39;&#39;&#39;Get the frequency and amplitude modulation function from a prior data.
+
+    &#39;&#39;&#39;
+    if isinstance(t, Spectrum):
+        aprior_signal = t.get_signal()
+        aprior_spectrum = t
+    elif isinstance(t, Relation):
+        aprior_signal = Signal(t)
+        aprior_spectrum = aprior_signal.get_spectrum()
+    elif isinstance(aprior_data, Spectrum):
+        aprior_signal = aprior_data.get_signal()
+        aprior_spectrum = aprior_data
+    elif isinstance(aprior_data, Signal):
+        aprior_signal = aprior_data
+        aprior_spectrum = aprior_data.get_spectrum()
+    elif isinstance(aprior_data, Relation):
+        aprior_spectrum = Spectrum(aprior_data)
+        aprior_signal = aprior_spectrum.get_signal()
+    else:
+        aprior_signal = Signal(t, aprior_data)
+        aprior_spectrum = aprior_signal.get_spectrum()
+    
+    f_t, a_t = convert_freq2time(aprior_spectrum, f_a_t_method)
+
+    return f_t, a_t, aprior_signal</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.get_info_from_ftat"><code class="name flex">
+<span>def <span class="ident">get_info_from_ftat</span></span>(<span>t: Optional[numpy.ndarray], f_t: Union[<a title="sweep_design.math_signals.math_relation.Relation" href="../math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, numpy.ndarray, Callable[[numpy.ndarray], numpy.ndarray], ForwardRef(None)], a_t: Union[<a title="sweep_design.math_signals.math_relation.Relation" href="../math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, numpy.ndarray, Callable[[numpy.ndarray], numpy.ndarray], ForwardRef(None)]) ‑> Tuple[Optional[numpy.ndarray], Callable[[numpy.ndarray], numpy.ndarray], Callable[[numpy.ndarray], numpy.ndarray]]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_info_from_ftat(t: Optional[np.ndarray], f_t: Optional[Ftatr], 
+        a_t: Optional[Ftatr]) \
+            -&gt; Tuple[Optional[np.ndarray], InterpolateTime, InterpolateTime]:
+    &#39;&#39;&#39;
+    
+    &#39;&#39;&#39;
+    if f_t is None:
+        def linear_time(time: np.ndarray) -&gt; np.ndarray:
+            return time
+        f_t = linear_time
+
+    t1, f_t = _extract_x_t(t, f_t)
+
+    if a_t is None:
+        def const_one(time: np.ndarray) -&gt; np.ndarray:
+            return np.ones(len(time))
+        a_t = const_one
+
+    t2, a_t = _extract_x_t(t, a_t)
+
+    if t is None:
+        if t1 is None and t2 is not None:
+            t = t2
+        elif t2 is None and t1 is not None:
+            t = t1
+        elif t2 is not None and t1 is not None:
+            t = Config.get_common_x(t1, t2)        
+
+    return t, f_t, a_t</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.get_spectrogram"><code class="name flex">
+<span>def <span class="ident">get_spectrogram</span></span>(<span>nperseg=256, noverlap=128, nfft=2048) ‑> Callable[[numpy.ndarray, numpy.ndarray], Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to prepare a function that retrieves the spectrogram of the sweep signal.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_spectrogram(nperseg=256, noverlap=128, nfft=2048) \
+        -&gt; Callable[[np.ndarray, np.ndarray], Tuple[time, frequency, spectrogram_]]:
+    &#39;&#39;&#39;Function to prepare a function that retrieves the spectrogram of the sweep signal.
+
+    &#39;&#39;&#39;
+    def extract(time: np.ndarray, amplitude: np.ndarray) \
+                                    -&gt; Tuple[time, frequency, spectrogram_]:
+        &#39;&#39;&#39;Function to get spectrogram of the sweep signal.
+        
+        Using the scipy.signal.spectrogram function.
+        &#39;&#39;&#39;
+
+        dt = time[1]-time[0]
+        frequency, spectrogram_time, spectrogram_ = spectrogram(amplitude, 1/(dt), nperseg=nperseg,
+                              noverlap=noverlap, nfft=nfft)
+
+        return spectrogram_time, frequency, spectrogram_
+
+    return extract</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.integrate_quad"><code class="name flex">
+<span>def <span class="ident">integrate_quad</span></span>(<span>f_t_function: Callable[[numpy.ndarray], numpy.ndarray], time: numpy.ndarray) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Integration.</p>
+<p>Integration of time-frequency function, using scipy.integrate.quad function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def integrate_quad(f_t_function: Callable[[time], frequency], time: np.ndarray) -&gt; theta:
+    &#39;&#39;&#39;Integration.
+
+    Integration of time-frequency function, using scipy.integrate.quad function.
+    &#39;&#39;&#39;
+    return np.append([0.], np.array(
+            [2*np.pi*integrate.quad(f_t_function, time[0], t)[0] for t in time[1:]]))    </code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.pre_interpolate_time"><code class="name flex">
+<span>def <span class="ident">pre_interpolate_time</span></span>(<span>x: Union[<a title="sweep_design.math_signals.defaults.base_structures.RelationProtocol" href="base_structures.html#sweep_design.math_signals.defaults.base_structures.RelationProtocol">RelationProtocol</a>, numpy.ndarray], y: numpy.ndarray = None) ‑> Callable[[numpy.ndarray], numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Thr interpolation of frequency and amplitude modulation functions.</p>
+<p>The method returns the interpolation function for frequency modulation
+and amplitude envelope. Since the sampling step is not the same,
+it is required to bring the desired sweep signal to the time axis.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def pre_interpolate_time(x: Union[RelationProtocol, np.ndarray], y: np.ndarray = None) \
+        -&gt; InterpolateTime:
+    &#39;&#39;&#39;Thr interpolation of frequency and amplitude modulation functions.
+
+    The method returns the interpolation function for frequency modulation 
+    and amplitude envelope. Since the sampling step is not the same, 
+    it is required to bring the desired sweep signal to the time axis.
+    &#39;&#39;&#39;
+    if isinstance(x, Relation):
+        x, y = x.get_data()
+
+    def interpolate_time(time):
+        nT = x*(time[-1]/x[-1])
+        y2 = Config.interpolate_extrapolate_method(nT, y)
+        return y2(time)
+    return interpolate_time</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.defaults.sweep_methods.simple_freq2time"><code class="name flex">
+<span>def <span class="ident">simple_freq2time</span></span>(<span>spectrum: Spectrum) ‑> Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The simple method to extract frequency modulation from a prior spectrum.</p>
+<p>Properties:</p>
+<blockquote>
+<p>spectrum: Spectrum</p>
+</blockquote>
+<p>Returns:</p>
+<blockquote>
+<p>Tuple [</p>
+<blockquote>
+<p>time: np.ndarray,<br>
+frequency: np.ndarray,<br>
+amplitude_modulation: np.ndarray<br>
+]</p>
+</blockquote>
+</blockquote>
+<p>The amplitude modulation is constant.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def simple_freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[time, frequency, envelope]:
+    &#39;&#39;&#39;The simple method to extract frequency modulation from a prior spectrum.
+    
+    Properties:
+    &gt; spectrum: Spectrum
+    
+    Returns:
+    &gt; Tuple [
+    &gt;&gt; time: np.ndarray,  
+    &gt;&gt; frequency: np.ndarray,  
+    &gt;&gt; amplitude_modulation: np.ndarray  
+    &gt;]
+
+    The amplitude modulation is constant.
+    &#39;&#39;&#39;
+    amplitude_spectrum = spectrum.get_amp_spectrum()
+    frequency, amplitude = amplitude_spectrum.get_data()
+    n_spec = amplitude ** 2
+    time = np.append([0.], ((n_spec[1:]+n_spec[:-1])/(frequency[1:]-frequency[:-1])).cumsum())
+    coef = amplitude_spectrum.get_norm()
+    amplitude_modulation = coef*np.ones(len(time))
+    return time, frequency, amplitude_modulation</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sweep_design.math_signals.defaults" href="index.html">sweep_design.math_signals.defaults</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.convert_freq2time" href="#sweep_design.math_signals.defaults.sweep_methods.convert_freq2time">convert_freq2time</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_a_t" href="#sweep_design.math_signals.defaults.sweep_methods.get_a_t">get_a_t</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_f_t" href="#sweep_design.math_signals.defaults.sweep_methods.get_f_t">get_f_t</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_info_from_aprior_data" href="#sweep_design.math_signals.defaults.sweep_methods.get_info_from_aprior_data">get_info_from_aprior_data</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_info_from_ftat" href="#sweep_design.math_signals.defaults.sweep_methods.get_info_from_ftat">get_info_from_ftat</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_spectrogram" href="#sweep_design.math_signals.defaults.sweep_methods.get_spectrogram">get_spectrogram</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.integrate_quad" href="#sweep_design.math_signals.defaults.sweep_methods.integrate_quad">integrate_quad</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.pre_interpolate_time" href="#sweep_design.math_signals.defaults.sweep_methods.pre_interpolate_time">pre_interpolate_time</a></code></li>
+<li><code><a title="sweep_design.math_signals.defaults.sweep_methods.simple_freq2time" href="#sweep_design.math_signals.defaults.sweep_methods.simple_freq2time">simple_freq2time</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

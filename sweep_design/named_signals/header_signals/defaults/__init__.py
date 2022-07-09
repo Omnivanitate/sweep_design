@@ -1,0 +1,1 @@
+'''Defaults methods and veriable.'''

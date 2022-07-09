@@ -36,12 +36,12 @@ def simple_freq2time(spectrum: 'Spectrum') -> Tuple[time, frequency, envelope]:
 
     The amplitude modulation is constant.
     '''
-    frequency, amplitude = spectrum.get_amp_spectrum().get_data()
+    amplitude_spectrum = spectrum.get_amp_spectrum()
+    frequency, amplitude = amplitude_spectrum.get_data()
     n_spec = amplitude ** 2
     time = np.append([0.], ((n_spec[1:]+n_spec[:-1])/(frequency[1:]-frequency[:-1])).cumsum())
-    coef = spectrum.get_norm()
+    coef = amplitude_spectrum.get_norm()
     amplitude_modulation = coef*np.ones(len(time))
-
     return time, frequency, amplitude_modulation
 
 
@@ -70,6 +70,7 @@ def convert_freq2time(spectrum: 'Spectrum', convert_method: CallFtatMethod) \
     
     '''
     nT, f, a_t = convert_method(spectrum)
+    # print(a_t)
     return pre_interpolate_time(nT, f), pre_interpolate_time(nT, a_t)
 
 
