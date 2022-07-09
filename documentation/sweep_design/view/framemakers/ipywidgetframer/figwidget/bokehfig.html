@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import copy
+import itertools
+from typing import Any, Callable, Dict, Literal, Set, Union
+
+import ipywidgets as widgets
+import numpy as np
+from bokeh.io import output_notebook, push_notebook, show
+from bokeh.models import DataRange1d, LinearAxis, Span
+from bokeh.models.renderers import GlyphRenderer
+from bokeh.palettes import Set1_9, Set2_8
+from bokeh.plotting import Figure, figure
+from loguru import logger
+
+from ....base_view.abc_common_framer_grapher.figure import (CommonFigure,
+                                                             CommonFigureMaker,
+                                                             CommonImage,
+                                                             CommonLine)
+
+output_notebook()
+
+_colors = list(Set1_9)
+_colors.extend(list(Set2_8))
+color_palette = itertools.cycle(_colors)
+
+default_line_property = {
+        &#39;line_color&#39;: None,
+        &#39;line_width&#39;: 2,
+        &#39;line_dash&#39;: &#39;solid&#39;
+        }
+
+default_image_properties = {
+    &#39;palette&#39;: &#39;Viridis256&#39;,
+    &#39;level&#39;: &#39;image&#39;
+}
+
+class BokehFigureMaker(CommonFigureMaker):
+    def __init__(self, default_line_property=default_line_property, 
+                                color_palette=color_palette) -&gt; None:
+        self.default_line_property = default_line_property
+        self.color_palette = color_palette
+        self.default_image_propertis = default_image_properties
+    
+    @staticmethod
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
+
+        fig = figure(
+            title=figure_properties[&#39;title&#39;],
+            title_location = &#39;above&#39;,
+            plot_width=int(figure_properties[&#39;width&#39;]),
+            plot_height=int(figure_properties[&#39;height&#39;])
+        )
+        fig.xaxis.axis_label = figure_properties[&#39;x_axis_label&#39;]
+        fig.yaxis.axis_label = figure_properties[&#39;y_axis_label&#39;]
+        return BokehFigure(fig)
+    
+    def get_next_line_properties(self) -&gt; Dict[str, Any]:
+        line_properties = copy.deepcopy(self.default_line_property)
+        line_properties[&#39;line_color&#39;] = next(self.color_palette)
+        return line_properties
+
+    def get_next_image_properties(self) -&gt; Dict[str, Any]:
+        return {&#39;palette&#39;:&#34;Spectral11&#34;}
+
+class MetaFigure(type(widgets.Output), type(CommonFigure)):
+    pass
+
+class BokehFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
+
+    def __init__(self, figure: Figure) -&gt; None:
+        super().__init__()
+        self._figure = figure
+        self._handle = None
+        self._lines = {}
+        self._images = {}
+        self.on_displayed(lambda x: x.set_handle())
+
+    def set_handle(self):
+        self.clear_output()
+        with self:
+            self._handle = show(self._figure, notebook_handle=True)
+
+    def get_handle(self):
+        return self._handle
+
+    def update(self):
+        push_notebook(handle=self._handle)
+    
+    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
+        self._figure.extra_y_ranges[axis_name] = DataRange1d()
+        self._figure.add_layout(LinearAxis(y_range_name = axis_name, axis_label = axis_label), location)
+    
+    def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
+        if type_axis == &#39;x&#39;:
+            if axis_name in self._figure.extra_x_ranges:
+                return self._figure.extra_x_ranges[axis_name]
+            else:
+                return self._figure.x_range
+        elif type_axis == &#39;y&#39;:
+            if axis_name in self._figure.extra_y_ranges:
+                return self._figure.extra_y_ranges[axis_name]
+            else:
+                return self._figure.y_range
+
+    def set_limits(self, range_axis: DataRange1d, min_z=0, max_z=1,):
+        
+        range_axis.start = min_z + min_z*0.25
+        range_axis.end = max_z + max_z*0.25   
+        
+    def add_line(self, x: np.ndarray, y: np.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) -&gt; &#39;BokehLine&#39;:
+        
+        line = self._figure.line(x, y, **line_property)
+        bokeh_line = BokehLine(line, name, groups, self.update)
+        self._lines.update({name: bokeh_line})
+        return bokeh_line
+
+    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) -&gt; None:
+        
+        if isinstance(groups, str):
+            groups = set([groups])
+
+        image = self._figure.image(image=[s_xy], x=x[0], y=y[0],
+            dw = x[-1] - x[0], dh = y[-1] - y[0], **image_properties)
+        image.level = &#39;underlay&#39;
+        self._images.update({unique_name: BokehImage(image, unique_name, groups, self.update)})
+   
+    def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
+        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+
+        if axis  == &#39;x&#39;:
+            line = Span(location= k, dimension=&#39;height&#39;, **line_properties)
+        elif axis == &#39;y&#39;:
+            line = Span(location=k, dimension=&#39;width&#39;, **line_properties)
+        else:
+            line = None
+        
+        self._figure.add_layout(line)
+        bokeh_line = BokehLine(line, unique_name, groups, self.update)
+        self._lines.update({unique_name: bokeh_line})
+
+class BokehLine(CommonLine[GlyphRenderer]):
+
+    def __init__(self, line: GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any) -&gt; None:
+        super().__init__(line, name, groups)
+        self._update = update
+        
+    def get_color(self) -&gt; str:
+        return list(self._line.glyph.references())[0].line_color
+
+    def set_visible(self, check: bool) -&gt; None:
+        self._line.visible = check
+        self._update()
+
+class BokehImage(CommonImage[GlyphRenderer]):
+
+    def __init__(self, image: GlyphRenderer, name: str, groups: Set[str], update: Callable[..., None]) -&gt; None:
+        super().__init__(image, name, groups)
+        self._update = update
+    
+    def set_visible(self, is_visible: bool) -&gt; None:
+        self._image.visible = is_visible
+        self._update()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure"><code class="flex name class">
+<span>class <span class="ident">BokehFigure</span></span>
+<span>(</span><span>figure: bokeh.plotting.figure.Figure)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Widget used as a context manager to display output.</p>
+<p>This widget can capture and display stdout, stderr, and rich output.
+To use
+it, create an instance of it and display it.</p>
+<p>You can then use the widget as a context manager: any output produced while in the
+context will be captured and displayed in the widget instead of the standard output
+area.</p>
+<p>You can also use the .capture() method to decorate a function or a method. Any output
+produced by the function will then go to the output widget. This is useful for
+debugging widget callbacks, for example.</p>
+<p>Example::
+import ipywidgets as widgets
+from IPython.display import display
+out = widgets.Output()
+display(out)</p>
+<pre><code>print('prints to output area')
+
+with out:
+    print('prints to output widget')
+
+@out.capture()
+def func():
+    print('prints to output widget')
+</code></pre>
+<p>Public constructor</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BokehFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
+
+    def __init__(self, figure: Figure) -&gt; None:
+        super().__init__()
+        self._figure = figure
+        self._handle = None
+        self._lines = {}
+        self._images = {}
+        self.on_displayed(lambda x: x.set_handle())
+
+    def set_handle(self):
+        self.clear_output()
+        with self:
+            self._handle = show(self._figure, notebook_handle=True)
+
+    def get_handle(self):
+        return self._handle
+
+    def update(self):
+        push_notebook(handle=self._handle)
+    
+    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
+        self._figure.extra_y_ranges[axis_name] = DataRange1d()
+        self._figure.add_layout(LinearAxis(y_range_name = axis_name, axis_label = axis_label), location)
+    
+    def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
+        if type_axis == &#39;x&#39;:
+            if axis_name in self._figure.extra_x_ranges:
+                return self._figure.extra_x_ranges[axis_name]
+            else:
+                return self._figure.x_range
+        elif type_axis == &#39;y&#39;:
+            if axis_name in self._figure.extra_y_ranges:
+                return self._figure.extra_y_ranges[axis_name]
+            else:
+                return self._figure.y_range
+
+    def set_limits(self, range_axis: DataRange1d, min_z=0, max_z=1,):
+        
+        range_axis.start = min_z + min_z*0.25
+        range_axis.end = max_z + max_z*0.25   
+        
+    def add_line(self, x: np.ndarray, y: np.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) -&gt; &#39;BokehLine&#39;:
+        
+        line = self._figure.line(x, y, **line_property)
+        bokeh_line = BokehLine(line, name, groups, self.update)
+        self._lines.update({name: bokeh_line})
+        return bokeh_line
+
+    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) -&gt; None:
+        
+        if isinstance(groups, str):
+            groups = set([groups])
+
+        image = self._figure.image(image=[s_xy], x=x[0], y=y[0],
+            dw = x[-1] - x[0], dh = y[-1] - y[0], **image_properties)
+        image.level = &#39;underlay&#39;
+        self._images.update({unique_name: BokehImage(image, unique_name, groups, self.update)})
+   
+    def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
+        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+
+        if axis  == &#39;x&#39;:
+            line = Span(location= k, dimension=&#39;height&#39;, **line_properties)
+        elif axis == &#39;y&#39;:
+            line = Span(location=k, dimension=&#39;width&#39;, **line_properties)
+        else:
+            line = None
+        
+        self._figure.add_layout(line)
+        bokeh_line = BokehLine(line, unique_name, groups, self.update)
+        self._lines.update({unique_name: bokeh_line})</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>ipywidgets.widgets.widget_output.Output</li>
+<li>ipywidgets.widgets.domwidget.DOMWidget</li>
+<li>ipywidgets.widgets.widget.Widget</li>
+<li>ipywidgets.widgets.widget.LoggingHasTraits</li>
+<li>traitlets.traitlets.HasTraits</li>
+<li>traitlets.traitlets.HasDescriptors</li>
+<li><a title="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonFigure" href="../../../base_view/abc_common_framer_grapher/figure.html#sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonFigure">CommonFigure</a></li>
+<li>typing.Generic</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_extra_axis"><code class="name flex">
+<span>def <span class="ident">add_extra_axis</span></span>(<span>self, axis_name: str, axis_label: str, location='right') ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
+    self._figure.extra_y_ranges[axis_name] = DataRange1d()
+    self._figure.add_layout(LinearAxis(y_range_name = axis_name, axis_label = axis_label), location)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_image"><code class="name flex">
+<span>def <span class="ident">add_image</span></span>(<span>self, x: numpy.ndarray, y: numpy.ndarray, s_xy: numpy.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) -&gt; None:
+    
+    if isinstance(groups, str):
+        groups = set([groups])
+
+    image = self._figure.image(image=[s_xy], x=x[0], y=y[0],
+        dw = x[-1] - x[0], dh = y[-1] - y[0], **image_properties)
+    image.level = &#39;underlay&#39;
+    self._images.update({unique_name: BokehImage(image, unique_name, groups, self.update)})</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_infty_line"><code class="name flex">
+<span>def <span class="ident">add_infty_line</span></span>(<span>self, k: numpy.ndarray, axis: Literal['x', 'y'], unique_name: str, groups: Set[str], line_properties: Dict[str, Any]) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
+    groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+
+    if axis  == &#39;x&#39;:
+        line = Span(location= k, dimension=&#39;height&#39;, **line_properties)
+    elif axis == &#39;y&#39;:
+        line = Span(location=k, dimension=&#39;width&#39;, **line_properties)
+    else:
+        line = None
+    
+    self._figure.add_layout(line)
+    bokeh_line = BokehLine(line, unique_name, groups, self.update)
+    self._lines.update({unique_name: bokeh_line})</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_line"><code class="name flex">
+<span>def <span class="ident">add_line</span></span>(<span>self, x: numpy.ndarray, y: numpy.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) ‑> <a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine">BokehLine</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_line(self, x: np.ndarray, y: np.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) -&gt; &#39;BokehLine&#39;:
+    
+    line = self._figure.line(x, y, **line_property)
+    bokeh_line = BokehLine(line, name, groups, self.update)
+    self._lines.update({name: bokeh_line})
+    return bokeh_line</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.get_axis"><code class="name flex">
+<span>def <span class="ident">get_axis</span></span>(<span>self, axis_name: str = None, type_axis: str = 'y')</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
+    if type_axis == &#39;x&#39;:
+        if axis_name in self._figure.extra_x_ranges:
+            return self._figure.extra_x_ranges[axis_name]
+        else:
+            return self._figure.x_range
+    elif type_axis == &#39;y&#39;:
+        if axis_name in self._figure.extra_y_ranges:
+            return self._figure.extra_y_ranges[axis_name]
+        else:
+            return self._figure.y_range</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.get_handle"><code class="name flex">
+<span>def <span class="ident">get_handle</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_handle(self):
+    return self._handle</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.set_handle"><code class="name flex">
+<span>def <span class="ident">set_handle</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_handle(self):
+    self.clear_output()
+    with self:
+        self._handle = show(self._figure, notebook_handle=True)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.set_limits"><code class="name flex">
+<span>def <span class="ident">set_limits</span></span>(<span>self, range_axis: bokeh.models.ranges.DataRange1d, min_z=0, max_z=1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_limits(self, range_axis: DataRange1d, min_z=0, max_z=1,):
+    
+    range_axis.start = min_z + min_z*0.25
+    range_axis.end = max_z + max_z*0.25   </code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self):
+    push_notebook(handle=self._handle)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker"><code class="flex name class">
+<span>class <span class="ident">BokehFigureMaker</span></span>
+<span>(</span><span>default_line_property={'line_color': None, 'line_width': 2, 'line_dash': 'solid'}, color_palette=&lt;itertools.cycle object&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BokehFigureMaker(CommonFigureMaker):
+    def __init__(self, default_line_property=default_line_property, 
+                                color_palette=color_palette) -&gt; None:
+        self.default_line_property = default_line_property
+        self.color_palette = color_palette
+        self.default_image_propertis = default_image_properties
+    
+    @staticmethod
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
+
+        fig = figure(
+            title=figure_properties[&#39;title&#39;],
+            title_location = &#39;above&#39;,
+            plot_width=int(figure_properties[&#39;width&#39;]),
+            plot_height=int(figure_properties[&#39;height&#39;])
+        )
+        fig.xaxis.axis_label = figure_properties[&#39;x_axis_label&#39;]
+        fig.yaxis.axis_label = figure_properties[&#39;y_axis_label&#39;]
+        return BokehFigure(fig)
+    
+    def get_next_line_properties(self) -&gt; Dict[str, Any]:
+        line_properties = copy.deepcopy(self.default_line_property)
+        line_properties[&#39;line_color&#39;] = next(self.color_palette)
+        return line_properties
+
+    def get_next_image_properties(self) -&gt; Dict[str, Any]:
+        return {&#39;palette&#39;:&#34;Spectral11&#34;}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonFigureMaker" href="../../../base_view/abc_common_framer_grapher/figure.html#sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonFigureMaker">CommonFigureMaker</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_figure"><code class="name flex">
+<span>def <span class="ident">get_figure</span></span>(<span>figure_properties: Dict[str, Any]) ‑> <a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure">BokehFigure</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
+
+    fig = figure(
+        title=figure_properties[&#39;title&#39;],
+        title_location = &#39;above&#39;,
+        plot_width=int(figure_properties[&#39;width&#39;]),
+        plot_height=int(figure_properties[&#39;height&#39;])
+    )
+    fig.xaxis.axis_label = figure_properties[&#39;x_axis_label&#39;]
+    fig.yaxis.axis_label = figure_properties[&#39;y_axis_label&#39;]
+    return BokehFigure(fig)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_image_properties"><code class="name flex">
+<span>def <span class="ident">get_next_image_properties</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_next_image_properties(self) -&gt; Dict[str, Any]:
+    return {&#39;palette&#39;:&#34;Spectral11&#34;}</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_line_properties"><code class="name flex">
+<span>def <span class="ident">get_next_line_properties</span></span>(<span>self) ‑> Dict[str, Any]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_next_line_properties(self) -&gt; Dict[str, Any]:
+    line_properties = copy.deepcopy(self.default_line_property)
+    line_properties[&#39;line_color&#39;] = next(self.color_palette)
+    return line_properties</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehImage"><code class="flex name class">
+<span>class <span class="ident">BokehImage</span></span>
+<span>(</span><span>image: bokeh.models.renderers.GlyphRenderer, name: str, groups: Set[str], update: Callable[..., None])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract base class for generic types.</p>
+<p>A generic type is typically declared by inheriting from
+this class parameterized with one or more type variables.
+For example, a generic mapping type might be defined as::</p>
+<p>class Mapping(Generic[KT, VT]):
+def <strong>getitem</strong>(self, key: KT) -&gt; VT:
+&hellip;
+# Etc.</p>
+<p>This class can then be used as follows::</p>
+<p>def lookup_name(mapping: Mapping[KT, VT], key: KT, default: VT) -&gt; VT:
+try:
+return mapping[key]
+except KeyError:
+return default</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BokehImage(CommonImage[GlyphRenderer]):
+
+    def __init__(self, image: GlyphRenderer, name: str, groups: Set[str], update: Callable[..., None]) -&gt; None:
+        super().__init__(image, name, groups)
+        self._update = update
+    
+    def set_visible(self, is_visible: bool) -&gt; None:
+        self._image.visible = is_visible
+        self._update()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonImage" href="../../../base_view/abc_common_framer_grapher/figure.html#sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonImage">CommonImage</a></li>
+<li><a title="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonGraphElement" href="../../../base_view/abc_common_framer_grapher/figure.html#sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonGraphElement">CommonGraphElement</a></li>
+<li>typing.Generic</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehImage.set_visible"><code class="name flex">
+<span>def <span class="ident">set_visible</span></span>(<span>self, is_visible: bool) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_visible(self, is_visible: bool) -&gt; None:
+    self._image.visible = is_visible
+    self._update()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine"><code class="flex name class">
+<span>class <span class="ident">BokehLine</span></span>
+<span>(</span><span>line: bokeh.models.renderers.GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract base class for generic types.</p>
+<p>A generic type is typically declared by inheriting from
+this class parameterized with one or more type variables.
+For example, a generic mapping type might be defined as::</p>
+<p>class Mapping(Generic[KT, VT]):
+def <strong>getitem</strong>(self, key: KT) -&gt; VT:
+&hellip;
+# Etc.</p>
+<p>This class can then be used as follows::</p>
+<p>def lookup_name(mapping: Mapping[KT, VT], key: KT, default: VT) -&gt; VT:
+try:
+return mapping[key]
+except KeyError:
+return default</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BokehLine(CommonLine[GlyphRenderer]):
+
+    def __init__(self, line: GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any) -&gt; None:
+        super().__init__(line, name, groups)
+        self._update = update
+        
+    def get_color(self) -&gt; str:
+        return list(self._line.glyph.references())[0].line_color
+
+    def set_visible(self, check: bool) -&gt; None:
+        self._line.visible = check
+        self._update()</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonLine" href="../../../base_view/abc_common_framer_grapher/figure.html#sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonLine">CommonLine</a></li>
+<li><a title="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonGraphElement" href="../../../base_view/abc_common_framer_grapher/figure.html#sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonGraphElement">CommonGraphElement</a></li>
+<li>typing.Generic</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine.get_color"><code class="name flex">
+<span>def <span class="ident">get_color</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_color(self) -&gt; str:
+    return list(self._line.glyph.references())[0].line_color</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine.set_visible"><code class="name flex">
+<span>def <span class="ident">set_visible</span></span>(<span>self, check: bool) ‑> None</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_visible(self, check: bool) -&gt; None:
+    self._line.visible = check
+    self._update()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.MetaFigure"><code class="flex name class">
+<span>class <span class="ident">MetaFigure</span></span>
+<span>(</span><span>name, bases, classdict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A metaclass for HasTraits.</p>
+<p>Finish initializing the HasDescriptors class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MetaFigure(type(widgets.Output), type(CommonFigure)):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>traitlets.traitlets.MetaHasTraits</li>
+<li>traitlets.traitlets.MetaHasDescriptors</li>
+<li>abc.ABCMeta</li>
+<li>builtins.type</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget" href="index.html">sweep_design.view.framemakers.ipywidgetframer.figwidget</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure">BokehFigure</a></code></h4>
+<ul class="two-column">
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_extra_axis" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_extra_axis">add_extra_axis</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_image" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_image">add_image</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_infty_line" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_infty_line">add_infty_line</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_line" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_line">add_line</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.get_axis" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.get_axis">get_axis</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.get_handle" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.get_handle">get_handle</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.set_handle" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.set_handle">set_handle</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.set_limits" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.set_limits">set_limits</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.update" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.update">update</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker">BokehFigureMaker</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_figure" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_figure">get_figure</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_image_properties" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_image_properties">get_next_image_properties</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_line_properties" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_line_properties">get_next_line_properties</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehImage" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehImage">BokehImage</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehImage.set_visible" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehImage.set_visible">set_visible</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine">BokehLine</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine.get_color" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine.get_color">get_color</a></code></li>
+<li><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine.set_visible" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehLine.set_visible">set_visible</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.MetaFigure" href="#sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.MetaFigure">MetaFigure</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

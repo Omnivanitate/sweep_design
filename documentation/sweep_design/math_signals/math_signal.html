@@ -1,0 +1,1264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sweep_design.math_signals.math_signal API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sweep_design.math_signals.math_signal</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from typing import  Optional, TypeVar, Union, Type
+
+import numpy as np
+from numpy.typing import NDArray
+
+from ..config import Config
+from .math_relation import Relation
+from .defaults.base_structures import ConvertingError
+
+
+Num = Union[float, int, complex]
+R = TypeVar(&#39;R&#39;, bound=Relation)
+SP = TypeVar(&#39;SP&#39;, bound=&#39;Spectrum&#39;)
+S = TypeVar(&#39;S&#39;, bound=&#39;Signal&#39;)
+SPRN = Union[&#39;Spectrum&#39;, &#39;Relation&#39;, Num]
+SSPR = Union[&#39;Spectrum&#39;, &#39;Signal&#39;, &#39;Relation&#39;]
+SSPRN = Union[&#39;Spectrum&#39;, &#39;Signal&#39;, &#39;Relation&#39;, Num]
+
+
+def _input2spectrum_operation(inp: SSPRN) -&gt; Union[&#39;Relation&#39;, &#39;Spectrum&#39;, Num]:
+    if isinstance(inp, Signal):
+        return inp.get_spectrum()
+    elif isinstance(inp, (Spectrum, Relation, int, float, complex)):
+        return inp
+    else:
+        raise ConvertingError(type(inp), Spectrum)
+     
+def _input2spectrum(inp: SSPR) -&gt; &#39;Spectrum&#39;:
+    if isinstance(inp, Signal):
+        return inp.get_spectrum()
+    
+    elif isinstance(inp, Spectrum):
+        return inp
+    
+    elif isinstance(inp, Relation):
+            return Spectrum(inp)  
+    else:
+        raise ConvertingError(type(inp), Spectrum)
+
+class Spectrum(Relation):
+    &#39;&#39;&#39;A class that describes the Fourier spectrum of a signal.
+    
+    The `Spectrun` class derived from the `Relation` class.
+
+    **Properties**:
+
+    &gt; **frequency**: `Union[Relation, NDArray]`  
+    An instance of Relation class or inherited from it, or array_like object 
+    containing numbers (real or complex).
+
+    &gt; **spectrum_amplitude**: `Oprional[NDArray]`  
+    None or array_like object containing numbers (real or complex).
+    
+    &gt; **df**: `float` = `None`  
+    Sample rate of frequency-axis
+
+    To convert the spectrum into a signal, the method defined in the Config 
+    class is used. (Config.spectrum2signal_method). Current method can be 
+    overridden by own in `Config` class.
+    
+    When performing arithmetic operations on instances of the `Signal` class, 
+    an instance of the `Spectrum` class will be extracted from 
+    the `Signal` instance, and arithmetic operations will be performed 
+    on this instance. An instance of `Relation` class will be converted into 
+    the instance of `Spectrum` class.
+    &#39;&#39;&#39;
+
+    def __init__(self, frequency: Union[Relation, NDArray], 
+                        spectrum_amplitude: NDArray = None, df: float = None, **kwargs) -&gt; None:
+        super().__init__(frequency, spectrum_amplitude, df)
+        self._spectrum2signal_method_default = Config.spectrum2signal_method
+        self.signal: Optional[Signal] = None
+    
+    @property
+    def frequency(self):
+        return self.x
+
+    @property
+    def spectrum_amplitude(self):
+        return self.y
+
+    @property
+    def df(self):
+        return self.dx
+
+    @df.setter
+    def df(self, value: float):
+        self.dx = value
+
+    def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#39;Signal&#39;:
+        &#39;&#39;&#39;Compute the signal from the spectrum.&#39;&#39;&#39;
+        
+        if self.signal is None or recalculate:
+            time, amplitude = self._spectrum2signal_method_default(self._x, self._y, start_time)
+            self.signal = Signal(time, amplitude)
+        return self.signal
+    
+    def get_amp_spectrum(self: R, **kwargs) -&gt; &#39;Relation&#39;:
+        &#39;&#39;&#39;Amplitude spectrum.
+        
+        Calculate the relationship between the frequency and the absolute 
+        value of the spectrum amplitude.&#39;&#39;&#39;
+
+        x, y = self.get_data()
+        return Relation(x, np.abs(y))
+
+    def get_phase_spectrum(self: R, **kwargs) -&gt; &#39;Relation&#39;:
+        &#39;&#39;&#39;Calculate the relationship between frequency and phase of the spectrum.&#39;&#39;&#39;
+        x, y = self.get_data()
+        return Relation(x, np.unwrap(np.angle(y)))
+
+    def get_reverse_filter(self: SP, percent: Union[float, int] = 5.,
+                           subtrack_phase=True,  
+                           frequency_start: float = None, 
+                           frequency_end: float = None, **kwargs) -&gt; SP:
+        &#39;&#39;&#39;Calculate filter of reversed signal.
+
+        **Properties**:
+        &gt; **percent**: `Union[float, int]`  
+        level of added white noise in percent
+        
+        **subtrack_phase**: True  
+        If True performs phase subtraction,  
+        If False succeeds, add the phase.
+
+        **frequency_start**: `float`**  
+        Start frequency.
+
+        **frequency_end**: `float`  
+        End frequency.
+
+        &#39;&#39;&#39;
+        spectrum = self.select_data(frequency_start, frequency_end)
+        abs_spectrum = spectrum.get_amp_spectrum()
+        abs_spectrum = (abs_spectrum+abs_spectrum.max()*percent/100)
+        reversed_abs_spectrum = 1/abs_spectrum
+
+        if subtrack_phase:
+            phase_spectrum = -1*spectrum.get_phase_spectrum()
+        else:
+            phase_spectrum = 1*spectrum.get_phase_spectrum()
+
+        result_spectrum = type(self).get_spectrum_from_amp_phase(
+            reversed_abs_spectrum, phase_spectrum, **kwargs)
+        return result_spectrum
+   
+    def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        sp_other = _input2spectrum(other)
+        return type(self).get_spectrum_from_amp_phase(
+            self.get_amp_spectrum(),
+            self.get_phase_spectrum()+\
+            sp_other.get_phase_spectrum(),
+            **kwargs
+            )
+        
+    def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        sp_other = _input2spectrum(other)
+        return type(self).get_spectrum_from_amp_phase(
+            self.get_amp_spectrum(),
+            self.get_phase_spectrum() -\
+            sp_other.get_phase_spectrum(),
+            **kwargs
+            )
+
+    @classmethod
+    def get_spectrum_from_amp_phase(cls: Type[SP], s1: Relation, 
+            s2: Relation, **kwargs) -&gt; SP:
+        &#39;&#39;&#39;Calculate of the spectrum from the amplitude and frequency spectrum.
+        
+        The spectrum is calculated through the amplitude and phase spectrum 
+        using the formula abs*exp(1j*phase).&#39;&#39;&#39;
+        
+        return cls(s1*((1.j*s2).exp()), **kwargs)
+    
+    @classmethod
+    def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        sp_r1 = _input2spectrum(r1)
+        sp_r2 = _input2spectrum(r2)
+        return super().convolve(sp_r1, sp_r2, **kwargs)
+    
+    @classmethod
+    def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        sp_r1 = _input2spectrum(r1)
+        sp_r2 = _input2spectrum(r2)
+        return super().correlate(sp_r1, sp_r2, **kwargs)
+    
+    def __add__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__add__(r_a, **kwargs)
+
+    def __sub__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__sub__(r_a, **kwargs)
+
+    def __mul__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__mul__(r_a, **kwargs)
+
+    def __truediv__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__truediv__(r_a, **kwargs)
+ 
+    def __pow__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__pow__(r_a, **kwargs)
+
+
+def _inp2signal_operation(inp: SSPRN) -&gt; Union[&#39;Relation&#39;, &#39;Signal&#39;, Num]:
+    if isinstance(inp, Spectrum):
+        return inp.get_signal()
+    elif isinstance(inp, (Signal, Relation, int, complex, float)):
+        return inp
+    else:
+        raise ConvertingError(type(inp), Signal)
+
+def _inp2signal(inp: SSPR) -&gt; &#39;Signal&#39;:
+    if isinstance(inp, Spectrum):
+        return inp.get_signal()
+
+    elif isinstance(inp, Signal):
+        return inp
+
+    elif isinstance(inp, Relation):
+        return Signal(inp)
+    else:
+        raise ConvertingError(type(inp), Signal)
+        
+
+class Signal(Relation):
+    &#39;&#39;&#39;Class describing some kind of signal.
+
+    The `Signal` class inherits the `Relation` class.
+
+    **Properties**:
+    &gt; **time**: `Union[Relation, NDArray]`  
+    An instance of Relation class or inherited from it, or array_like object
+    containing numbers (real or complex).
+
+    &gt; **amplitude**: `NDArray`  
+    None or array_like object containing numbers (real or complex).
+
+    &gt; **dt**: `float` = `None`  
+    Sample rate of time-axis
+
+    To convert the signal into a spectrum, the method defined in the `Config` 
+    class is used. (Config.signal2spectrum_method). Current method can be 
+    overridden by own in Config class.
+
+    When performing arithmetic operations on instances of the Spectrum class, 
+    an instance of the `Singal` class will be extracted from 
+    the `Spectrum` instance, and arithmetic operations will be performed 
+    on this instance. An instance of `Relation` class will be converted into 
+    the instance of `Signal` class.
+
+    &#39;&#39;&#39;
+
+    def __init__(self, time: Union[Relation, np.ndarray], 
+                                amplitude: np.ndarray = None, dt: float = None) -&gt; None:
+        
+        self._signal2spectrum_method_default = Config.signal2spectrum_method
+        super().__init__(time, amplitude, dt)
+        self._spectrum: Optional[Spectrum] = None
+    
+    
+    def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#39;Spectrum&#39;:
+
+        if self._spectrum is None or recalculate:
+            f, a = self._signal2spectrum_method_default(*self.get_data(), is_start_zero)
+            self._spectrum = Spectrum(f, a)
+
+        return self._spectrum
+    
+    def get_amplitude_spectrum(self, recalculate=False, is_start_zero=False) -&gt; Relation:
+        return self.get_spectrum(recalculate, is_start_zero).get_amp_spectrum()    
+    
+    def get_phase_spectrum(self, recalculate=False, is_start_zero=False) -&gt; Relation:
+        return self.get_spectrum(recalculate, is_start_zero).get_phase_spectrum()    
+    
+    def get_reverse_signal(self: S, percent: Union[float, int] = 5.,
+                           subtrack_phase: bool = True, 
+                           frequency_start: float = None, 
+                           frequency_end: float = None,
+                           **kwargs) -&gt; S:
+        &#39;&#39;&#39;Calculate reversed signal.
+
+        **Properties**:
+    
+        &gt; **percent**: `Union[float, int]`  
+        level of added white noise in percent
+        
+        &gt; **subtrack_phase**: True  
+        If True performs phase subtraction,  
+        If False succeeds, add the phase.
+
+        &gt; **frequency_start**: float.  
+        Start frequency.
+
+        &gt; **frequency_end**: float
+        End frequency.  
+
+        &#39;&#39;&#39;
+        signal =  self.get_spectrum().\
+            get_reverse_filter(percent, subtrack_phase, frequency_start, frequency_end).\
+                get_signal()
+        
+        return type(self)(signal, **kwargs)
+
+    def add_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        sp_other = _input2spectrum(other)
+        self_spectrum = self.get_spectrum()
+        new_spectrum = Spectrum.get_spectrum_from_amp_phase(
+            self_spectrum.get_amp_spectrum(),
+            self_spectrum.get_phase_spectrum()+\
+                sp_other.get_phase_spectrum()
+            )
+        return type(self)(new_spectrum.get_signal(), **kwargs)
+
+    def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        sp_other = _input2spectrum(other)
+        self_spectrum = self.get_spectrum()
+        new_spectrum = Spectrum.get_spectrum_from_amp_phase(
+            self_spectrum.get_amp_spectrum(),
+            self_spectrum.get_phase_spectrum()-\
+                sp_other.get_phase_spectrum()
+            )
+        return type(self)(new_spectrum.get_signal(), **kwargs)
+
+    @classmethod
+    def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        s_r1 = _inp2signal(r1)
+        s_r2 = _inp2signal(r2)
+        return cls(super().convolve(s_r1, s_r2), **kwargs)
+
+    @classmethod
+    def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        s_r1 = _inp2signal(r1)
+        s_r2 = _inp2signal(r2)
+        return cls(super().correlate(s_r1, s_r2), **kwargs)
+
+    def __add__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__add__(s_a, **kwargs)
+
+    def __sub__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__sub__(s_a, **kwargs)
+
+    def __mul__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__mul__(s_a, **kwargs)
+
+    def __truediv__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__truediv__(s_a, **kwargs)
+
+    def __pow__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__pow__(s_a, **kwargs)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sweep_design.math_signals.math_signal.Signal"><code class="flex name class">
+<span>class <span class="ident">Signal</span></span>
+<span>(</span><span>time: Union[<a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, numpy.ndarray], amplitude: numpy.ndarray = None, dt: float = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Class describing some kind of signal.</p>
+<p>The <code><a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a></code> class inherits the <code>Relation</code> class.</p>
+<p><strong>Properties</strong>:</p>
+<blockquote>
+<p><strong>time</strong>: <code>Union[Relation, NDArray]</code><br>
+An instance of Relation class or inherited from it, or array_like object
+containing numbers (real or complex).</p>
+<p><strong>amplitude</strong>: <code>NDArray</code><br>
+None or array_like object containing numbers (real or complex).</p>
+<p><strong>dt</strong>: <code>float</code> = <code>None</code><br>
+Sample rate of time-axis</p>
+</blockquote>
+<p>To convert the signal into a spectrum, the method defined in the <code>Config</code>
+class is used. (Config.signal2spectrum_method). Current method can be
+overridden by own in Config class.</p>
+<p>When performing arithmetic operations on instances of the Spectrum class,
+an instance of the <code>Singal</code> class will be extracted from
+the <code><a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a></code> instance, and arithmetic operations will be performed
+on this instance. An instance of <code>Relation</code> class will be converted into
+the instance of <code><a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a></code> class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Signal(Relation):
+    &#39;&#39;&#39;Class describing some kind of signal.
+
+    The `Signal` class inherits the `Relation` class.
+
+    **Properties**:
+    &gt; **time**: `Union[Relation, NDArray]`  
+    An instance of Relation class or inherited from it, or array_like object
+    containing numbers (real or complex).
+
+    &gt; **amplitude**: `NDArray`  
+    None or array_like object containing numbers (real or complex).
+
+    &gt; **dt**: `float` = `None`  
+    Sample rate of time-axis
+
+    To convert the signal into a spectrum, the method defined in the `Config` 
+    class is used. (Config.signal2spectrum_method). Current method can be 
+    overridden by own in Config class.
+
+    When performing arithmetic operations on instances of the Spectrum class, 
+    an instance of the `Singal` class will be extracted from 
+    the `Spectrum` instance, and arithmetic operations will be performed 
+    on this instance. An instance of `Relation` class will be converted into 
+    the instance of `Signal` class.
+
+    &#39;&#39;&#39;
+
+    def __init__(self, time: Union[Relation, np.ndarray], 
+                                amplitude: np.ndarray = None, dt: float = None) -&gt; None:
+        
+        self._signal2spectrum_method_default = Config.signal2spectrum_method
+        super().__init__(time, amplitude, dt)
+        self._spectrum: Optional[Spectrum] = None
+    
+    
+    def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#39;Spectrum&#39;:
+
+        if self._spectrum is None or recalculate:
+            f, a = self._signal2spectrum_method_default(*self.get_data(), is_start_zero)
+            self._spectrum = Spectrum(f, a)
+
+        return self._spectrum
+    
+    def get_amplitude_spectrum(self, recalculate=False, is_start_zero=False) -&gt; Relation:
+        return self.get_spectrum(recalculate, is_start_zero).get_amp_spectrum()    
+    
+    def get_phase_spectrum(self, recalculate=False, is_start_zero=False) -&gt; Relation:
+        return self.get_spectrum(recalculate, is_start_zero).get_phase_spectrum()    
+    
+    def get_reverse_signal(self: S, percent: Union[float, int] = 5.,
+                           subtrack_phase: bool = True, 
+                           frequency_start: float = None, 
+                           frequency_end: float = None,
+                           **kwargs) -&gt; S:
+        &#39;&#39;&#39;Calculate reversed signal.
+
+        **Properties**:
+    
+        &gt; **percent**: `Union[float, int]`  
+        level of added white noise in percent
+        
+        &gt; **subtrack_phase**: True  
+        If True performs phase subtraction,  
+        If False succeeds, add the phase.
+
+        &gt; **frequency_start**: float.  
+        Start frequency.
+
+        &gt; **frequency_end**: float
+        End frequency.  
+
+        &#39;&#39;&#39;
+        signal =  self.get_spectrum().\
+            get_reverse_filter(percent, subtrack_phase, frequency_start, frequency_end).\
+                get_signal()
+        
+        return type(self)(signal, **kwargs)
+
+    def add_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        sp_other = _input2spectrum(other)
+        self_spectrum = self.get_spectrum()
+        new_spectrum = Spectrum.get_spectrum_from_amp_phase(
+            self_spectrum.get_amp_spectrum(),
+            self_spectrum.get_phase_spectrum()+\
+                sp_other.get_phase_spectrum()
+            )
+        return type(self)(new_spectrum.get_signal(), **kwargs)
+
+    def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        sp_other = _input2spectrum(other)
+        self_spectrum = self.get_spectrum()
+        new_spectrum = Spectrum.get_spectrum_from_amp_phase(
+            self_spectrum.get_amp_spectrum(),
+            self_spectrum.get_phase_spectrum()-\
+                sp_other.get_phase_spectrum()
+            )
+        return type(self)(new_spectrum.get_signal(), **kwargs)
+
+    @classmethod
+    def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        s_r1 = _inp2signal(r1)
+        s_r2 = _inp2signal(r2)
+        return cls(super().convolve(s_r1, s_r2), **kwargs)
+
+    @classmethod
+    def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        s_r1 = _inp2signal(r1)
+        s_r2 = _inp2signal(r2)
+        return cls(super().correlate(s_r1, s_r2), **kwargs)
+
+    def __add__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__add__(s_a, **kwargs)
+
+    def __sub__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__sub__(s_a, **kwargs)
+
+    def __mul__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__mul__(s_a, **kwargs)
+
+    def __truediv__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__truediv__(s_a, **kwargs)
+
+    def __pow__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        s_a = _inp2signal_operation(a)
+        return super().__pow__(s_a, **kwargs)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="sweep_design.math_signals.math_sweep.Sweep" href="math_sweep.html#sweep_design.math_signals.math_sweep.Sweep">Sweep</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="sweep_design.math_signals.math_signal.Signal.convolve"><code class="name flex">
+<span>def <span class="ident">convolve</span></span>(<span>r1: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], r2: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~S</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+    s_r1 = _inp2signal(r1)
+    s_r2 = _inp2signal(r2)
+    return cls(super().convolve(s_r1, s_r2), **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Signal.correlate"><code class="name flex">
+<span>def <span class="ident">correlate</span></span>(<span>r1: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], r2: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~S</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+    s_r1 = _inp2signal(r1)
+    s_r2 = _inp2signal(r2)
+    return cls(super().correlate(s_r1, s_r2), **kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.math_signals.math_signal.Signal.add_phase"><code class="name flex">
+<span>def <span class="ident">add_phase</span></span>(<span>self: ~S, other: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~S</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+    sp_other = _input2spectrum(other)
+    self_spectrum = self.get_spectrum()
+    new_spectrum = Spectrum.get_spectrum_from_amp_phase(
+        self_spectrum.get_amp_spectrum(),
+        self_spectrum.get_phase_spectrum()+\
+            sp_other.get_phase_spectrum()
+        )
+    return type(self)(new_spectrum.get_signal(), **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Signal.get_amplitude_spectrum"><code class="name flex">
+<span>def <span class="ident">get_amplitude_spectrum</span></span>(<span>self, recalculate=False, is_start_zero=False) ‑> <a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_amplitude_spectrum(self, recalculate=False, is_start_zero=False) -&gt; Relation:
+    return self.get_spectrum(recalculate, is_start_zero).get_amp_spectrum()    </code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Signal.get_phase_spectrum"><code class="name flex">
+<span>def <span class="ident">get_phase_spectrum</span></span>(<span>self, recalculate=False, is_start_zero=False) ‑> <a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_phase_spectrum(self, recalculate=False, is_start_zero=False) -&gt; Relation:
+    return self.get_spectrum(recalculate, is_start_zero).get_phase_spectrum()    </code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Signal.get_reverse_signal"><code class="name flex">
+<span>def <span class="ident">get_reverse_signal</span></span>(<span>self: ~S, percent: Union[float, int] = 5.0, subtrack_phase: bool = True, frequency_start: float = None, frequency_end: float = None, **kwargs) ‑> ~S</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate reversed signal.</p>
+<p><strong>Properties</strong>:</p>
+<blockquote>
+<p><strong>percent</strong>: <code>Union[float, int]</code><br>
+level of added white noise in percent</p>
+<p><strong>subtrack_phase</strong>: True<br>
+If True performs phase subtraction,<br>
+If False succeeds, add the phase.</p>
+<p><strong>frequency_start</strong>: float.<br>
+Start frequency.</p>
+<p><strong>frequency_end</strong>: float
+End frequency.</p>
+</blockquote></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_reverse_signal(self: S, percent: Union[float, int] = 5.,
+                       subtrack_phase: bool = True, 
+                       frequency_start: float = None, 
+                       frequency_end: float = None,
+                       **kwargs) -&gt; S:
+    &#39;&#39;&#39;Calculate reversed signal.
+
+    **Properties**:
+
+    &gt; **percent**: `Union[float, int]`  
+    level of added white noise in percent
+    
+    &gt; **subtrack_phase**: True  
+    If True performs phase subtraction,  
+    If False succeeds, add the phase.
+
+    &gt; **frequency_start**: float.  
+    Start frequency.
+
+    &gt; **frequency_end**: float
+    End frequency.  
+
+    &#39;&#39;&#39;
+    signal =  self.get_spectrum().\
+        get_reverse_filter(percent, subtrack_phase, frequency_start, frequency_end).\
+            get_signal()
+    
+    return type(self)(signal, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Signal.get_spectrum"><code class="name flex">
+<span>def <span class="ident">get_spectrum</span></span>(<span>self, recalculate=False, is_start_zero=False) ‑> <a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#39;Spectrum&#39;:
+
+    if self._spectrum is None or recalculate:
+        f, a = self._signal2spectrum_method_default(*self.get_data(), is_start_zero)
+        self._spectrum = Spectrum(f, a)
+
+    return self._spectrum</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Signal.sub_phase"><code class="name flex">
+<span>def <span class="ident">sub_phase</span></span>(<span>self: ~S, other: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~S</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+    sp_other = _input2spectrum(other)
+    self_spectrum = self.get_spectrum()
+    new_spectrum = Spectrum.get_spectrum_from_amp_phase(
+        self_spectrum.get_amp_spectrum(),
+        self_spectrum.get_phase_spectrum()-\
+            sp_other.get_phase_spectrum()
+        )
+    return type(self)(new_spectrum.get_signal(), **kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></b></code>:
+<ul class="hlist">
+<li><code><a title="sweep_design.math_signals.math_relation.Relation.get_data" href="math_relation.html#sweep_design.math_signals.math_relation.Relation.get_data">get_data</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_relation.Relation.get_norm" href="math_relation.html#sweep_design.math_signals.math_relation.Relation.get_norm">get_norm</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_relation.Relation.select_data" href="math_relation.html#sweep_design.math_signals.math_relation.Relation.select_data">select_data</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum"><code class="flex name class">
+<span>class <span class="ident">Spectrum</span></span>
+<span>(</span><span>frequency: Union[<a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, numpy.ndarray[Any, numpy.dtype[+ScalarType]]], spectrum_amplitude: numpy.ndarray = None, df: float = None, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>A class that describes the Fourier spectrum of a signal.</p>
+<p>The <code>Spectrun</code> class derived from the <code>Relation</code> class.</p>
+<p><strong>Properties</strong>:</p>
+<blockquote>
+<p><strong>frequency</strong>: <code>Union[Relation, NDArray]</code><br>
+An instance of Relation class or inherited from it, or array_like object
+containing numbers (real or complex).</p>
+<p><strong>spectrum_amplitude</strong>: <code>Oprional[NDArray]</code><br>
+None or array_like object containing numbers (real or complex).</p>
+<p><strong>df</strong>: <code>float</code> = <code>None</code><br>
+Sample rate of frequency-axis</p>
+</blockquote>
+<p>To convert the spectrum into a signal, the method defined in the Config
+class is used. (Config.spectrum2signal_method). Current method can be
+overridden by own in <code>Config</code> class.</p>
+<p>When performing arithmetic operations on instances of the <code><a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a></code> class,
+an instance of the <code><a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a></code> class will be extracted from
+the <code><a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a></code> instance, and arithmetic operations will be performed
+on this instance. An instance of <code>Relation</code> class will be converted into
+the instance of <code><a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a></code> class.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Spectrum(Relation):
+    &#39;&#39;&#39;A class that describes the Fourier spectrum of a signal.
+    
+    The `Spectrun` class derived from the `Relation` class.
+
+    **Properties**:
+
+    &gt; **frequency**: `Union[Relation, NDArray]`  
+    An instance of Relation class or inherited from it, or array_like object 
+    containing numbers (real or complex).
+
+    &gt; **spectrum_amplitude**: `Oprional[NDArray]`  
+    None or array_like object containing numbers (real or complex).
+    
+    &gt; **df**: `float` = `None`  
+    Sample rate of frequency-axis
+
+    To convert the spectrum into a signal, the method defined in the Config 
+    class is used. (Config.spectrum2signal_method). Current method can be 
+    overridden by own in `Config` class.
+    
+    When performing arithmetic operations on instances of the `Signal` class, 
+    an instance of the `Spectrum` class will be extracted from 
+    the `Signal` instance, and arithmetic operations will be performed 
+    on this instance. An instance of `Relation` class will be converted into 
+    the instance of `Spectrum` class.
+    &#39;&#39;&#39;
+
+    def __init__(self, frequency: Union[Relation, NDArray], 
+                        spectrum_amplitude: NDArray = None, df: float = None, **kwargs) -&gt; None:
+        super().__init__(frequency, spectrum_amplitude, df)
+        self._spectrum2signal_method_default = Config.spectrum2signal_method
+        self.signal: Optional[Signal] = None
+    
+    @property
+    def frequency(self):
+        return self.x
+
+    @property
+    def spectrum_amplitude(self):
+        return self.y
+
+    @property
+    def df(self):
+        return self.dx
+
+    @df.setter
+    def df(self, value: float):
+        self.dx = value
+
+    def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#39;Signal&#39;:
+        &#39;&#39;&#39;Compute the signal from the spectrum.&#39;&#39;&#39;
+        
+        if self.signal is None or recalculate:
+            time, amplitude = self._spectrum2signal_method_default(self._x, self._y, start_time)
+            self.signal = Signal(time, amplitude)
+        return self.signal
+    
+    def get_amp_spectrum(self: R, **kwargs) -&gt; &#39;Relation&#39;:
+        &#39;&#39;&#39;Amplitude spectrum.
+        
+        Calculate the relationship between the frequency and the absolute 
+        value of the spectrum amplitude.&#39;&#39;&#39;
+
+        x, y = self.get_data()
+        return Relation(x, np.abs(y))
+
+    def get_phase_spectrum(self: R, **kwargs) -&gt; &#39;Relation&#39;:
+        &#39;&#39;&#39;Calculate the relationship between frequency and phase of the spectrum.&#39;&#39;&#39;
+        x, y = self.get_data()
+        return Relation(x, np.unwrap(np.angle(y)))
+
+    def get_reverse_filter(self: SP, percent: Union[float, int] = 5.,
+                           subtrack_phase=True,  
+                           frequency_start: float = None, 
+                           frequency_end: float = None, **kwargs) -&gt; SP:
+        &#39;&#39;&#39;Calculate filter of reversed signal.
+
+        **Properties**:
+        &gt; **percent**: `Union[float, int]`  
+        level of added white noise in percent
+        
+        **subtrack_phase**: True  
+        If True performs phase subtraction,  
+        If False succeeds, add the phase.
+
+        **frequency_start**: `float`**  
+        Start frequency.
+
+        **frequency_end**: `float`  
+        End frequency.
+
+        &#39;&#39;&#39;
+        spectrum = self.select_data(frequency_start, frequency_end)
+        abs_spectrum = spectrum.get_amp_spectrum()
+        abs_spectrum = (abs_spectrum+abs_spectrum.max()*percent/100)
+        reversed_abs_spectrum = 1/abs_spectrum
+
+        if subtrack_phase:
+            phase_spectrum = -1*spectrum.get_phase_spectrum()
+        else:
+            phase_spectrum = 1*spectrum.get_phase_spectrum()
+
+        result_spectrum = type(self).get_spectrum_from_amp_phase(
+            reversed_abs_spectrum, phase_spectrum, **kwargs)
+        return result_spectrum
+   
+    def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        sp_other = _input2spectrum(other)
+        return type(self).get_spectrum_from_amp_phase(
+            self.get_amp_spectrum(),
+            self.get_phase_spectrum()+\
+            sp_other.get_phase_spectrum(),
+            **kwargs
+            )
+        
+    def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        sp_other = _input2spectrum(other)
+        return type(self).get_spectrum_from_amp_phase(
+            self.get_amp_spectrum(),
+            self.get_phase_spectrum() -\
+            sp_other.get_phase_spectrum(),
+            **kwargs
+            )
+
+    @classmethod
+    def get_spectrum_from_amp_phase(cls: Type[SP], s1: Relation, 
+            s2: Relation, **kwargs) -&gt; SP:
+        &#39;&#39;&#39;Calculate of the spectrum from the amplitude and frequency spectrum.
+        
+        The spectrum is calculated through the amplitude and phase spectrum 
+        using the formula abs*exp(1j*phase).&#39;&#39;&#39;
+        
+        return cls(s1*((1.j*s2).exp()), **kwargs)
+    
+    @classmethod
+    def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        sp_r1 = _input2spectrum(r1)
+        sp_r2 = _input2spectrum(r2)
+        return super().convolve(sp_r1, sp_r2, **kwargs)
+    
+    @classmethod
+    def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        sp_r1 = _input2spectrum(r1)
+        sp_r2 = _input2spectrum(r2)
+        return super().correlate(sp_r1, sp_r2, **kwargs)
+    
+    def __add__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__add__(r_a, **kwargs)
+
+    def __sub__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__sub__(r_a, **kwargs)
+
+    def __mul__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__mul__(r_a, **kwargs)
+
+    def __truediv__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__truediv__(r_a, **kwargs)
+ 
+    def __pow__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        r_a = _input2spectrum_operation(a)
+        return super().__pow__(r_a, **kwargs)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.convolve"><code class="name flex">
+<span>def <span class="ident">convolve</span></span>(<span>r1: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], r2: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~SP</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+    sp_r1 = _input2spectrum(r1)
+    sp_r2 = _input2spectrum(r2)
+    return super().convolve(sp_r1, sp_r2, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.correlate"><code class="name flex">
+<span>def <span class="ident">correlate</span></span>(<span>r1: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], r2: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~SP</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+    sp_r1 = _input2spectrum(r1)
+    sp_r2 = _input2spectrum(r2)
+    return super().correlate(sp_r1, sp_r2, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.get_spectrum_from_amp_phase"><code class="name flex">
+<span>def <span class="ident">get_spectrum_from_amp_phase</span></span>(<span>s1: <a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, s2: <a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, **kwargs) ‑> ~SP</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate of the spectrum from the amplitude and frequency spectrum.</p>
+<p>The spectrum is calculated through the amplitude and phase spectrum
+using the formula abs<em>exp(1j</em>phase).</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def get_spectrum_from_amp_phase(cls: Type[SP], s1: Relation, 
+        s2: Relation, **kwargs) -&gt; SP:
+    &#39;&#39;&#39;Calculate of the spectrum from the amplitude and frequency spectrum.
+    
+    The spectrum is calculated through the amplitude and phase spectrum 
+    using the formula abs*exp(1j*phase).&#39;&#39;&#39;
+    
+    return cls(s1*((1.j*s2).exp()), **kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.df"><code class="name">var <span class="ident">df</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def df(self):
+    return self.dx</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.frequency"><code class="name">var <span class="ident">frequency</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def frequency(self):
+    return self.x</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.spectrum_amplitude"><code class="name">var <span class="ident">spectrum_amplitude</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def spectrum_amplitude(self):
+    return self.y</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.add_phase"><code class="name flex">
+<span>def <span class="ident">add_phase</span></span>(<span>self: ~SP, other: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~SP</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+    sp_other = _input2spectrum(other)
+    return type(self).get_spectrum_from_amp_phase(
+        self.get_amp_spectrum(),
+        self.get_phase_spectrum()+\
+        sp_other.get_phase_spectrum(),
+        **kwargs
+        )</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.get_amp_spectrum"><code class="name flex">
+<span>def <span class="ident">get_amp_spectrum</span></span>(<span>self: ~R, **kwargs) ‑> <a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Amplitude spectrum.</p>
+<p>Calculate the relationship between the frequency and the absolute
+value of the spectrum amplitude.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_amp_spectrum(self: R, **kwargs) -&gt; &#39;Relation&#39;:
+    &#39;&#39;&#39;Amplitude spectrum.
+    
+    Calculate the relationship between the frequency and the absolute 
+    value of the spectrum amplitude.&#39;&#39;&#39;
+
+    x, y = self.get_data()
+    return Relation(x, np.abs(y))</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.get_phase_spectrum"><code class="name flex">
+<span>def <span class="ident">get_phase_spectrum</span></span>(<span>self: ~R, **kwargs) ‑> <a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate the relationship between frequency and phase of the spectrum.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_phase_spectrum(self: R, **kwargs) -&gt; &#39;Relation&#39;:
+    &#39;&#39;&#39;Calculate the relationship between frequency and phase of the spectrum.&#39;&#39;&#39;
+    x, y = self.get_data()
+    return Relation(x, np.unwrap(np.angle(y)))</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.get_reverse_filter"><code class="name flex">
+<span>def <span class="ident">get_reverse_filter</span></span>(<span>self: ~SP, percent: Union[float, int] = 5.0, subtrack_phase=True, frequency_start: float = None, frequency_end: float = None, **kwargs) ‑> ~SP</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculate filter of reversed signal.</p>
+<p><strong>Properties</strong>:</p>
+<blockquote>
+<p><strong>percent</strong>: <code>Union[float, int]</code><br>
+level of added white noise in percent</p>
+</blockquote>
+<p><strong>subtrack_phase</strong>: True<br>
+If True performs phase subtraction,<br>
+If False succeeds, add the phase.</p>
+<p><strong>frequency_start</strong>: <code>float</code>**<br>
+Start frequency.</p>
+<p><strong>frequency_end</strong>: <code>float</code><br>
+End frequency.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_reverse_filter(self: SP, percent: Union[float, int] = 5.,
+                       subtrack_phase=True,  
+                       frequency_start: float = None, 
+                       frequency_end: float = None, **kwargs) -&gt; SP:
+    &#39;&#39;&#39;Calculate filter of reversed signal.
+
+    **Properties**:
+    &gt; **percent**: `Union[float, int]`  
+    level of added white noise in percent
+    
+    **subtrack_phase**: True  
+    If True performs phase subtraction,  
+    If False succeeds, add the phase.
+
+    **frequency_start**: `float`**  
+    Start frequency.
+
+    **frequency_end**: `float`  
+    End frequency.
+
+    &#39;&#39;&#39;
+    spectrum = self.select_data(frequency_start, frequency_end)
+    abs_spectrum = spectrum.get_amp_spectrum()
+    abs_spectrum = (abs_spectrum+abs_spectrum.max()*percent/100)
+    reversed_abs_spectrum = 1/abs_spectrum
+
+    if subtrack_phase:
+        phase_spectrum = -1*spectrum.get_phase_spectrum()
+    else:
+        phase_spectrum = 1*spectrum.get_phase_spectrum()
+
+    result_spectrum = type(self).get_spectrum_from_amp_phase(
+        reversed_abs_spectrum, phase_spectrum, **kwargs)
+    return result_spectrum</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.get_signal"><code class="name flex">
+<span>def <span class="ident">get_signal</span></span>(<span>self, recalculate=False, start_time: float = None) ‑> <a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute the signal from the spectrum.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#39;Signal&#39;:
+    &#39;&#39;&#39;Compute the signal from the spectrum.&#39;&#39;&#39;
+    
+    if self.signal is None or recalculate:
+        time, amplitude = self._spectrum2signal_method_default(self._x, self._y, start_time)
+        self.signal = Signal(time, amplitude)
+    return self.signal</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.math_signals.math_signal.Spectrum.sub_phase"><code class="name flex">
+<span>def <span class="ident">sub_phase</span></span>(<span>self: ~SP, other: Union[ForwardRef('<a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a>'), ForwardRef('<a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a>'), ForwardRef('Relation')], **kwargs) ‑> ~SP</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+    sp_other = _input2spectrum(other)
+    return type(self).get_spectrum_from_amp_phase(
+        self.get_amp_spectrum(),
+        self.get_phase_spectrum() -\
+        sp_other.get_phase_spectrum(),
+        **kwargs
+        )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="sweep_design.math_signals.math_relation.Relation" href="math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a></b></code>:
+<ul class="hlist">
+<li><code><a title="sweep_design.math_signals.math_relation.Relation.get_data" href="math_relation.html#sweep_design.math_signals.math_relation.Relation.get_data">get_data</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_relation.Relation.get_norm" href="math_relation.html#sweep_design.math_signals.math_relation.Relation.get_norm">get_norm</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_relation.Relation.select_data" href="math_relation.html#sweep_design.math_signals.math_relation.Relation.select_data">select_data</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sweep_design.math_signals" href="index.html">sweep_design.math_signals</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sweep_design.math_signals.math_signal.Signal" href="#sweep_design.math_signals.math_signal.Signal">Signal</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.add_phase" href="#sweep_design.math_signals.math_signal.Signal.add_phase">add_phase</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.convolve" href="#sweep_design.math_signals.math_signal.Signal.convolve">convolve</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.correlate" href="#sweep_design.math_signals.math_signal.Signal.correlate">correlate</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.get_amplitude_spectrum" href="#sweep_design.math_signals.math_signal.Signal.get_amplitude_spectrum">get_amplitude_spectrum</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.get_phase_spectrum" href="#sweep_design.math_signals.math_signal.Signal.get_phase_spectrum">get_phase_spectrum</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.get_reverse_signal" href="#sweep_design.math_signals.math_signal.Signal.get_reverse_signal">get_reverse_signal</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.get_spectrum" href="#sweep_design.math_signals.math_signal.Signal.get_spectrum">get_spectrum</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Signal.sub_phase" href="#sweep_design.math_signals.math_signal.Signal.sub_phase">sub_phase</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="sweep_design.math_signals.math_signal.Spectrum" href="#sweep_design.math_signals.math_signal.Spectrum">Spectrum</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.add_phase" href="#sweep_design.math_signals.math_signal.Spectrum.add_phase">add_phase</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.convolve" href="#sweep_design.math_signals.math_signal.Spectrum.convolve">convolve</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.correlate" href="#sweep_design.math_signals.math_signal.Spectrum.correlate">correlate</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.df" href="#sweep_design.math_signals.math_signal.Spectrum.df">df</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.frequency" href="#sweep_design.math_signals.math_signal.Spectrum.frequency">frequency</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.get_amp_spectrum" href="#sweep_design.math_signals.math_signal.Spectrum.get_amp_spectrum">get_amp_spectrum</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.get_phase_spectrum" href="#sweep_design.math_signals.math_signal.Spectrum.get_phase_spectrum">get_phase_spectrum</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.get_reverse_filter" href="#sweep_design.math_signals.math_signal.Spectrum.get_reverse_filter">get_reverse_filter</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.get_signal" href="#sweep_design.math_signals.math_signal.Spectrum.get_signal">get_signal</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.get_spectrum_from_amp_phase" href="#sweep_design.math_signals.math_signal.Spectrum.get_spectrum_from_amp_phase">get_spectrum_from_amp_phase</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.spectrum_amplitude" href="#sweep_design.math_signals.math_signal.Spectrum.spectrum_amplitude">spectrum_amplitude</a></code></li>
+<li><code><a title="sweep_design.math_signals.math_signal.Spectrum.sub_phase" href="#sweep_design.math_signals.math_signal.Spectrum.sub_phase">sub_phase</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

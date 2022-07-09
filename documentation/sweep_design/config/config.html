@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sweep_design.config.config API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sweep_design.config.config</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from pathlib import Path
+from ..math_signals.defaults import methods as dfm
+
+
+class Config:
+    &#34;&#34;&#34;The configuratuin file.
+
+    The methods used to calculate the various parameters are provided in the
+    configuration file. Also the file contain an other parameters.
+    -----------------------------------------------------------------------
+
+    **DEFAULT_PATH** - This is the path using to write and read data.
+    This directory defaults to the current working derectiory, from where
+    functions are called.
+
+    - - -
+
+    **CONVERT2ARRAY** - If parameter is True, then converted **input** array to `numpy.ndarray`
+    in the constructor of class `Relation`.
+
+    - - -
+
+    **interpolate_extrapolate_method**:
+    &gt; The method by which interpolation and extrapolation are performed.
+    &gt; The methods returns a function that takes a new x sequence and
+    return a new y sequence.
+
+    &gt; **new_x** = `numpy.ndarray`  
+    &gt; **new_y** = `numpy.ndarray`
+
+    &gt; Method derived from default function:
+    &gt;&gt; sweep_design.math_signals.defaults.methods.interpolate_extrapolate
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y**: `numpy.ndarray`
+
+    &gt; **output**:
+    &gt;&gt; `Callable`[[**new_x**], **new_y**]
+
+    - - -
+
+    **math_operation_method**:
+    &gt; The method of basic mathematical operations of addition (+),
+    subtraction(-), multiplication (*), division(/), exponentiation (**)
+    and their unary operations (+=, -=, *=, /=).
+
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.math_operation`
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y1**: `numpy.ndarray`  
+    &gt;&gt; **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]  
+    &gt;&gt; **name_operation**: `sweep_design.math_signals.defaults.base_structures.MathOperation`
+
+    &gt; **output**:
+    &gt;&gt; `Tuple` [
+    &gt;&gt; **x**: `numpy.ndarray`,
+    &gt;&gt; **y**: `numpy.ndarray`
+    &gt;&gt;]
+
+    - - -
+
+    **integrate_one_method**:
+    &gt; Method for calculating the integral of a sequence on a segment.  
+    &gt; Method derived from default function:
+
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.one_integrate`
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y**: `numpy.ndarray`
+
+    &gt; **output**:
+    &gt;&gt; `float`
+
+    - - -
+
+    **integrate_method**:
+    &gt; The method by which the integration is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.integrate`
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; d**x**: float - sequence sample rate x
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **x**: `numpy.ndarray`,      
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **differentiate_method**:
+    &gt; The method by which differentiation is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.differentiate`
+
+    &gt; **input**:
+
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; **dx**: `float` - sequence sample rate **x**
+
+    &gt; **output**:
+    &gt;&gt;Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **correlate_method**:
+    &gt; The method by which the correlation is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.correlate`
+
+    &gt; **input**:
+    &gt;&gt; cls: Relation
+    &gt;&gt; r1: Relation
+    &gt;&gt; r2: Relation
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **convolve_method**:
+    &gt; The method by which the convolution is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.convolve`
+
+    &gt; **input**:
+    &gt;&gt; cls: Relation
+    &gt;&gt; r1: Relation
+    &gt;&gt; r2: Relation
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **get_common_x**:
+    &gt; A method by which to find the common sequence of numbers along
+    &gt; the x-axis, obtained from two other sequences along the x-axis.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.get_common_x`
+
+    &gt; **input**:
+    &gt;&gt; **x1**: `numpy.ndarray`  
+    &gt;&gt; **x2**: `numpy.ndarray`  
+    &gt;&gt; **dx1**: float  - sample rate first sequence  
+    &gt;&gt; **dx2**: float  - sample rate second sequence
+
+    &gt; **output**:
+    &gt;&gt; **x**: `numpy.ndarray`
+
+    - - -
+
+    **spectrum2signal_method**:
+    &gt; Method for converting a spectrum into a signal. (Using Fourier transform)  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
+
+    &gt; **input**:
+    &gt;&gt; **frequenc**: `numpy.ndarray`  
+    **specturm**: `numpy.ndarray`  
+    **start_time**: `float` = `None`  
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **time**: `numpy.ndarray`,  
+        **amplitude**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **signal2spectrum_method**:
+    &gt; Method for converting a signal into a spectrum. (Using Fourier transform)  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
+
+    &gt; **input**:
+
+    &gt;&gt; **time**: `numpy.ndarray`  
+    &gt;&gt; **amplitude**: `numpy.ndarray`  
+    &gt;&gt; **is_start_zero** = `False`  
+
+    &gt; **output**:  
+    &gt;&gt; Tuple [  
+        **frequency**: `numpy.ndarray`,  
+        **spectrum**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    The above methods can be overridden with your own here, or you can import the
+    class `Config` somewhere and override it there.
+    (They must be written according to the rules corresponding to
+    the **input** and **output** parameters)
+
+    &#34;&#34;&#34;
+
+    # Path for io_data module
+    DEFAULT_PATH = Path(&#34;.&#34;)
+
+    # Conver array for Relation.
+    CONVERT2ARRAY = True
+
+    # Methods for the Relation.
+    interpolate_extrapolate_method = dfm.interpolate_extrapolate
+    math_operation = dfm.math_operation
+    integrate_one_method = dfm.one_integrate
+    integrate_method = dfm.integrate
+    differentiate_method = dfm.differentiate
+    correlate_method = dfm.correlate
+    convolve_method = dfm.convolve
+    get_common_x = dfm.get_common_x
+
+    # Methods for Spectrum and Signal.
+    spectrum2signal_method = dfm.spectrum2sigmal
+    signal2spectrum_method = dfm.signal2spectrum</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sweep_design.config.config.Config"><code class="flex name class">
+<span>class <span class="ident">Config</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>The configuratuin file.</p>
+<p>The methods used to calculate the various parameters are provided in the
+configuration file. Also the file contain an other parameters.</p>
+<hr>
+<p><strong>DEFAULT_PATH</strong> - This is the path using to write and read data.
+This directory defaults to the current working derectiory, from where
+functions are called.</p>
+<hr>
+<p><strong>CONVERT2ARRAY</strong> - If parameter is True, then converted <strong>input</strong> array to <code>numpy.ndarray</code>
+in the constructor of class <code>Relation</code>.</p>
+<hr>
+<p><strong>interpolate_extrapolate_method</strong>:</p>
+<blockquote>
+<p>The method by which interpolation and extrapolation are performed.
+The methods returns a function that takes a new x sequence and
+return a new y sequence.</p>
+<p><strong>new_x</strong> = <code>numpy.ndarray</code><br>
+<strong>new_y</strong> = <code>numpy.ndarray</code></p>
+<p>Method derived from default function:</p>
+<blockquote>
+<p>sweep_design.math_signals.defaults.methods.interpolate_extrapolate</p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>x</strong>: <code>numpy.ndarray</code><br>
+<strong>y</strong>: <code>numpy.ndarray</code></p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p><code>Callable</code>[[<strong>new_x</strong>], <strong>new_y</strong>]</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>math_operation_method</strong>:</p>
+<blockquote>
+<p>The method of basic mathematical operations of addition (+),
+subtraction(-), multiplication (<em>), division(/), exponentiation (</em><em>)
+and their unary operations (+=, -=, </em>=, /=).</p>
+<p>Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.math_operation" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.math_operation">math_operation()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>x</strong>: <code>numpy.ndarray</code><br>
+<strong>y1</strong>: <code>numpy.ndarray</code><br>
+<strong>y2</strong>: <code>Union</code>[<code>numpy.ndarray</code>, <code>float</code>, <code>int</code>, <code>complex</code>]<br>
+<strong>name_operation</strong>: <code><a title="sweep_design.math_signals.defaults.base_structures.MathOperation" href="../math_signals/defaults/base_structures.html#sweep_design.math_signals.defaults.base_structures.MathOperation">MathOperation</a></code></p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p><code>Tuple</code> [
+<strong>x</strong>: <code>numpy.ndarray</code>,
+<strong>y</strong>: <code>numpy.ndarray</code>
+]</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>integrate_one_method</strong>:</p>
+<blockquote>
+<p>Method for calculating the integral of a sequence on a segment.<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.one_integrate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.one_integrate">one_integrate()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>x</strong>: <code>numpy.ndarray</code>
+<strong>y</strong>: <code>numpy.ndarray</code></p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p><code>float</code></p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>integrate_method</strong>:</p>
+<blockquote>
+<p>The method by which the integration is performed.<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.integrate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.integrate">integrate()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>x</strong>: <code>numpy.ndarray</code><br>
+<strong>y</strong>: <code>numpy.ndarray</code><br>
+d<strong>x</strong>: float - sequence sample rate x</p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p>Tuple [<br>
+<strong>x</strong>: <code>numpy.ndarray</code>,
+<br>
+<strong>y</strong>: <code>numpy.ndarray</code><br>
+]
+</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>differentiate_method</strong>:</p>
+<blockquote>
+<p>The method by which differentiation is performed.<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.differentiate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.differentiate">differentiate()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>x</strong>: <code>numpy.ndarray</code><br>
+<strong>y</strong>: <code>numpy.ndarray</code><br>
+<strong>dx</strong>: <code>float</code> - sequence sample rate <strong>x</strong></p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p>Tuple [<br>
+<strong>x</strong>: <code>numpy.ndarray</code>,<br>
+<strong>y</strong>: <code>numpy.ndarray</code><br>
+]
+</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>correlate_method</strong>:</p>
+<blockquote>
+<p>The method by which the correlation is performed.<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.correlate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.correlate">correlate()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p>cls: Relation
+r1: Relation
+r2: Relation</p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p>Tuple [<br>
+<strong>x</strong>: <code>numpy.ndarray</code>,<br>
+<strong>y</strong>: <code>numpy.ndarray</code><br>
+]
+</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>convolve_method</strong>:</p>
+<blockquote>
+<p>The method by which the convolution is performed.<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.convolve" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.convolve">convolve()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p>cls: Relation
+r1: Relation
+r2: Relation</p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p>Tuple [<br>
+<strong>x</strong>: <code>numpy.ndarray</code>,<br>
+<strong>y</strong>: <code>numpy.ndarray</code><br>
+]
+</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>get_common_x</strong>:</p>
+<blockquote>
+<p>A method by which to find the common sequence of numbers along
+the x-axis, obtained from two other sequences along the x-axis.<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.get_common_x" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.get_common_x">get_common_x()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>x1</strong>: <code>numpy.ndarray</code><br>
+<strong>x2</strong>: <code>numpy.ndarray</code><br>
+<strong>dx1</strong>: float
+- sample rate first sequence<br>
+<strong>dx2</strong>: float
+- sample rate second sequence</p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p><strong>x</strong>: <code>numpy.ndarray</code></p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>spectrum2signal_method</strong>:</p>
+<blockquote>
+<p>Method for converting a spectrum into a signal. (Using Fourier transform)<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.spectrum2sigmal" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.spectrum2sigmal">spectrum2sigmal()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>frequenc</strong>: <code>numpy.ndarray</code><br>
+<strong>specturm</strong>: <code>numpy.ndarray</code><br>
+<strong>start_time</strong>: <code>float</code> = <code>None</code>
+</p>
+</blockquote>
+<p><strong>output</strong>:</p>
+<blockquote>
+<p>Tuple [<br>
+<strong>time</strong>: <code>numpy.ndarray</code>,<br>
+<strong>amplitude</strong>: <code>numpy.ndarray</code><br>
+]
+</p>
+</blockquote>
+</blockquote>
+<hr>
+<p><strong>signal2spectrum_method</strong>:</p>
+<blockquote>
+<p>Method for converting a signal into a spectrum. (Using Fourier transform)<br>
+Method derived from default function:</p>
+<blockquote>
+<p><code><a title="sweep_design.math_signals.defaults.methods.spectrum2sigmal" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.spectrum2sigmal">spectrum2sigmal()</a></code></p>
+</blockquote>
+<p><strong>input</strong>:</p>
+<blockquote>
+<p><strong>time</strong>: <code>numpy.ndarray</code><br>
+<strong>amplitude</strong>: <code>numpy.ndarray</code><br>
+<strong>is_start_zero</strong> = <code>False</code>
+</p>
+</blockquote>
+<p><strong>output</strong>:
+</p>
+<blockquote>
+<p>Tuple [<br>
+<strong>frequency</strong>: <code>numpy.ndarray</code>,<br>
+<strong>spectrum</strong>: <code>numpy.ndarray</code><br>
+]
+</p>
+</blockquote>
+</blockquote>
+<hr>
+<p>The above methods can be overridden with your own here, or you can import the
+class <code><a title="sweep_design.config.config.Config" href="#sweep_design.config.config.Config">Config</a></code> somewhere and override it there.
+(They must be written according to the rules corresponding to
+the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Config:
+    &#34;&#34;&#34;The configuratuin file.
+
+    The methods used to calculate the various parameters are provided in the
+    configuration file. Also the file contain an other parameters.
+    -----------------------------------------------------------------------
+
+    **DEFAULT_PATH** - This is the path using to write and read data.
+    This directory defaults to the current working derectiory, from where
+    functions are called.
+
+    - - -
+
+    **CONVERT2ARRAY** - If parameter is True, then converted **input** array to `numpy.ndarray`
+    in the constructor of class `Relation`.
+
+    - - -
+
+    **interpolate_extrapolate_method**:
+    &gt; The method by which interpolation and extrapolation are performed.
+    &gt; The methods returns a function that takes a new x sequence and
+    return a new y sequence.
+
+    &gt; **new_x** = `numpy.ndarray`  
+    &gt; **new_y** = `numpy.ndarray`
+
+    &gt; Method derived from default function:
+    &gt;&gt; sweep_design.math_signals.defaults.methods.interpolate_extrapolate
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y**: `numpy.ndarray`
+
+    &gt; **output**:
+    &gt;&gt; `Callable`[[**new_x**], **new_y**]
+
+    - - -
+
+    **math_operation_method**:
+    &gt; The method of basic mathematical operations of addition (+),
+    subtraction(-), multiplication (*), division(/), exponentiation (**)
+    and their unary operations (+=, -=, *=, /=).
+
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.math_operation`
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y1**: `numpy.ndarray`  
+    &gt;&gt; **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]  
+    &gt;&gt; **name_operation**: `sweep_design.math_signals.defaults.base_structures.MathOperation`
+
+    &gt; **output**:
+    &gt;&gt; `Tuple` [
+    &gt;&gt; **x**: `numpy.ndarray`,
+    &gt;&gt; **y**: `numpy.ndarray`
+    &gt;&gt;]
+
+    - - -
+
+    **integrate_one_method**:
+    &gt; Method for calculating the integral of a sequence on a segment.  
+    &gt; Method derived from default function:
+
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.one_integrate`
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y**: `numpy.ndarray`
+
+    &gt; **output**:
+    &gt;&gt; `float`
+
+    - - -
+
+    **integrate_method**:
+    &gt; The method by which the integration is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.integrate`
+
+    &gt; **input**:
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; d**x**: float - sequence sample rate x
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **x**: `numpy.ndarray`,      
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **differentiate_method**:
+    &gt; The method by which differentiation is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.differentiate`
+
+    &gt; **input**:
+
+    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; **dx**: `float` - sequence sample rate **x**
+
+    &gt; **output**:
+    &gt;&gt;Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **correlate_method**:
+    &gt; The method by which the correlation is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.correlate`
+
+    &gt; **input**:
+    &gt;&gt; cls: Relation
+    &gt;&gt; r1: Relation
+    &gt;&gt; r2: Relation
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **convolve_method**:
+    &gt; The method by which the convolution is performed.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.convolve`
+
+    &gt; **input**:
+    &gt;&gt; cls: Relation
+    &gt;&gt; r1: Relation
+    &gt;&gt; r2: Relation
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **x**: `numpy.ndarray`,  
+        **y**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **get_common_x**:
+    &gt; A method by which to find the common sequence of numbers along
+    &gt; the x-axis, obtained from two other sequences along the x-axis.  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.get_common_x`
+
+    &gt; **input**:
+    &gt;&gt; **x1**: `numpy.ndarray`  
+    &gt;&gt; **x2**: `numpy.ndarray`  
+    &gt;&gt; **dx1**: float  - sample rate first sequence  
+    &gt;&gt; **dx2**: float  - sample rate second sequence
+
+    &gt; **output**:
+    &gt;&gt; **x**: `numpy.ndarray`
+
+    - - -
+
+    **spectrum2signal_method**:
+    &gt; Method for converting a spectrum into a signal. (Using Fourier transform)  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
+
+    &gt; **input**:
+    &gt;&gt; **frequenc**: `numpy.ndarray`  
+    **specturm**: `numpy.ndarray`  
+    **start_time**: `float` = `None`  
+
+    &gt; **output**:
+    &gt;&gt; Tuple [  
+        **time**: `numpy.ndarray`,  
+        **amplitude**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    **signal2spectrum_method**:
+    &gt; Method for converting a signal into a spectrum. (Using Fourier transform)  
+    &gt; Method derived from default function:
+    &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
+
+    &gt; **input**:
+
+    &gt;&gt; **time**: `numpy.ndarray`  
+    &gt;&gt; **amplitude**: `numpy.ndarray`  
+    &gt;&gt; **is_start_zero** = `False`  
+
+    &gt; **output**:  
+    &gt;&gt; Tuple [  
+        **frequency**: `numpy.ndarray`,  
+        **spectrum**: `numpy.ndarray`  
+    ]  
+
+    - - -
+
+    The above methods can be overridden with your own here, or you can import the
+    class `Config` somewhere and override it there.
+    (They must be written according to the rules corresponding to
+    the **input** and **output** parameters)
+
+    &#34;&#34;&#34;
+
+    # Path for io_data module
+    DEFAULT_PATH = Path(&#34;.&#34;)
+
+    # Conver array for Relation.
+    CONVERT2ARRAY = True
+
+    # Methods for the Relation.
+    interpolate_extrapolate_method = dfm.interpolate_extrapolate
+    math_operation = dfm.math_operation
+    integrate_one_method = dfm.one_integrate
+    integrate_method = dfm.integrate
+    differentiate_method = dfm.differentiate
+    correlate_method = dfm.correlate
+    convolve_method = dfm.convolve
+    get_common_x = dfm.get_common_x
+
+    # Methods for Spectrum and Signal.
+    spectrum2signal_method = dfm.spectrum2sigmal
+    signal2spectrum_method = dfm.signal2spectrum</code></pre>
+</details>
+<h3>Class variables</h3>
+<dl>
+<dt id="sweep_design.config.config.Config.CONVERT2ARRAY"><code class="name">var <span class="ident">CONVERT2ARRAY</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="sweep_design.config.config.Config.DEFAULT_PATH"><code class="name">var <span class="ident">DEFAULT_PATH</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.config.config.Config.convolve_method"><code class="name flex">
+<span>def <span class="ident">convolve_method</span></span>(<span>cls: Type[ForwardRef('Relation')], r1: Relation, r2: Relation) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Convolution.</p>
+<p>Using the numpy.convlove function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convolve(cls: Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
+            -&gt; Tuple[x, y]:
+    &#39;&#39;&#39;Convolution.
+
+    Using the numpy.convlove function.
+    &#39;&#39;&#39;
+    r1 = r1.shift(-r1._x[0])
+    r2 = r2.shift(-r2._x[0])
+    r1, r2 = cls.equalize(r1, r2)
+    x, y1 = r1.get_data()
+    _, y2 = r2.get_data()
+    return np.append(np.sort(-1*x)[:-1], x), np.convolve(y1, y2, &#39;full&#39;)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.correlate_method"><code class="name flex">
+<span>def <span class="ident">correlate_method</span></span>(<span>cls: Type[ForwardRef('Relation')], r1: Relation, r2: Relation) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Correlation.</p>
+<p>Using the numpy.correlate function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def correlate(cls:  Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
+            -&gt; Tuple[x, y]:
+    &#39;&#39;&#39;Correlation.
+
+    Using the numpy.correlate function.
+    &#39;&#39;&#39;
+    r1 = r1.shift(-r1._x[0])
+    r2 = r2.shift(-r2._x[0])
+    r1, r2 = cls.equalize(r1, r2)
+    x, y1 = r1.get_data()
+    _, y2 = r2.get_data()
+    return np.append(np.sort(-1*x)[:-1], x), np.correlate(y1, y2, &#39;full&#39;)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.differentiate_method"><code class="name flex">
+<span>def <span class="ident">differentiate_method</span></span>(<span>x: numpy.ndarray, y: numpy.ndarray, dx: float = None) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Differentiation.</p>
+<p>Using the numpy.diff function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def differentiate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
+    &#39;&#39;&#39;Differentiation.
+
+    Using the numpy.diff function.&#39;&#39;&#39;
+    if dx is None:
+        dx = x[1] - x[0]
+    return x[:-1]+(dx)/2, np.diff(y)/(dx)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.get_common_x"><code class="name flex">
+<span>def <span class="ident">get_common_x</span></span>(<span>x1: numpy.ndarray, x2: numpy.ndarray, dx1: float = None, dx2: float = None) ‑> numpy.ndarray</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Specifies the overall x-axis.</p>
+<p>Finds the general sample rate and beginning and end of sequence.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_common_x(x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None) -&gt; x:
+    &#39;&#39;&#39;Specifies the overall x-axis.
+
+    Finds the general sample rate and beginning and end of sequence. 
+    &#39;&#39;&#39;
+    if dx1 is None:
+        dx1 = x1[1]-x1[0]
+    if dx2 is None:
+        dx2 = x2[1]-x2[0]
+    dx = dx1 if dx1 &lt;= dx2 else dx2
+    x_start = x1[0] if x1[0] &lt;= x2[0] else x2[0]
+    x_end = x1[-1] if x1[-1] &gt;= x2[-1] else x2[-1]
+    X = x_end-x_start
+    return np.linspace(x_start, (int(X/dx))*dx, int(X/dx)+1)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.integrate_method"><code class="name flex">
+<span>def <span class="ident">integrate_method</span></span>(<span>x: numpy.ndarray, y: numpy.ndarray, dx: float = None) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Integration. </p>
+<p>Using the scipy.integrate.cumtrapz function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def integrate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
+    &#39;&#39;&#39;Integration. 
+        
+    Using the scipy.integrate.cumtrapz function.
+    &#39;&#39;&#39;
+    if dx is None:
+        dx = x[1] - x[0]
+    return x[1:], cumulative_trapezoid(y)*(dx)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.integrate_one_method"><code class="name flex">
+<span>def <span class="ident">integrate_one_method</span></span>(<span>y: numpy.ndarray, x: numpy.ndarray = None) ‑> float</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Integration.</p>
+<p>Taking the integral on a segment. Return of the area under the graph.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def one_integrate(y: np.ndarray, x: np.ndarray = None) -&gt; float:
+    &#39;&#39;&#39;Integration.
+
+    Taking the integral on a segment. Return of the area under the graph. 
+    &#39;&#39;&#39;
+    return trapz(y, x)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.interpolate_extrapolate_method"><code class="name flex">
+<span>def <span class="ident">interpolate_extrapolate_method</span></span>(<span>x: numpy.ndarray, y: numpy.ndarray, bounds_error=False, fill_value=0.0) ‑> Callable[[numpy.ndarray], numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Interpolation.</p>
+<p>Using the scyipy.interpolate.interp1d function.
+Returning function of interpolation.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interpolate_extrapolate(x: np.ndarray, y: np.ndarray, bounds_error=False,
+                            fill_value=0.) -&gt; Callable[[x], y]:
+    &#39;&#39;&#39;Interpolation.
+
+    Using the scyipy.interpolate.interp1d function.
+    Returning function of interpolation.
+    &#39;&#39;&#39;
+    return interp1d(x, y, bounds_error=bounds_error, fill_value=fill_value)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.math_operation"><code class="name flex">
+<span>def <span class="ident">math_operation</span></span>(<span>x: numpy.ndarray, y1: numpy.ndarray, y2: Union[numpy.ndarray, float, int, complex], name_operation: <a title="sweep_design.math_signals.defaults.base_structures.MathOperation" href="../math_signals/defaults/base_structures.html#sweep_design.math_signals.defaults.base_structures.MathOperation">MathOperation</a>) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Math operations.</p>
+<p>Using numpy math operations.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def math_operation(
+        x: np.ndarray,
+        y1: np.ndarray,
+        y2: Union[np.ndarray, Number],
+        name_operation: MathOperation,
+    ) -&gt; Tuple[x, y]:
+    &#39;&#39;&#39;Math operations.
+    
+    Using numpy math operations.
+    &#39;&#39;&#39;
+    if name_operation == MathOperation.POW:
+        y = np.abs(y1).__getattribute__(name_operation.value)(y2)*np.sign(y1)
+    else:
+        y = y1.__getattribute__(name_operation.value)(y2)
+
+    return x, y</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.signal2spectrum_method"><code class="name flex">
+<span>def <span class="ident">signal2spectrum_method</span></span>(<span>time: numpy.ndarray, amplitude: numpy.ndarray, is_start_zero=False) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Forward Fourier Transform.</p>
+<p>Using the numpy.fft.rfft function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def signal2spectrum(time: np.ndarray, amplitude: np.ndarray, 
+                        is_start_zero=False) -&gt; Tuple[frequency, spectrum]:
+    &#39;&#39;&#39;Forward Fourier Transform.
+    
+    Using the numpy.fft.rfft function.
+    &#39;&#39;&#39;
+    if not is_start_zero:
+        if time[0] &gt; 0.:
+            time = np.linspace(0., time[-1], int(time[-1]/(time[1]-time[0]))+1)
+            amplitude = np.append(np.zeros(time.size-amplitude.size), amplitude)
+        elif time[-1] &lt; 0.:
+            time = np.linspace(time[0], 0., int(abs(time[0])/(time[1]-time[0]))+1)
+            amplitude = np.append(amplitude, np.zeros(time.size-amplitude.size))
+        
+        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
+    
+    spectrum = np.fft.rfft(amplitude)
+    frequency = np.fft.rfftfreq(amplitude.size, d=(time[-1]-time[0])/(amplitude.size))
+    return frequency, spectrum</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.config.config.Config.spectrum2signal_method"><code class="name flex">
+<span>def <span class="ident">spectrum2signal_method</span></span>(<span>frequency: numpy.ndarray, spectrum: numpy.ndarray, time_start: float = None) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inverse Fourier Transform.</p>
+<p>Using the numpy.fft.irfft function.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray, 
+                    time_start: float = None) -&gt; Tuple[time, amplitude]:
+    &#39;&#39;&#39;Inverse Fourier Transform.
+    
+    Using the numpy.fft.irfft function.
+    &#39;&#39;&#39;
+    amplitude = np.fft.irfft(spectrum) # type: np.ndarray
+    if time_start is None:
+        time = np.linspace(0, (amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
+    else:
+        time = np.linspace(time_start, time_start+(amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
+        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
+
+    return time, amplitude</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sweep_design.config" href="index.html">sweep_design.config</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sweep_design.config.config.Config" href="#sweep_design.config.config.Config">Config</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.config.config.Config.CONVERT2ARRAY" href="#sweep_design.config.config.Config.CONVERT2ARRAY">CONVERT2ARRAY</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.DEFAULT_PATH" href="#sweep_design.config.config.Config.DEFAULT_PATH">DEFAULT_PATH</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.convolve_method" href="#sweep_design.config.config.Config.convolve_method">convolve_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.correlate_method" href="#sweep_design.config.config.Config.correlate_method">correlate_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.differentiate_method" href="#sweep_design.config.config.Config.differentiate_method">differentiate_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.get_common_x" href="#sweep_design.config.config.Config.get_common_x">get_common_x</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.integrate_method" href="#sweep_design.config.config.Config.integrate_method">integrate_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.integrate_one_method" href="#sweep_design.config.config.Config.integrate_one_method">integrate_one_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.interpolate_extrapolate_method" href="#sweep_design.config.config.Config.interpolate_extrapolate_method">interpolate_extrapolate_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.math_operation" href="#sweep_design.config.config.Config.math_operation">math_operation</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.signal2spectrum_method" href="#sweep_design.config.config.Config.signal2spectrum_method">signal2spectrum_method</a></code></li>
+<li><code><a title="sweep_design.config.config.Config.spectrum2signal_method" href="#sweep_design.config.config.Config.spectrum2signal_method">spectrum2signal_method</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

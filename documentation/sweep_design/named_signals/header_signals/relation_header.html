@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sweep_design.named_signals.header_signals.relation_header API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sweep_design.named_signals.header_signals.relation_header</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import inspect
+from typing import Optional, Tuple, Type, TypeVar, Union, Callable
+
+import numpy as np
+
+from ...math_signals.math_relation import Relation
+from ...math_signals.defaults.base_structures import TypeFuncError
+from ...math_signals.defaults.base_structures import MathOperation
+from .base_header import HeaderBase
+from .defaults import names as dfn
+from .defaults.methods import make_name, make_category
+from ...config.named_config import NamedConfig
+
+Num = Union[float, int, complex]
+InName = Union[HeaderBase, str, Callable[[], str]]
+NR = TypeVar(&#39;NR&#39;, bound=&#39;HeaderRelation&#39;)
+
+class BadNameCategory(Exception):
+    pass
+
+
+def _get_name_by_trace(position: int) -&gt; str:
+    frames_callers = inspect.stack()
+    for n, k in enumerate(frames_callers):
+        if &#39;IPython&#39; in k.filename:
+            break
+               
+        names = frames_callers[n].frame.f_code.co_names
+        if len(names) &gt; 2:
+            name = names[position]
+        else:
+            name = names[-1] 
+    return name
+
+def set_name_by_trace(name: Optional[str], is_set = False, position = -1):
+    if name is None:
+        if is_set:
+            name = _get_name_by_trace(position)
+    return name
+
+class HeaderRelation(HeaderBase):
+   
+    _quantity = 1
+    _make_default_name = dfn.make_default_relation_name
+
+    def __init__(self, name: InName = None, 
+                category: Optional[str] = &#39;relation&#39;, **kwargs) -&gt; None:
+        
+        if name is None:
+            if not NamedConfig.NAMING_BY_ASSIGNMENT_CREATE:
+                name = type(self)._make_default_name(HeaderRelation._quantity)
+                type(self)._quantity += 1
+            else:
+                name = _get_name_by_trace(-1)
+        if category is None:
+            category = &#39;relation&#39;
+
+        super().__init__(name, category)
+ 
+    @property
+    def category(self) -&gt; str:
+        return self._category
+    
+    @category.setter
+    def category(self, value) -&gt; None:
+        self._category = value
+        
+    @property
+    def name(self) -&gt; Callable[..., str]:
+        return self._name
+    
+    @name.setter
+    def name(self, value: InName) -&gt; None:
+        if callable(value) and isinstance(value(), str):
+            self._name = value
+        elif isinstance(value, HeaderBase):
+            self._name = value._name
+        else:
+            str(value)
+            def call() -&gt; str:
+                return str(value)
+            self._name = call
+   
+    def select_data(self, x_start: Num, x_end: Num,
+            name: InName = None, 
+            category=&#39;relation&#39;, **kwargs) -&gt; &#39;HeaderRelation&#39;:   
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION) 
+        name = make_name(name, dfn.make_default_name_select_data, 
+                self, x_start, x_end)
+        category = make_category(self, category)
+        return HeaderRelation(name, category, **kwargs)
+
+    def exp(self, name: InName = None, 
+                category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_name_exp, self)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+    
+    
+    def diff(self, name: InName = None,
+                category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_diff_name, self)
+        category = make_category(self, category, dfn.make_diff_category_name)
+        return HeaderRelation(name, category)
+    
+    def integrate(self, name: InName = None, 
+            category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_integrate_name, self)
+        category = make_category(self, category, dfn.make_integrate_category_name)
+        return HeaderRelation(name, category)
+
+    def interpolate_extrapolate(self, new_x: Union[np.ndarray, Relation], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        if isinstance(new_x, Relation):
+            new_x, _ = new_x.get_data()
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_interpolate_name, self, new_x)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+    
+    def shift(self, x_shift: Num, name: InName = None, 
+                        category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_shift_name, self, x_shift)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    @staticmethod
+    def equalize(
+            r1: &#39;HeaderRelation&#39;, r2: &#39;HeaderRelation&#39;,
+            new_x: Union[Relation, np.ndarray],
+            name1: InName = None,
+            name2: InName = None, 
+            category1: str = None, 
+            category2: str = None
+            ) -&gt; Tuple[HeaderBase, HeaderBase]:
+        name1 = set_name_by_trace(name1, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION, -2)
+        name2 = set_name_by_trace(name2, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION, -1)
+        r1 = r1.interpolate_extrapolate(new_x, name1, category1)
+        r2 = r2.interpolate_extrapolate(new_x, name2, category2)
+        return r1, r2
+
+    @classmethod
+    def correlate(cls: Type[&#39;HeaderRelation&#39;], r1: &#39;HeaderRelation&#39;, 
+            r2: &#39;HeaderRelation&#39;, name: InName = None, 
+            category=None, **kwargs) -&gt; &#39;HeaderRelation&#39;:
+
+        if isinstance(r1, HeaderRelation) and isinstance(r2, HeaderRelation):
+            name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+            name = make_name(name, dfn.make_default_name_correlation, r1, r2)
+            category = make_category(r1, category)
+            return cls(name, category)
+        else:
+            raise TypeFuncError(&#39;Correlation&#39;, type(r1), type(r2))
+
+    @classmethod
+    def convolve(cls: Type[&#39;HeaderRelation&#39;], r1: &#39;HeaderRelation&#39;, 
+            r2: &#39;HeaderRelation&#39;, name: InName = None, 
+            category: str = None, **kwargs) -&gt; &#39;HeaderRelation&#39;:
+        
+        if isinstance(r1, HeaderRelation) and isinstance(r2, HeaderRelation):
+            name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+            name = make_name(name, dfn.make_default_name_convolution, r1, r2)
+            category = make_category(r1, category)
+            return cls(name, category)
+        else:
+            raise TypeFuncError(&#39;Convolution&#39;, type(r1), type(r2))
+    
+    def __str__(self) -&gt; str:
+        return self.name()
+    
+    def __repr__(self) -&gt; str:
+        return f&#39;Name: {self.name()} category: {self.category}&#39;
+
+    def __add__(self, other: Union[&#39;HeaderRelation&#39;, Num],
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.ADD)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __radd__(self, other: Union[&#39;HeaderRelation&#39;, Num],
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RADD)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __sub__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self,
+                            other, MathOperation.SUB)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rsub__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RSUB)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __mul__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.MUL)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rmul__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RMUL)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __truediv__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.TRUEDIV)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rtruediv__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName =  None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RTRUEDIV)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __pow__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName =  None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.POW)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rpow__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName =  None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RPOW)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __iadd__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__add__(other, name, category)
+
+    def __isub__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__sub__(other, name, category)
+
+    def __imul__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__mul__(other, name, category)
+
+    def __idiv__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__truediv__(other, name, category)
+
+    def __ipow__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__pow__(other, name, category)
+    </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="sweep_design.named_signals.header_signals.relation_header.set_name_by_trace"><code class="name flex">
+<span>def <span class="ident">set_name_by_trace</span></span>(<span>name: Optional[str], is_set=False, position=-1)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_name_by_trace(name: Optional[str], is_set = False, position = -1):
+    if name is None:
+        if is_set:
+            name = _get_name_by_trace(position)
+    return name</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="sweep_design.named_signals.header_signals.relation_header.BadNameCategory"><code class="flex name class">
+<span>class <span class="ident">BadNameCategory</span></span>
+<span>(</span><span>*args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BadNameCategory(Exception):
+    pass</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>builtins.Exception</li>
+<li>builtins.BaseException</li>
+</ul>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation"><code class="flex name class">
+<span>class <span class="ident">HeaderRelation</span></span>
+<span>(</span><span>name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: Optional[str] = 'relation', **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class HeaderRelation(HeaderBase):
+   
+    _quantity = 1
+    _make_default_name = dfn.make_default_relation_name
+
+    def __init__(self, name: InName = None, 
+                category: Optional[str] = &#39;relation&#39;, **kwargs) -&gt; None:
+        
+        if name is None:
+            if not NamedConfig.NAMING_BY_ASSIGNMENT_CREATE:
+                name = type(self)._make_default_name(HeaderRelation._quantity)
+                type(self)._quantity += 1
+            else:
+                name = _get_name_by_trace(-1)
+        if category is None:
+            category = &#39;relation&#39;
+
+        super().__init__(name, category)
+ 
+    @property
+    def category(self) -&gt; str:
+        return self._category
+    
+    @category.setter
+    def category(self, value) -&gt; None:
+        self._category = value
+        
+    @property
+    def name(self) -&gt; Callable[..., str]:
+        return self._name
+    
+    @name.setter
+    def name(self, value: InName) -&gt; None:
+        if callable(value) and isinstance(value(), str):
+            self._name = value
+        elif isinstance(value, HeaderBase):
+            self._name = value._name
+        else:
+            str(value)
+            def call() -&gt; str:
+                return str(value)
+            self._name = call
+   
+    def select_data(self, x_start: Num, x_end: Num,
+            name: InName = None, 
+            category=&#39;relation&#39;, **kwargs) -&gt; &#39;HeaderRelation&#39;:   
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION) 
+        name = make_name(name, dfn.make_default_name_select_data, 
+                self, x_start, x_end)
+        category = make_category(self, category)
+        return HeaderRelation(name, category, **kwargs)
+
+    def exp(self, name: InName = None, 
+                category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_name_exp, self)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+    
+    
+    def diff(self, name: InName = None,
+                category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_diff_name, self)
+        category = make_category(self, category, dfn.make_diff_category_name)
+        return HeaderRelation(name, category)
+    
+    def integrate(self, name: InName = None, 
+            category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_integrate_name, self)
+        category = make_category(self, category, dfn.make_integrate_category_name)
+        return HeaderRelation(name, category)
+
+    def interpolate_extrapolate(self, new_x: Union[np.ndarray, Relation], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        if isinstance(new_x, Relation):
+            new_x, _ = new_x.get_data()
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_interpolate_name, self, new_x)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+    
+    def shift(self, x_shift: Num, name: InName = None, 
+                        category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_shift_name, self, x_shift)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    @staticmethod
+    def equalize(
+            r1: &#39;HeaderRelation&#39;, r2: &#39;HeaderRelation&#39;,
+            new_x: Union[Relation, np.ndarray],
+            name1: InName = None,
+            name2: InName = None, 
+            category1: str = None, 
+            category2: str = None
+            ) -&gt; Tuple[HeaderBase, HeaderBase]:
+        name1 = set_name_by_trace(name1, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION, -2)
+        name2 = set_name_by_trace(name2, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION, -1)
+        r1 = r1.interpolate_extrapolate(new_x, name1, category1)
+        r2 = r2.interpolate_extrapolate(new_x, name2, category2)
+        return r1, r2
+
+    @classmethod
+    def correlate(cls: Type[&#39;HeaderRelation&#39;], r1: &#39;HeaderRelation&#39;, 
+            r2: &#39;HeaderRelation&#39;, name: InName = None, 
+            category=None, **kwargs) -&gt; &#39;HeaderRelation&#39;:
+
+        if isinstance(r1, HeaderRelation) and isinstance(r2, HeaderRelation):
+            name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+            name = make_name(name, dfn.make_default_name_correlation, r1, r2)
+            category = make_category(r1, category)
+            return cls(name, category)
+        else:
+            raise TypeFuncError(&#39;Correlation&#39;, type(r1), type(r2))
+
+    @classmethod
+    def convolve(cls: Type[&#39;HeaderRelation&#39;], r1: &#39;HeaderRelation&#39;, 
+            r2: &#39;HeaderRelation&#39;, name: InName = None, 
+            category: str = None, **kwargs) -&gt; &#39;HeaderRelation&#39;:
+        
+        if isinstance(r1, HeaderRelation) and isinstance(r2, HeaderRelation):
+            name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+            name = make_name(name, dfn.make_default_name_convolution, r1, r2)
+            category = make_category(r1, category)
+            return cls(name, category)
+        else:
+            raise TypeFuncError(&#39;Convolution&#39;, type(r1), type(r2))
+    
+    def __str__(self) -&gt; str:
+        return self.name()
+    
+    def __repr__(self) -&gt; str:
+        return f&#39;Name: {self.name()} category: {self.category}&#39;
+
+    def __add__(self, other: Union[&#39;HeaderRelation&#39;, Num],
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.ADD)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __radd__(self, other: Union[&#39;HeaderRelation&#39;, Num],
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RADD)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __sub__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self,
+                            other, MathOperation.SUB)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rsub__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RSUB)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __mul__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.MUL)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rmul__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RMUL)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __truediv__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.TRUEDIV)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rtruediv__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName =  None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RTRUEDIV)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __pow__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName =  None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.POW)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __rpow__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName =  None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_MATH_OPERATION)
+        name = make_name(name, dfn.make_default_names_operations, self, 
+                            other, MathOperation.RPOW)
+        category = make_category(self, category)
+        return HeaderRelation(name, category)
+
+    def __iadd__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__add__(other, name, category)
+
+    def __isub__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__sub__(other, name, category)
+
+    def __imul__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__mul__(other, name, category)
+
+    def __idiv__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__truediv__(other, name, category)
+
+    def __ipow__(self, other: Union[&#39;HeaderRelation&#39;, Num], 
+            name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+        return self.__pow__(other, name, category)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a></li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="sweep_design.named_signals.header_signals.signal_header.HeaderSignal" href="signal_header.html#sweep_design.named_signals.header_signals.signal_header.HeaderSignal">HeaderSignal</a></li>
+<li><a title="sweep_design.named_signals.header_signals.signal_header.HeaderSpectrum" href="signal_header.html#sweep_design.named_signals.header_signals.signal_header.HeaderSpectrum">HeaderSpectrum</a></li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.convolve"><code class="name flex">
+<span>def <span class="ident">convolve</span></span>(<span>r1: <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a>, r2: <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a>, name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: str = None, **kwargs) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def convolve(cls: Type[&#39;HeaderRelation&#39;], r1: &#39;HeaderRelation&#39;, 
+        r2: &#39;HeaderRelation&#39;, name: InName = None, 
+        category: str = None, **kwargs) -&gt; &#39;HeaderRelation&#39;:
+    
+    if isinstance(r1, HeaderRelation) and isinstance(r2, HeaderRelation):
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_name_convolution, r1, r2)
+        category = make_category(r1, category)
+        return cls(name, category)
+    else:
+        raise TypeFuncError(&#39;Convolution&#39;, type(r1), type(r2))</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.correlate"><code class="name flex">
+<span>def <span class="ident">correlate</span></span>(<span>r1: <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a>, r2: <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a>, name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category=None, **kwargs) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def correlate(cls: Type[&#39;HeaderRelation&#39;], r1: &#39;HeaderRelation&#39;, 
+        r2: &#39;HeaderRelation&#39;, name: InName = None, 
+        category=None, **kwargs) -&gt; &#39;HeaderRelation&#39;:
+
+    if isinstance(r1, HeaderRelation) and isinstance(r2, HeaderRelation):
+        name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+        name = make_name(name, dfn.make_default_name_correlation, r1, r2)
+        category = make_category(r1, category)
+        return cls(name, category)
+    else:
+        raise TypeFuncError(&#39;Correlation&#39;, type(r1), type(r2))</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.equalize"><code class="name flex">
+<span>def <span class="ident">equalize</span></span>(<span>r1: <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a>, r2: <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a>, new_x: Union[<a title="sweep_design.math_signals.math_relation.Relation" href="../../math_signals/math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, numpy.ndarray], name1: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, name2: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category1: str = None, category2: str = None) ‑> Tuple[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, <a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def equalize(
+        r1: &#39;HeaderRelation&#39;, r2: &#39;HeaderRelation&#39;,
+        new_x: Union[Relation, np.ndarray],
+        name1: InName = None,
+        name2: InName = None, 
+        category1: str = None, 
+        category2: str = None
+        ) -&gt; Tuple[HeaderBase, HeaderBase]:
+    name1 = set_name_by_trace(name1, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION, -2)
+    name2 = set_name_by_trace(name2, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION, -1)
+    r1 = r1.interpolate_extrapolate(new_x, name1, category1)
+    r2 = r2.interpolate_extrapolate(new_x, name2, category2)
+    return r1, r2</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.category"><code class="name">var <span class="ident">category</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def category(self) -&gt; str:
+    return self._category</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.name"><code class="name">var <span class="ident">name</span> : Callable[..., str]</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def name(self) -&gt; Callable[..., str]:
+    return self._name</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.diff"><code class="name flex">
+<span>def <span class="ident">diff</span></span>(<span>self, name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: str = None) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def diff(self, name: InName = None,
+            category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+    name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+    name = make_name(name, dfn.make_default_diff_name, self)
+    category = make_category(self, category, dfn.make_diff_category_name)
+    return HeaderRelation(name, category)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.exp"><code class="name flex">
+<span>def <span class="ident">exp</span></span>(<span>self, name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: str = None) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def exp(self, name: InName = None, 
+            category: str = None) -&gt; &#39;HeaderRelation&#39;:
+
+    name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+    name = make_name(name, dfn.make_default_name_exp, self)
+    category = make_category(self, category)
+    return HeaderRelation(name, category)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.integrate"><code class="name flex">
+<span>def <span class="ident">integrate</span></span>(<span>self, name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: str = None) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def integrate(self, name: InName = None, 
+        category: str = None) -&gt; &#39;HeaderRelation&#39;:
+    
+    name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+    name = make_name(name, dfn.make_default_integrate_name, self)
+    category = make_category(self, category, dfn.make_integrate_category_name)
+    return HeaderRelation(name, category)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.interpolate_extrapolate"><code class="name flex">
+<span>def <span class="ident">interpolate_extrapolate</span></span>(<span>self, new_x: Union[<a title="sweep_design.math_signals.math_relation.Relation" href="../../math_signals/math_relation.html#sweep_design.math_signals.math_relation.Relation">Relation</a>, numpy.ndarray], name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: str = None) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def interpolate_extrapolate(self, new_x: Union[np.ndarray, Relation], 
+        name: InName = None, category: str = None) -&gt; &#39;HeaderRelation&#39;:
+    if isinstance(new_x, Relation):
+        new_x, _ = new_x.get_data()
+    name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+    name = make_name(name, dfn.make_default_interpolate_name, self, new_x)
+    category = make_category(self, category)
+    return HeaderRelation(name, category)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.select_data"><code class="name flex">
+<span>def <span class="ident">select_data</span></span>(<span>self, x_start: Union[float, int, complex], x_end: Union[float, int, complex], name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category='relation', **kwargs) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def select_data(self, x_start: Num, x_end: Num,
+        name: InName = None, 
+        category=&#39;relation&#39;, **kwargs) -&gt; &#39;HeaderRelation&#39;:   
+
+    name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION) 
+    name = make_name(name, dfn.make_default_name_select_data, 
+            self, x_start, x_end)
+    category = make_category(self, category)
+    return HeaderRelation(name, category, **kwargs)</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.shift"><code class="name flex">
+<span>def <span class="ident">shift</span></span>(<span>self, x_shift: Union[float, int, complex], name: Union[<a title="sweep_design.named_signals.header_signals.base_header.HeaderBase" href="base_header.html#sweep_design.named_signals.header_signals.base_header.HeaderBase">HeaderBase</a>, str, Callable[[], str]] = None, category: str = None) ‑> <a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shift(self, x_shift: Num, name: InName = None, 
+                    category: str = None) -&gt; &#39;HeaderRelation&#39;:
+    
+    name = set_name_by_trace(name, NamedConfig.NAMING_BY_ASSIGNMENT_OTHER_OPERATION)
+    name = make_name(name, dfn.make_default_shift_name, self, x_shift)
+    category = make_category(self, category)
+    return HeaderRelation(name, category)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sweep_design.named_signals.header_signals" href="index.html">sweep_design.named_signals.header_signals</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.set_name_by_trace" href="#sweep_design.named_signals.header_signals.relation_header.set_name_by_trace">set_name_by_trace</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="sweep_design.named_signals.header_signals.relation_header.BadNameCategory" href="#sweep_design.named_signals.header_signals.relation_header.BadNameCategory">BadNameCategory</a></code></h4>
+</li>
+<li>
+<h4><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation">HeaderRelation</a></code></h4>
+<ul class="">
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.category" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.category">category</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.convolve" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.convolve">convolve</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.correlate" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.correlate">correlate</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.diff" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.diff">diff</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.equalize" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.equalize">equalize</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.exp" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.exp">exp</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.integrate" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.integrate">integrate</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.interpolate_extrapolate" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.interpolate_extrapolate">interpolate_extrapolate</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.name" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.name">name</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.select_data" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.select_data">select_data</a></code></li>
+<li><code><a title="sweep_design.named_signals.header_signals.relation_header.HeaderRelation.shift" href="#sweep_design.named_signals.header_signals.relation_header.HeaderRelation.shift">shift</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

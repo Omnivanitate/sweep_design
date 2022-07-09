@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>sweep_design.view API documentation</title>
+<meta name="description" content="Module view …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>sweep_design.view</code></h1>
+</header>
+<section id="section-intro">
+<p>Module view.</p>
+<p>The module provides several functions to get simple <code>GUI</code> to visualize the
+results in <code>jupyter notebook</code>.</p>
+<p>The <code><a title="sweep_design.view.base_view.abc_common_framer_grapher" href="base_view/abc_common_framer_grapher/index.html">sweep_design.view.base_view.abc_common_framer_grapher</a></code> module contains
+abstract classes for creating GUI elements.</p>
+<p>The <code><a title="sweep_design.view.framemakers" href="framemakers/index.html">sweep_design.view.framemakers</a></code> module contains concret classes for
+creating GUIs.</p>
+<p>For example, classes that create graphics windows use libraries such as
+<code>bokeh</code> (<a href="http://docs.bokeh.org/">http://docs.bokeh.org/</a>) or <code>matplotlib</code> (<a href="https://matplotlib.org/">https://matplotlib.org/</a>),
+classes that create controls use the <code>ipywidget</code> (<a href="https://ipywidgets.readthedocs.io">https://ipywidgets.readthedocs.io</a>)
+library.</p>
+<p>The modules described above can be used to create your own GUI.</p>
+<p>Also, the <code><a title="sweep_design.view" href="#sweep_design.view">sweep_design.view</a></code> module contains several ready-made solutions.
+There are only 4 of them so far and they use the <code>ipywidget</code>, <code>matplotlib</code> and
+<code>bokeh</code> libraries:</p>
+<hr>
+<p>The <code><a title="sweep_design.view.view_general" href="view_general/index.html">sweep_design.view.view_general</a></code> module provides functions for general
+visualization (<code><a title="sweep_design.view.view_general.get_general_view_bokeh_ipywidget" href="view_general/index.html#sweep_design.view.view_general.get_general_view_bokeh_ipywidget">get_general_view_bokeh_ipywidget()</a></code>
+and <code><a title="sweep_design.view.view_general.get_general_view_matplotlib_ipywidget" href="view_general/index.html#sweep_design.view.view_general.get_general_view_matplotlib_ipywidget">get_general_view_matplotlib_ipywidget()</a></code>
+(the names of functions indicate which libraries are used))</p>
+<p>Functions accept:</p>
+<blockquote>
+<p><strong>k_width</strong>: <code>float</code> = 1. - the horizontal ratio of the render model window
+size to the screen size.<br>
+<strong>k_height</strong>: <code>float</code> = 1. - vertical ratio of the render model window
+size to the screen size.</p>
+</blockquote>
+<p>Return a <code><a title="sweep_design.view.view_general.view.GeneralView" href="view_general/view.html#sweep_design.view.view_general.view.GeneralView">GeneralView</a></code> object
+that represents a single render window. But by calling the function several
+times, you can get several new instances of the
+<code><a title="sweep_design.view.view_general.view.GeneralView" href="view_general/view.html#sweep_design.view.view_general.view.GeneralView">GeneralView</a></code> class, and they can be
+combined as needed.</p>
+<p>Next, you can build graphs and images using the
+<code><a title="sweep_design.view.view_general.view.GeneralView.add_line" href="view_general/view.html#sweep_design.view.view_general.view.GeneralView.add_line">GeneralView.add_line()</a></code>
+and <code><a title="sweep_design.view.view_general.view.GeneralView.add_image" href="view_general/view.html#sweep_design.view.view_general.view.GeneralView.add_image">GeneralView.add_image()</a></code>
+methods in the required corresponding instances, and then render in the
+corresponding cell by calling the
+<code><a title="sweep_design.view.view_general.view.GeneralView.show" href="view_general/view.html#sweep_design.view.view_general.view.GeneralView.show">GeneralView.show()</a></code> method or by
+selecting an attribute of the object
+<code><a title="sweep_design.view.view_general.view.GeneralView.result_view" href="view_general/view.html#sweep_design.view.view_general.view.GeneralView.result_view">GeneralView.result_view</a></code> and calling
+the <code>get_output()</code> method.</p>
+<p>An example can be seen in the <code>examples.general_view.ipynb</code> folder in the project
+<a href="https://github.com/Omnivanitate/sweep_design">https://github.com/Omnivanitate/sweep_design</a>
+</p>
+<hr>
+<p>The <code><a title="sweep_design.view.view_source" href="view_source/index.html">sweep_design.view.view_source</a></code> module contains functions for visualizing a
+sweep signal for a vibration source. Displays the change in force as well as
+a graph of displacement.</p>
+<p>A new visualization object is created using the get_view_source_bokeh_ipywidget
+function, which is passed the parameters:</p>
+<blockquote>
+<p><strong>reaction_mass</strong>: <code>float</code> = 1. - reaction mass of the source,<br>
+<strong>limits</strong>: <code>float</code> = <code>None</code> - limits limiting its fluctuations,<br>
+<strong>k_width</strong>: <code>float</code> = 1. - horizontal ratio of the visualization model window
+size to the screen size,<br>
+<strong>k_height</strong>: <code>float</code> = 1. - vertical ratio of render model window size to
+screen size</p>
+</blockquote>
+<p>The function returns an instance of the
+<code><a title="sweep_design.view.view_source.source_view_builder.ViewSource" href="view_source/source_view_builder.html#sweep_design.view.view_source.source_view_builder.ViewSource">ViewSource</a></code> class.</p>
+<p>The newly created instance can be passed a signal (an instance of the
+<code><a title="sweep_design.named_signals.named_relation.NamedRelation" href="../named_signals/named_relation.html#sweep_design.named_signals.named_relation.NamedRelation">NamedRelation</a></code> class) using the
+<code><a title="sweep_design.view.view_source.source_view_builder.ViewSource.add_signal" href="view_source/source_view_builder.html#sweep_design.view.view_source.source_view_builder.ViewSource.add_signal">ViewSource.add_signal()</a></code>
+method. And by calling
+the <code><a title="sweep_design.view.view_source.source_view_builder.ViewSource.show" href="view_source/source_view_builder.html#sweep_design.view.view_source.source_view_builder.ViewSource.show">ViewSource.show()</a></code>
+method, visualize the result in the cell.</p>
+<p>An example can be seen in the <code>examples.source_view.ipynb</code> folder in the project
+<a href="https://github.com/Omnivanitate/sweep_design">https://github.com/Omnivanitate/sweep_design</a> </p>
+<hr>
+<p>The
+module <code><a title="sweep_design.view.view_sweep" href="view_sweep/index.html">sweep_design.view.view_sweep</a></code> contains the
+<code><a title="sweep_design.view.view_sweep.bokeh_view.get_view_sweep_bokeh_ipywidget" href="view_sweep/bokeh_view.html#sweep_design.view.view_sweep.bokeh_view.get_view_sweep_bokeh_ipywidget">get_view_sweep_bokeh_ipywidget()</a></code>
+function. </p>
+<p>The function accepts:</p>
+<blockquote>
+<p><strong>k_width</strong>: <code>float</code> = 1 - horizontal ratio of the visualization model window
+size to the screen size,<br>
+<strong>k_height</strong>: <code>float</code> = 1 - vertical ratio of render model window size to screen size</p>
+</blockquote>
+<p>The function retruns an instanse of
+<code><a title="sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder" href="view_sweep/common_view_builder.html#sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder">CommonVeiwSweepBuilder</a></code> class
+to visualize sweep signals (<code><a title="sweep_design.named_signals.named_sweep.NamedSweep" href="../named_signals/named_sweep.html#sweep_design.named_signals.named_sweep.NamedSweep">NamedSweep</a></code>)
+and other signals (<code><a title="sweep_design.named_signals.named_signal.NamedSignal" href="../named_signals/named_signal.html#sweep_design.named_signals.named_signal.NamedSignal">NamedSignal</a></code>).</p>
+<p>The instance of the
+<code><a title="sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder" href="view_sweep/common_view_builder.html#sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder">CommonVeiwSweepBuilder</a></code> class
+contains an
+<code><a title="sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder.add" href="view_sweep/common_view_builder.html#sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder.add">CommonVeiwSweepBuilder.add()</a></code>
+method that can take the <code><a title="sweep_design.named_signals.named_sweep.NamedSweep" href="../named_signals/named_sweep.html#sweep_design.named_signals.named_sweep.NamedSweep">NamedSweep</a></code>
+or <code><a title="sweep_design.named_signals.named_signal.NamedSignal" href="../named_signals/named_signal.html#sweep_design.named_signals.named_signal.NamedSignal">NamedSignal</a></code> instance.</p>
+<p>You can plot the result in a cell using the
+<code><a title="sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder.show" href="view_sweep/common_view_builder.html#sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder.show">CommonVeiwSweepBuilder.show()</a></code>
+method.</p>
+<p>An example can be seen in the <code>examples.sweep_view.ipynb</code> folder in the project
+<a href="https://github.com/Omnivanitate/sweep_design">https://github.com/Omnivanitate/sweep_design</a></p>
+<hr>
+<p><code><a title="sweep_design.view.view_pilot_rm_bp" href="view_pilot_rm_bp/index.html">sweep_design.view.view_pilot_rm_bp</a></code> module for visualization of
+<em>pilot signal</em>, <em>plate signal</em> and <em>reaction mass signal</em>.
+The module contains a function
+(<code><a title="sweep_design.view.view_pilot_rm_bp.bokeh_view.get_pilot_rm_bp_view_bokeh_ipywidget" href="view_pilot_rm_bp/bokeh_view.html#sweep_design.view.view_pilot_rm_bp.bokeh_view.get_pilot_rm_bp_view_bokeh_ipywidget">get_pilot_rm_bp_view_bokeh_ipywidget()</a></code>)
+that takes two arguments:</p>
+<blockquote>
+<p><strong>k_width</strong>: <code>float</code> = 1 - horizontal ratio of the visualization model window
+size to the screen size,<br>
+<strong>k_height</strong>: <code>float</code> = 1. - vertical ratio of render model window size to
+screen size</p>
+</blockquote>
+<p>The function returns a
+<code><a title="sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView" href="view_pilot_rm_bp/bokeh_view.html#sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView">PilotRMBPBokehView</a></code>
+instance for rendering.</p>
+<p>To add signals (<strong>pilot</strong>: <code><a title="sweep_design.named_signals.named_sweep.NamedSweep" href="../named_signals/named_sweep.html#sweep_design.named_signals.named_sweep.NamedSweep">NamedSweep</a></code>,
+<strong>reaction_mass</strong>: <code><a title="sweep_design.named_signals.named_sweep.NamedSweep" href="../named_signals/named_sweep.html#sweep_design.named_signals.named_sweep.NamedSweep">NamedSweep</a></code>,
+<strong>base_plate</strong>: <code><a title="sweep_design.named_signals.named_sweep.NamedSweep" href="../named_signals/named_sweep.html#sweep_design.named_signals.named_sweep.NamedSweep">NamedSweep</a></code>)
+the class instance has an
+<code><a title="sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.add_pilot_rm_bp" href="view_pilot_rm_bp/bokeh_view.html#sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.add_pilot_rm_bp">PilotRMBPBokehView.add_pilot_rm_bp()</a></code>
+method that accepts them.</p>
+<p>You can plot the result in a cell using the
+<code><a title="sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.show" href="view_pilot_rm_bp/bokeh_view.html#sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.show">PilotRMBPBokehView.show()</a></code>
+method.</p>
+<p>An example can be seen in the <code>examples.pilot_rm_bp_view.ipynb</code> folder in
+the project <a href="https://github.com/Omnivanitate/sweep_design">https://github.com/Omnivanitate/sweep_design</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;Module view.
+
+The module provides several functions to get simple `GUI` to visualize the 
+results in `jupyter notebook`.
+
+The `sweep_design.view.base_view.abc_common_framer_grapher` module contains 
+abstract classes for creating GUI elements.
+
+The `sweep_design.view.framemakers` module contains concret classes for 
+creating GUIs.
+
+For example, classes that create graphics windows use libraries such as 
+`bokeh` (http://docs.bokeh.org/) or `matplotlib` (https://matplotlib.org/), 
+classes that create controls use the `ipywidget` (https://ipywidgets.readthedocs.io) 
+library.
+
+The modules described above can be used to create your own GUI.
+
+Also, the `sweep_design.view` module contains several ready-made solutions. 
+There are only 4 of them so far and they use the `ipywidget`, `matplotlib` and 
+`bokeh` libraries:
+
+- - -
+
+The `sweep_design.view.view_general` module provides functions for general 
+visualization (`sweep_design.view.view_general.get_general_view_bokeh_ipywidget` 
+and `sweep_design.view.view_general.get_general_view_matplotlib_ipywidget` 
+(the names of functions indicate which libraries are used))
+
+Functions accept:
+&gt; **k_width**: `float` = 1. - the horizontal ratio of the render model window 
+size to the screen size.  
+&gt; **k_height**: `float` = 1. - vertical ratio of the render model window 
+size to the screen size.
+
+Return a `sweep_design.view.view_general.view.GeneralView` object 
+that represents a single render window. But by calling the function several 
+times, you can get several new instances of the 
+`sweep_design.view.view_general.view.GeneralView` class, and they can be 
+combined as needed.
+
+Next, you can build graphs and images using the 
+`sweep_design.view.view_general.view.GeneralView.add_line` 
+and `sweep_design.view.view_general.view.GeneralView.add_image` 
+methods in the required corresponding instances, and then render in the 
+corresponding cell by calling the 
+`sweep_design.view.view_general.view.GeneralView.show()` method or by 
+selecting an attribute of the object 
+`sweep_design.view.view_general.view.GeneralView.result_view` and calling 
+the `get_output()` method.
+
+An example can be seen in the `examples.general_view.ipynb` folder in the project 
+https://github.com/Omnivanitate/sweep_design  
+
+- - -
+
+The `sweep_design.view.view_source` module contains functions for visualizing a 
+sweep signal for a vibration source. Displays the change in force as well as 
+a graph of displacement.
+
+A new visualization object is created using the get_view_source_bokeh_ipywidget 
+function, which is passed the parameters:
+&gt; **reaction_mass**: `float` = 1. - reaction mass of the source,  
+&gt; **limits**: `float` = `None` - limits limiting its fluctuations,  
+&gt; **k_width**: `float` = 1. - horizontal ratio of the visualization model window 
+size to the screen size,  
+&gt; **k_height**: `float` = 1. - vertical ratio of render model window size to 
+screen size
+
+The function returns an instance of the 
+`sweep_design.view.view_source.source_view_builder.ViewSource` class.
+
+The newly created instance can be passed a signal (an instance of the 
+`sweep_design.named_signals.named_relation.NamedRelation` class) using the 
+`sweep_design.view.view_source.source_view_builder.ViewSource.add_signal` 
+method. And by calling 
+the `sweep_design.view.view_source.source_view_builder.ViewSource.show()` 
+method, visualize the result in the cell.
+
+An example can be seen in the `examples.source_view.ipynb` folder in the project 
+https://github.com/Omnivanitate/sweep_design 
+
+- - -
+
+The  module `sweep_design.view.view_sweep` contains the 
+`sweep_design.view.view_sweep.bokeh_view.get_view_sweep_bokeh_ipywidget` 
+function. 
+
+The function accepts:
+&gt; **k_width**: `float` = 1 - horizontal ratio of the visualization model window 
+size to the screen size,  
+&gt; **k_height**: `float` = 1 - vertical ratio of render model window size to screen size
+
+The function retruns an instanse of 
+`sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder` class 
+to visualize sweep signals (`sweep_design.named_signals.named_sweep.NamedSweep`) 
+and other signals (`sweep_design.named_signals.named_signal.NamedSignal`).
+
+The instance of the 
+`sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder` class 
+contains an 
+`sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder.add` 
+method that can take the `sweep_design.named_signals.named_sweep.NamedSweep` 
+or `sweep_design.named_signals.named_signal.NamedSignal` instance.
+
+You can plot the result in a cell using the 
+`sweep_design.view.view_sweep.common_view_builder.CommonVeiwSweepBuilder.show()` 
+method.
+
+An example can be seen in the `examples.sweep_view.ipynb` folder in the project 
+https://github.com/Omnivanitate/sweep_design
+
+- - -
+
+`sweep_design.view.view_pilot_rm_bp` module for visualization of 
+*pilot signal*, *plate signal* and *reaction mass signal*.
+The module contains a function 
+(`sweep_design.view.view_pilot_rm_bp.bokeh_view.get_pilot_rm_bp_view_bokeh_ipywidget`) 
+that takes two arguments:
+
+&gt; **k_width**: `float` = 1 - horizontal ratio of the visualization model window 
+size to the screen size,  
+&gt; **k_height**: `float` = 1. - vertical ratio of render model window size to 
+screen size
+
+The function returns a 
+`sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView` 
+instance for rendering.
+
+To add signals (**pilot**: `sweep_design.named_signals.named_sweep.NamedSweep`, 
+**reaction_mass**: `sweep_design.named_signals.named_sweep.NamedSweep`, 
+**base_plate**: `sweep_design.named_signals.named_sweep.NamedSweep`) 
+the class instance has an 
+`sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.add_pilot_rm_bp` 
+method that accepts them.
+
+You can plot the result in a cell using the 
+`sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.show()` 
+method.
+
+An example can be seen in the `examples.pilot_rm_bp_view.ipynb` folder in 
+the project https://github.com/Omnivanitate/sweep_design
+
+&#39;&#39;&#39;
+
+from .view_general import get_general_view_bokeh_ipywidget as \
+                                        get_general_view_bokeh_ipywidget    
+from .view_general import get_general_view_matplotlib_ipywidget as \
+                                        get_general_view_matplotlib_ipywidget    
+from .view_pilot_rm_bp import get_pilot_rm_bp_view_bokeh_ipywidget as \
+                                        get_pilot_rm_bp_view_bokeh_ipywidget
+from .view_source import get_view_source_bokeh_ipywidget as \
+                                        get_view_source_bokeh_ipywidget
+from .view_sweep import get_view_sweep_bokeh_ipywidget as \
+                                        get_view_sweep_bokeh_ipywidget</code></pre>
+</details>
+</section>
+<section>
+<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+<dl>
+<dt><code class="name"><a title="sweep_design.view.base_view" href="base_view/index.html">sweep_design.view.base_view</a></code></dt>
+<dd>
+<div class="desc"><p>Base for view.</p></div>
+</dd>
+<dt><code class="name"><a title="sweep_design.view.framemakers" href="framemakers/index.html">sweep_design.view.framemakers</a></code></dt>
+<dd>
+<div class="desc"><p>Specific view class.</p></div>
+</dd>
+<dt><code class="name"><a title="sweep_design.view.view_general" href="view_general/index.html">sweep_design.view.view_general</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="sweep_design.view.view_pilot_rm_bp" href="view_pilot_rm_bp/index.html">sweep_design.view.view_pilot_rm_bp</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="sweep_design.view.view_source" href="view_source/index.html">sweep_design.view.view_source</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt><code class="name"><a title="sweep_design.view.view_sweep" href="view_sweep/index.html">sweep_design.view.view_sweep</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="sweep_design" href="../index.html">sweep_design</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<ul>
+<li><code><a title="sweep_design.view.base_view" href="base_view/index.html">sweep_design.view.base_view</a></code></li>
+<li><code><a title="sweep_design.view.framemakers" href="framemakers/index.html">sweep_design.view.framemakers</a></code></li>
+<li><code><a title="sweep_design.view.view_general" href="view_general/index.html">sweep_design.view.view_general</a></code></li>
+<li><code><a title="sweep_design.view.view_pilot_rm_bp" href="view_pilot_rm_bp/index.html">sweep_design.view.view_pilot_rm_bp</a></code></li>
+<li><code><a title="sweep_design.view.view_source" href="view_source/index.html">sweep_design.view.view_source</a></code></li>
+<li><code><a title="sweep_design.view.view_sweep" href="view_sweep/index.html">sweep_design.view.view_sweep</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
