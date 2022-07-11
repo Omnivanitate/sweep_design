@@ -44,37 +44,53 @@ InName = Union[HeaderBase, str, Callable[[], str]]
 
 
 class NamedSweep(NamedSignal):
-    
-    def __init__(self, time: Any, amplitude: Any = None, name: InName = None, 
-                    category: str = &#39;sweep&#39;, f_t: Any = None,
-                    a_t: Any = None, aprior_signal: Any = None) -&gt; None:
+    def __init__(
+        self,
+        time: Any,
+        amplitude: Any = None,
+        name: InName = None,
+        category: str = &#34;sweep&#34;,
+        f_t: Any = None,
+        a_t: Any = None,
+        aprior_signal: Any = None,
+    ) -&gt; None:
 
         self.header: HeaderSweep = HeaderSweep(name, category)
 
-        self._f_t = super()._convert_input(f_t, self.header) if f_t is not None else None
-        self._a_t = super()._convert_input(a_t, self.header) if a_t is not None else None
+        self._f_t = (
+            super()._convert_input(f_t, self.header) if f_t is not None else None
+        )
+        self._a_t = (
+            super()._convert_input(a_t, self.header) if a_t is not None else None
+        )
 
-        self.aprior_signal: Optional[NamedSignal] = aprior_signal if aprior_signal is None else NamedSignal(aprior_signal)
+        self.aprior_signal: Optional[NamedSignal] = (
+            aprior_signal if aprior_signal is None else NamedSignal(aprior_signal)
+        )
 
         if isinstance(aprior_signal, Spectrum):
-            self.aprior_signal = NamedSignal(aprior_signal.get_signal(), name=self.header)
+            self.aprior_signal = NamedSignal(
+                aprior_signal.get_signal(), name=self.header
+            )
         elif isinstance(aprior_signal, NamedSpectrum):
             self.aprior_signal = aprior_signal.get_signal()
         elif isinstance(aprior_signal, NamedRelation):
-            self.aprior_signal = NamedSignal(aprior_signal, name = aprior_signal.header)
+            self.aprior_signal = NamedSignal(aprior_signal, name=aprior_signal.header)
         elif aprior_signal is not None:
-            self.aprior_signal = NamedSignal(aprior_signal, name = self.header)
+            self.aprior_signal = NamedSignal(aprior_signal, name=self.header)
         else:
             self.aprior_signal = None
-    
+
         r_f_t = None if self._f_t is None else self._f_t.relation
         r_a_t = None if self._a_t is None else self._a_t.relation
-        r_aprior_signal = None if self.aprior_signal is None else self.aprior_signal.relation
-        
-        time, amplitude = NamedConfig.extract_input(time, amplitude)        
-        self._relation = Sweep(time, amplitude, r_f_t, r_a_t, None)        
-       
-        self._spectrogram: Optional[&#39;NamedSpecrogram&#39;] = None
+        r_aprior_signal = (
+            None if self.aprior_signal is None else self.aprior_signal.relation
+        )
+
+        time, amplitude = NamedConfig.extract_input(time, amplitude)
+        self._relation = Sweep(time, amplitude, r_f_t, r_a_t, None)
+
+        self._spectrogram: Optional[&#34;NamedSpecrogram&#34;] = None
         self.spectrum: Optional[NamedSpectrum] = None
 
     @property
@@ -90,33 +106,32 @@ class NamedSweep(NamedSignal):
             header = self.header.get_a_t()
             self._a_t = NamedRelation(self.relation.amplitude_time, name=header)
         return self._a_t
-    
+
     @property
-    def spectrogram(self) -&gt; &#39;NamedSpecrogram&#39;:
+    def spectrogram(self) -&gt; &#34;NamedSpecrogram&#34;:
         if self._spectrogram is None:
             header = self.header.get_spectrogram()
-            self._spectrogram = NamedSpecrogram(
-            self._relation.spectrogram, name=header)
+            self._spectrogram = NamedSpecrogram(self._relation.spectrogram, name=header)
         return self._spectrogram
 
     def set_f_t(self, name: InName = None, category: str = None) -&gt; None:
-        
+
         header = self.header.get_f_t(name, category)
         self._f_t = NamedRelation(self.relation.frequency_time, name=header)
-        
+
     def set_a_t(self, name: InName = None, category: str = None) -&gt; None:
         header = self.header.get_a_t(name, category)
         self._a_t = NamedRelation(self.relation.amplitude_time, name=header)
-        
-    def set_spectrogram(self, name: InName=None, 
-                                        category: str = None) -&gt; None:
+
+    def set_spectrogram(self, name: InName = None, category: str = None) -&gt; None:
         header = self.header.get_spectrogram(name, category)
         self._spectrogram = NamedSpecrogram(self.relation.spectrogram, name=header)
-    
+
 
 class NamedSpecrogram:
-
-    def __init__(self, spectrogram: Spectrogram, name: InName = None, category: str = None) -&gt; None:
+    def __init__(
+        self, spectrogram: Spectrogram, name: InName = None, category: str = None
+    ) -&gt; None:
         self.header = HeaderSpectrogram(name, category)
         self.spectrogram = spectrogram
 
@@ -157,8 +172,9 @@ class NamedSpecrogram:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class NamedSpecrogram:
-
-    def __init__(self, spectrogram: Spectrogram, name: InName = None, category: str = None) -&gt; None:
+    def __init__(
+        self, spectrogram: Spectrogram, name: InName = None, category: str = None
+    ) -&gt; None:
         self.header = HeaderSpectrogram(name, category)
         self.spectrogram = spectrogram
 
@@ -241,37 +257,53 @@ def time(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class NamedSweep(NamedSignal):
-    
-    def __init__(self, time: Any, amplitude: Any = None, name: InName = None, 
-                    category: str = &#39;sweep&#39;, f_t: Any = None,
-                    a_t: Any = None, aprior_signal: Any = None) -&gt; None:
+    def __init__(
+        self,
+        time: Any,
+        amplitude: Any = None,
+        name: InName = None,
+        category: str = &#34;sweep&#34;,
+        f_t: Any = None,
+        a_t: Any = None,
+        aprior_signal: Any = None,
+    ) -&gt; None:
 
         self.header: HeaderSweep = HeaderSweep(name, category)
 
-        self._f_t = super()._convert_input(f_t, self.header) if f_t is not None else None
-        self._a_t = super()._convert_input(a_t, self.header) if a_t is not None else None
+        self._f_t = (
+            super()._convert_input(f_t, self.header) if f_t is not None else None
+        )
+        self._a_t = (
+            super()._convert_input(a_t, self.header) if a_t is not None else None
+        )
 
-        self.aprior_signal: Optional[NamedSignal] = aprior_signal if aprior_signal is None else NamedSignal(aprior_signal)
+        self.aprior_signal: Optional[NamedSignal] = (
+            aprior_signal if aprior_signal is None else NamedSignal(aprior_signal)
+        )
 
         if isinstance(aprior_signal, Spectrum):
-            self.aprior_signal = NamedSignal(aprior_signal.get_signal(), name=self.header)
+            self.aprior_signal = NamedSignal(
+                aprior_signal.get_signal(), name=self.header
+            )
         elif isinstance(aprior_signal, NamedSpectrum):
             self.aprior_signal = aprior_signal.get_signal()
         elif isinstance(aprior_signal, NamedRelation):
-            self.aprior_signal = NamedSignal(aprior_signal, name = aprior_signal.header)
+            self.aprior_signal = NamedSignal(aprior_signal, name=aprior_signal.header)
         elif aprior_signal is not None:
-            self.aprior_signal = NamedSignal(aprior_signal, name = self.header)
+            self.aprior_signal = NamedSignal(aprior_signal, name=self.header)
         else:
             self.aprior_signal = None
-    
+
         r_f_t = None if self._f_t is None else self._f_t.relation
         r_a_t = None if self._a_t is None else self._a_t.relation
-        r_aprior_signal = None if self.aprior_signal is None else self.aprior_signal.relation
-        
-        time, amplitude = NamedConfig.extract_input(time, amplitude)        
-        self._relation = Sweep(time, amplitude, r_f_t, r_a_t, None)        
-       
-        self._spectrogram: Optional[&#39;NamedSpecrogram&#39;] = None
+        r_aprior_signal = (
+            None if self.aprior_signal is None else self.aprior_signal.relation
+        )
+
+        time, amplitude = NamedConfig.extract_input(time, amplitude)
+        self._relation = Sweep(time, amplitude, r_f_t, r_a_t, None)
+
+        self._spectrogram: Optional[&#34;NamedSpecrogram&#34;] = None
         self.spectrum: Optional[NamedSpectrum] = None
 
     @property
@@ -287,26 +319,24 @@ def time(self):
             header = self.header.get_a_t()
             self._a_t = NamedRelation(self.relation.amplitude_time, name=header)
         return self._a_t
-    
+
     @property
-    def spectrogram(self) -&gt; &#39;NamedSpecrogram&#39;:
+    def spectrogram(self) -&gt; &#34;NamedSpecrogram&#34;:
         if self._spectrogram is None:
             header = self.header.get_spectrogram()
-            self._spectrogram = NamedSpecrogram(
-            self._relation.spectrogram, name=header)
+            self._spectrogram = NamedSpecrogram(self._relation.spectrogram, name=header)
         return self._spectrogram
 
     def set_f_t(self, name: InName = None, category: str = None) -&gt; None:
-        
+
         header = self.header.get_f_t(name, category)
         self._f_t = NamedRelation(self.relation.frequency_time, name=header)
-        
+
     def set_a_t(self, name: InName = None, category: str = None) -&gt; None:
         header = self.header.get_a_t(name, category)
         self._a_t = NamedRelation(self.relation.amplitude_time, name=header)
-        
-    def set_spectrogram(self, name: InName=None, 
-                                        category: str = None) -&gt; None:
+
+    def set_spectrogram(self, name: InName = None, category: str = None) -&gt; None:
         header = self.header.get_spectrogram(name, category)
         self._spectrogram = NamedSpecrogram(self.relation.spectrogram, name=header)</code></pre>
 </details>
@@ -355,11 +385,10 @@ def f_t(self) -&gt; NamedRelation:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def spectrogram(self) -&gt; &#39;NamedSpecrogram&#39;:
+def spectrogram(self) -&gt; &#34;NamedSpecrogram&#34;:
     if self._spectrogram is None:
         header = self.header.get_spectrogram()
-        self._spectrogram = NamedSpecrogram(
-        self._relation.spectrogram, name=header)
+        self._spectrogram = NamedSpecrogram(self._relation.spectrogram, name=header)
     return self._spectrogram</code></pre>
 </details>
 </dd>
@@ -390,7 +419,7 @@ def spectrogram(self) -&gt; &#39;NamedSpecrogram&#39;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_f_t(self, name: InName = None, category: str = None) -&gt; None:
-    
+
     header = self.header.get_f_t(name, category)
     self._f_t = NamedRelation(self.relation.frequency_time, name=header)</code></pre>
 </details>
@@ -404,8 +433,7 @@ def spectrogram(self) -&gt; &#39;NamedSpecrogram&#39;:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_spectrogram(self, name: InName=None, 
-                                    category: str = None) -&gt; None:
+<pre><code class="python">def set_spectrogram(self, name: InName = None, category: str = None) -&gt; None:
     header = self.header.get_spectrogram(name, category)
     self._spectrogram = NamedSpecrogram(self.relation.spectrogram, name=header)</code></pre>
 </details>

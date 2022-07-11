@@ -36,15 +36,15 @@ from ..math_relation import Relation
 from .emd_analyse import get_IMFs_emd
 from .tukey import tukey_a_t
 
-Signal = TypeVar(&#39;Signal&#39;, bound=Relation)
+Signal = TypeVar(&#34;Signal&#34;, bound=Relation)
 
 
-def soft_clip(data: np.ndarray, limits: float, percent = 0.85, coef: int = 1) -&gt; np.ndarray:
-    &#39;&#39;&#39;Custom function for correction.
-   
-    &#39;&#39;&#39;
+def soft_clip(
+    data: np.ndarray, limits: float, percent=0.85, coef: int = 1
+) -&gt; np.ndarray:
+    &#34;&#34;&#34;Custom function for correction.&#34;&#34;&#34;
     hard_limit = limits
-    linear_limit = limits*percent
+    linear_limit = limits * percent
 
     def select_choice(data: np.ndarray):
 
@@ -54,27 +54,27 @@ def soft_clip(data: np.ndarray, limits: float, percent = 0.85, coef: int = 1) -&
             return data[1]
 
         if amplitude &gt;= hard_limit:
-            return ((hard_limit/amplitude) ** coef) * data[1]
+            return ((hard_limit / amplitude) ** coef) * data[1]
 
         scale = hard_limit - linear_limit
-        compression = scale * sin(np.pi/2*(amplitude - linear_limit) / scale)
+        compression = scale * sin(np.pi / 2 * (amplitude - linear_limit) / scale)
 
-        return (((linear_limit + compression)/amplitude) ** coef) * data[1]
+        return (((linear_limit + compression) / amplitude) ** coef) * data[1]
 
     return np.apply_along_axis(select_choice, 1, data)
 
 
 def get_correction_for_source(
-        signal: Signal, 
-        reaction_mass: float = 1.,                     
-        limits: float = None, 
-        limits_persent = 0.85,
-        limit_iteration: Optional[int] = 10,
-        window_percent = 0.01,
-        coef_function: Callable[[int], float] = lambda x: x
-    ) -&gt; Signal:
+    signal: Signal,
+    reaction_mass: float = 1.0,
+    limits: float = None,
+    limits_persent=0.85,
+    limit_iteration: Optional[int] = 10,
+    window_percent=0.01,
+    coef_function: Callable[[int], float] = lambda x: x,
+) -&gt; Signal:
 
-    &#39;&#39;&#39;Sweep signal correction for realization on the vibration source.
+    &#34;&#34;&#34;Sweep signal correction for realization on the vibration source.
 
     Steps of corrections:
     1. Calculate displcament from force.
@@ -82,68 +82,67 @@ def get_correction_for_source(
     3. Apply suppression amplitudy after limits.
     4. Apply window at the start to ensure a zero first amplitude.
     5. Return сalculated аorce from displacement
-    
+
     Parametrs:
-    &gt; `signal`: `Relation` - signal to be corrected  
+    &gt; `signal`: `Relation` - signal to be corrected
 
-    &gt; `reaction_mass`: `float` = 1. - reaction mass of source 
+    &gt; `reaction_mass`: `float` = 1. - reaction mass of source
 
-    &gt; `limits`: `float` = None - displacement limitation of source  
+    &gt; `limits`: `float` = None - displacement limitation of source
 
-    &gt; `limits_persent`: `float` = 0.85 from 0 to 1, determine the limits = 
-    `limits*limits_persent` up to which the displacement amplitude will 
+    &gt; `limits_persent`: `float` = 0.85 from 0 to 1, determine the limits =
+    `limits*limits_persent` up to which the displacement amplitude will
     not changed, after that, the limit amplitude will be changed using the
-    `soft_clip` function.  
+    `soft_clip` function.
 
-    &gt; `limit_iteration`: int = 10 - iterate corrections.  
+    &gt; `limit_iteration`: int = 10 - iterate corrections.
 
-    &gt; `window_percent`: float = 0.01 - apply window at the initial displacment 
-    to ensure a zero first amplitude.  
-    
+    &gt; `window_percent`: float = 0.01 - apply window at the initial displacment
+    to ensure a zero first amplitude.
+
     &gt; `coef_function` - function to suppress.
 
     Returns:
     &gt; `Relation` of Force.
 
-    &#39;&#39;&#39;
-    displacement = signal.integrate().integrate()/reaction_mass
+    &#34;&#34;&#34;
+    displacement = signal.integrate().integrate() / reaction_mass
     imfs = get_IMFs_emd(displacement)
 
     d_array = np.vstack((imfs[0].y, signal.y[1:-1]))
     d_array = np.transpose(d_array)
-    
+
     cnt = 0
     while True and limits is not None:
-        cnt +=1
+        cnt += 1
 
-        logger.info(&#39;Iteration of correction: {}&#39;, cnt)
-        
+        logger.info(&#34;Iteration of correction: {}&#34;, cnt)
+
         result = soft_clip(d_array, limits, limits_persent, coef_function(cnt))
-        
-        force = type(signal)(signal.x[:result.size], result)
+
+        force = type(signal)(signal.x[: result.size], result)
 
         new_displacement = force.integrate().integrate() / reaction_mass
 
         imfs = get_IMFs_emd(new_displacement)
 
         new_displacement = imfs[0]
-        
-        if np.all(np.abs(new_displacement.y)&lt;limits):
+
+        if np.all(np.abs(new_displacement.y) &lt; limits):
             break
-        
-        if limit_iteration is not None and cnt+1 &gt; limit_iteration:
+
+        if limit_iteration is not None and cnt + 1 &gt; limit_iteration:
             break
-        
+
         d_array = np.vstack((new_displacement.y, force.y[1:-1]))
         d_array = np.transpose(d_array)
 
-
-    new_displacement = new_displacement.shift(new_displacement.dx*cnt)
+    new_displacement = new_displacement.shift(new_displacement.dx * cnt)
 
     time = new_displacement.x
-    window =  Relation(time, tukey_a_t(time, time[-1]*window_percent, &#39;left&#39;))
+    window = Relation(time, tukey_a_t(time, time[-1] * window_percent, &#34;left&#34;))
 
-    return (new_displacement*window).diff().diff()*reaction_mass</code></pre>
+    return (new_displacement * window).diff().diff() * reaction_mass</code></pre>
 </details>
 </section>
 <section>
@@ -166,21 +165,16 @@ def get_correction_for_source(
 5. Return сalculated аorce from displacement</p>
 <p>Parametrs:</p>
 <blockquote>
-<p><code>signal</code>: <code>Relation</code> - signal to be corrected
-</p>
-<p><code>reaction_mass</code>: <code>float</code> = 1. - reaction mass of source </p>
-<p><code>limits</code>: <code>float</code> = None - displacement limitation of source
-</p>
+<p><code>signal</code>: <code>Relation</code> - signal to be corrected</p>
+<p><code>reaction_mass</code>: <code>float</code> = 1. - reaction mass of source</p>
+<p><code>limits</code>: <code>float</code> = None - displacement limitation of source</p>
 <p><code>limits_persent</code>: <code>float</code> = 0.85 from 0 to 1, determine the limits =
 <code>limits*limits_persent</code> up to which the displacement amplitude will
 not changed, after that, the limit amplitude will be changed using the
-<code><a title="sweep_design.math_signals.utility_functions.sweep_correction_source.soft_clip" href="#sweep_design.math_signals.utility_functions.sweep_correction_source.soft_clip">soft_clip()</a></code> function.
-</p>
-<p><code>limit_iteration</code>: int = 10 - iterate corrections.
-</p>
+<code><a title="sweep_design.math_signals.utility_functions.sweep_correction_source.soft_clip" href="#sweep_design.math_signals.utility_functions.sweep_correction_source.soft_clip">soft_clip()</a></code> function.</p>
+<p><code>limit_iteration</code>: int = 10 - iterate corrections.</p>
 <p><code>window_percent</code>: float = 0.01 - apply window at the initial displacment
-to ensure a zero first amplitude.
-</p>
+to ensure a zero first amplitude.</p>
 <p><code>coef_function</code> - function to suppress.</p>
 </blockquote>
 <p>Returns:</p>
@@ -192,16 +186,16 @@ to ensure a zero first amplitude.
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_correction_for_source(
-        signal: Signal, 
-        reaction_mass: float = 1.,                     
-        limits: float = None, 
-        limits_persent = 0.85,
-        limit_iteration: Optional[int] = 10,
-        window_percent = 0.01,
-        coef_function: Callable[[int], float] = lambda x: x
-    ) -&gt; Signal:
+    signal: Signal,
+    reaction_mass: float = 1.0,
+    limits: float = None,
+    limits_persent=0.85,
+    limit_iteration: Optional[int] = 10,
+    window_percent=0.01,
+    coef_function: Callable[[int], float] = lambda x: x,
+) -&gt; Signal:
 
-    &#39;&#39;&#39;Sweep signal correction for realization on the vibration source.
+    &#34;&#34;&#34;Sweep signal correction for realization on the vibration source.
 
     Steps of corrections:
     1. Calculate displcament from force.
@@ -209,68 +203,67 @@ to ensure a zero first amplitude.
     3. Apply suppression amplitudy after limits.
     4. Apply window at the start to ensure a zero first amplitude.
     5. Return сalculated аorce from displacement
-    
+
     Parametrs:
-    &gt; `signal`: `Relation` - signal to be corrected  
+    &gt; `signal`: `Relation` - signal to be corrected
 
-    &gt; `reaction_mass`: `float` = 1. - reaction mass of source 
+    &gt; `reaction_mass`: `float` = 1. - reaction mass of source
 
-    &gt; `limits`: `float` = None - displacement limitation of source  
+    &gt; `limits`: `float` = None - displacement limitation of source
 
-    &gt; `limits_persent`: `float` = 0.85 from 0 to 1, determine the limits = 
-    `limits*limits_persent` up to which the displacement amplitude will 
+    &gt; `limits_persent`: `float` = 0.85 from 0 to 1, determine the limits =
+    `limits*limits_persent` up to which the displacement amplitude will
     not changed, after that, the limit amplitude will be changed using the
-    `soft_clip` function.  
+    `soft_clip` function.
 
-    &gt; `limit_iteration`: int = 10 - iterate corrections.  
+    &gt; `limit_iteration`: int = 10 - iterate corrections.
 
-    &gt; `window_percent`: float = 0.01 - apply window at the initial displacment 
-    to ensure a zero first amplitude.  
-    
+    &gt; `window_percent`: float = 0.01 - apply window at the initial displacment
+    to ensure a zero first amplitude.
+
     &gt; `coef_function` - function to suppress.
 
     Returns:
     &gt; `Relation` of Force.
 
-    &#39;&#39;&#39;
-    displacement = signal.integrate().integrate()/reaction_mass
+    &#34;&#34;&#34;
+    displacement = signal.integrate().integrate() / reaction_mass
     imfs = get_IMFs_emd(displacement)
 
     d_array = np.vstack((imfs[0].y, signal.y[1:-1]))
     d_array = np.transpose(d_array)
-    
+
     cnt = 0
     while True and limits is not None:
-        cnt +=1
+        cnt += 1
 
-        logger.info(&#39;Iteration of correction: {}&#39;, cnt)
-        
+        logger.info(&#34;Iteration of correction: {}&#34;, cnt)
+
         result = soft_clip(d_array, limits, limits_persent, coef_function(cnt))
-        
-        force = type(signal)(signal.x[:result.size], result)
+
+        force = type(signal)(signal.x[: result.size], result)
 
         new_displacement = force.integrate().integrate() / reaction_mass
 
         imfs = get_IMFs_emd(new_displacement)
 
         new_displacement = imfs[0]
-        
-        if np.all(np.abs(new_displacement.y)&lt;limits):
+
+        if np.all(np.abs(new_displacement.y) &lt; limits):
             break
-        
-        if limit_iteration is not None and cnt+1 &gt; limit_iteration:
+
+        if limit_iteration is not None and cnt + 1 &gt; limit_iteration:
             break
-        
+
         d_array = np.vstack((new_displacement.y, force.y[1:-1]))
         d_array = np.transpose(d_array)
 
-
-    new_displacement = new_displacement.shift(new_displacement.dx*cnt)
+    new_displacement = new_displacement.shift(new_displacement.dx * cnt)
 
     time = new_displacement.x
-    window =  Relation(time, tukey_a_t(time, time[-1]*window_percent, &#39;left&#39;))
+    window = Relation(time, tukey_a_t(time, time[-1] * window_percent, &#34;left&#34;))
 
-    return (new_displacement*window).diff().diff()*reaction_mass</code></pre>
+    return (new_displacement * window).diff().diff() * reaction_mass</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.utility_functions.sweep_correction_source.soft_clip"><code class="name flex">
@@ -282,12 +275,12 @@ to ensure a zero first amplitude.
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def soft_clip(data: np.ndarray, limits: float, percent = 0.85, coef: int = 1) -&gt; np.ndarray:
-    &#39;&#39;&#39;Custom function for correction.
-   
-    &#39;&#39;&#39;
+<pre><code class="python">def soft_clip(
+    data: np.ndarray, limits: float, percent=0.85, coef: int = 1
+) -&gt; np.ndarray:
+    &#34;&#34;&#34;Custom function for correction.&#34;&#34;&#34;
     hard_limit = limits
-    linear_limit = limits*percent
+    linear_limit = limits * percent
 
     def select_choice(data: np.ndarray):
 
@@ -297,12 +290,12 @@ to ensure a zero first amplitude.
             return data[1]
 
         if amplitude &gt;= hard_limit:
-            return ((hard_limit/amplitude) ** coef) * data[1]
+            return ((hard_limit / amplitude) ** coef) * data[1]
 
         scale = hard_limit - linear_limit
-        compression = scale * sin(np.pi/2*(amplitude - linear_limit) / scale)
+        compression = scale * sin(np.pi / 2 * (amplitude - linear_limit) / scale)
 
-        return (((linear_limit + compression)/amplitude) ** coef) * data[1]
+        return (((linear_limit + compression) / amplitude) ** coef) * data[1]
 
     return np.apply_along_axis(select_choice, 1, data)</code></pre>
 </details>

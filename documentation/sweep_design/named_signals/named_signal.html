@@ -36,65 +36,83 @@ from .named_relation import NamedRelation
 from ..config.named_config import NamedConfig
 
 Num = Union[float, int, complex]
-CR = TypeVar(&#39;CR&#39;, bound=&#39;NamedRelation&#39;)
+CR = TypeVar(&#34;CR&#34;, bound=&#34;NamedRelation&#34;)
 InName = Union[HeaderBase, str, Callable[[], str]]
-InData = Union[NamedRelation, &#39;NamedSignal&#39;, &#39;NamedSpectrum&#39;]
+InData = Union[NamedRelation, &#34;NamedSignal&#34;, &#34;NamedSpectrum&#34;]
 InDataN = Union[NamedRelation, Relation, HeaderBase, Num]
-CSP = TypeVar(&#39;CSP&#39;, bound=&#39;NamedSpectrum&#39;)
-CS = TypeVar(&#39;CS&#39;, bound=&#39;NamedSignal&#39;)
+CSP = TypeVar(&#34;CSP&#34;, bound=&#34;NamedSpectrum&#34;)
+CS = TypeVar(&#34;CS&#34;, bound=&#34;NamedSignal&#34;)
 
 
 class NamedSpectrum(NamedRelation):
-
-    def __init__(self, f: Any, s_a: Any = None, name: InName = None, 
-        category=&#39;spectrum&#39;) -&gt; None:
+    def __init__(
+        self, f: Any, s_a: Any = None, name: InName = None, category=&#34;spectrum&#34;
+    ) -&gt; None:
         f, s_a = NamedConfig.extract_input(f, s_a)
         self._relation: Spectrum = Spectrum(f, s_a)
-        self.header: HeaderSpectrum = HeaderSpectrum(name=name, 
-                                                      category=category)
+        self.header: HeaderSpectrum = HeaderSpectrum(name=name, category=category)
         self.signal: Optional[NamedSignal] = None
 
-    def get_signal(self, recalculate=False, start_time: float = None,
-            name: InName = None, category: str = None) -&gt; &#39;NamedSignal&#39;:
-        
+    def get_signal(
+        self,
+        recalculate=False,
+        start_time: float = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; &#34;NamedSignal&#34;:
+
         if self.signal is None or recalculate:
-            signal = self._relation.get_signal(recalculate=recalculate, 
-                                                    start_time=start_time)
+            signal = self._relation.get_signal(
+                recalculate=recalculate, start_time=start_time
+            )
             header = self.header.get_signal(name, category)
             self.signal = NamedSignal(signal, name=header)
         return self.signal
-    
-    def get_amp_spectrum(self, name: InName = None, 
-                        category: str = &#39;amp_spectrum&#39;) -&gt; NamedRelation:
+
+    def get_amp_spectrum(
+        self, name: InName = None, category: str = &#34;amp_spectrum&#34;
+    ) -&gt; NamedRelation:
         relation = self._relation.get_amp_spectrum()
         header = self.header.get_amp_spectrum(name, category)
         return NamedRelation(relation, name=header)
 
-    def get_phase_spectrum(self, name: InName = None,
-                        category: str = &#39;phase_spectrum&#39;) -&gt; NamedRelation:
+    def get_phase_spectrum(
+        self, name: InName = None, category: str = &#34;phase_spectrum&#34;
+    ) -&gt; NamedRelation:
         relation = self._relation.get_phase_spectrum()
         header = self.header.get_phase_spectrum(name, category)
-        return NamedRelation(relation, name=header)        
+        return NamedRelation(relation, name=header)
 
-    def get_reverse_filter(self: CSP, percent: Union[float, int] = 5, 
-                            subtrack_phase=True, f_start: float = None, 
-                            f_end: float = None, name: InName = None,
-                            category: str = None) -&gt; CSP:
+    def get_reverse_filter(
+        self: CSP,
+        percent: Union[float, int] = 5,
+        subtrack_phase=True,
+        f_start: float = None,
+        f_end: float = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; CSP:
         header = self.header.get_reverse_filter(name, category)
-        spectrum = self._relation.get_reverse_filter(percent=percent, 
-                    subtrack_phase=subtrack_phase, f_start=f_start, 
-                    f_end=f_end, name=header)
+        spectrum = self._relation.get_reverse_filter(
+            percent=percent,
+            subtrack_phase=subtrack_phase,
+            f_start=f_start,
+            f_end=f_end,
+            name=header,
+        )
         return type(self)(spectrum, name=header)
 
-    def add_phase(self: CSP, other: Any, name: InName = None,
-                    category: str = None) -&gt; CSP:
+    def add_phase(
+        self: CSP, other: Any, name: InName = None, category: str = None
+    ) -&gt; CSP:
         c_other = super()._convert_input(other)
         header = self.header.add_phase(c_other.header, name, category)
         spectrum = self._relation.add_phase(c_other.relation, name=header)
         return type(self)(spectrum, name=header)
 
-    def sub_phase(self: CSP, other: Any, name: InName = None,
-                  category: str = None) -&gt; CSP:
+    def sub_phase(
+        self: CSP, other: Any, name: InName = None, category: str = None
+    ) -&gt; CSP:
         c_other = super()._convert_input(other)
         header = self.header.sub_phase(c_other.header, name, category)
         spectrum = self._relation.add_phase(c_other.relation, name=header)
@@ -102,81 +120,102 @@ class NamedSpectrum(NamedRelation):
 
     @classmethod
     def get_spectrum_from_amp_phase(
-        cls: Type[CSP], r1: Any, r2: Any, 
-        name: InName = None, category=&#39;spectrum&#39;, 
-        ) -&gt; CSP:
+        cls: Type[CSP],
+        r1: Any,
+        r2: Any,
+        name: InName = None,
+        category=&#34;spectrum&#34;,
+    ) -&gt; CSP:
         c_r1 = super()._convert_input(r1)
         c_r2 = super()._convert_input(r2)
-        header = HeaderSpectrum.get_spectrum_from_amp_phase(c_r1.header, 
-                                            c_r2.header, name, category)
-        spectrum =  Spectrum.get_spectrum_from_amp_phase(c_r1.relation, 
-                                                          c_r2.relation)
+        header = HeaderSpectrum.get_spectrum_from_amp_phase(
+            c_r1.header, c_r2.header, name, category
+        )
+        spectrum = Spectrum.get_spectrum_from_amp_phase(c_r1.relation, c_r2.relation)
         return cls(spectrum, name=header)
-    
+
 
 class NamedSignal(NamedRelation):
-
-    def __init__(self, t: Any, a: Any = None, name: InName = None, 
-        category=&#39;signal&#39;) -&gt; None:
+    def __init__(
+        self, t: Any, a: Any = None, name: InName = None, category=&#34;signal&#34;
+    ) -&gt; None:
         t, a = NamedConfig.extract_input(t, a)
         self._relation: Signal = Signal(t, a)
         self.header: HeaderSignal = HeaderSignal(name, category)
         self.spectrum: Optional[NamedSpectrum] = None
 
-    def get_amplitude_spectrum(self, recalculate=False, is_start_zero=False,
-            name: InName = None, category: str = None) -&gt; NamedRelation:
-       
-        amplitude_spectrum = self._relation.get_amplitude_spectrum(recalculate=recalculate, 
-                                        is_start_zero=is_start_zero)
+    def get_amplitude_spectrum(
+        self,
+        recalculate=False,
+        is_start_zero=False,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; NamedRelation:
+
+        amplitude_spectrum = self._relation.get_amplitude_spectrum(
+            recalculate=recalculate, is_start_zero=is_start_zero
+        )
         header = self.header.get_amlitude_spectrum(name, category)
         return NamedRelation(amplitude_spectrum, name=header)
-        
-    
-    def get_phase_spectrum(self, recalculate=False, is_start_zero=False,
-            name: InName = None, category: str = None) -&gt; NamedRelation:
 
-        phase_spectrum = self._relation.get_phase_spectrum(recalculate=recalculate, 
-                                            is_start_zero=is_start_zero)
+    def get_phase_spectrum(
+        self,
+        recalculate=False,
+        is_start_zero=False,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; NamedRelation:
+
+        phase_spectrum = self._relation.get_phase_spectrum(
+            recalculate=recalculate, is_start_zero=is_start_zero
+        )
         header = self.header.get_phase_spectrum(name, category)
         return NamedRelation(phase_spectrum, name=header)
-        
-    
-    
-    def get_spectrum(self, recalculate=False, is_start_zero=False,
-            name: InName = None, category: str = None) -&gt; NamedSpectrum:
+
+    def get_spectrum(
+        self,
+        recalculate=False,
+        is_start_zero=False,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; NamedSpectrum:
         if self.spectrum is None or recalculate:
-            spectrum = self._relation.get_spectrum(recalculate=recalculate, 
-                                            is_start_zero=is_start_zero)
+            spectrum = self._relation.get_spectrum(
+                recalculate=recalculate, is_start_zero=is_start_zero
+            )
             header = self.header.get_spectrum(name, category)
             self.spectrum = NamedSpectrum(spectrum, name=header)
         return self.spectrum
-    
-    def get_reverse_signal(self: CS, 
-                            percent: Union[float, int] = 5, 
-                            subtrack_phase: bool = True,
-                            f_start: float = None, 
-                            f_end: float = None, 
-                            name: InName = None,
-                            category: str = None, 
-                        ) -&gt; CS:
+
+    def get_reverse_signal(
+        self: CS,
+        percent: Union[float, int] = 5,
+        subtrack_phase: bool = True,
+        f_start: float = None,
+        f_end: float = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; CS:
         header = self.header.get_reverse_signal(name, category)
-        signal =  self._relation.get_reverse_signal(
-            percent=percent, 
-            subtrack_phase=subtrack_phase, 
-            f_start=f_start, 
+        signal = self._relation.get_reverse_signal(
+            percent=percent,
+            subtrack_phase=subtrack_phase,
+            f_start=f_start,
             f_end=f_end,
         )
-        return type(self)(signal, name=header) 
-    
-    def add_phase(self: CS, other: Any, name: InName = None,
-                                category: str = None) -&gt; CS:
+        return type(self)(signal, name=header)
+
+    def add_phase(
+        self: CS, other: Any, name: InName = None, category: str = None
+    ) -&gt; CS:
         r_other = super()._convert_input(other)
         header = self.header.add_phase(r_other.header, name, category)
         signal = self._relation.add_phase(r_other.relation)
         return type(self)(signal, name=header)
 
-    def sub_phase(self: CS, other: Any, name: InName = None,
-                                category: str = None) -&gt; CS:
+    def sub_phase(
+        self: CS, other: Any, name: InName = None, category: str = None
+    ) -&gt; CS:
         r_other = super()._convert_input(other)
         header = self.header.sub_phase(r_other.header, name, category)
         signal = self._relation.sub_phase(r_other.relation)
@@ -203,68 +242,86 @@ class NamedSignal(NamedRelation):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class NamedSignal(NamedRelation):
-
-    def __init__(self, t: Any, a: Any = None, name: InName = None, 
-        category=&#39;signal&#39;) -&gt; None:
+    def __init__(
+        self, t: Any, a: Any = None, name: InName = None, category=&#34;signal&#34;
+    ) -&gt; None:
         t, a = NamedConfig.extract_input(t, a)
         self._relation: Signal = Signal(t, a)
         self.header: HeaderSignal = HeaderSignal(name, category)
         self.spectrum: Optional[NamedSpectrum] = None
 
-    def get_amplitude_spectrum(self, recalculate=False, is_start_zero=False,
-            name: InName = None, category: str = None) -&gt; NamedRelation:
-       
-        amplitude_spectrum = self._relation.get_amplitude_spectrum(recalculate=recalculate, 
-                                        is_start_zero=is_start_zero)
+    def get_amplitude_spectrum(
+        self,
+        recalculate=False,
+        is_start_zero=False,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; NamedRelation:
+
+        amplitude_spectrum = self._relation.get_amplitude_spectrum(
+            recalculate=recalculate, is_start_zero=is_start_zero
+        )
         header = self.header.get_amlitude_spectrum(name, category)
         return NamedRelation(amplitude_spectrum, name=header)
-        
-    
-    def get_phase_spectrum(self, recalculate=False, is_start_zero=False,
-            name: InName = None, category: str = None) -&gt; NamedRelation:
 
-        phase_spectrum = self._relation.get_phase_spectrum(recalculate=recalculate, 
-                                            is_start_zero=is_start_zero)
+    def get_phase_spectrum(
+        self,
+        recalculate=False,
+        is_start_zero=False,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; NamedRelation:
+
+        phase_spectrum = self._relation.get_phase_spectrum(
+            recalculate=recalculate, is_start_zero=is_start_zero
+        )
         header = self.header.get_phase_spectrum(name, category)
         return NamedRelation(phase_spectrum, name=header)
-        
-    
-    
-    def get_spectrum(self, recalculate=False, is_start_zero=False,
-            name: InName = None, category: str = None) -&gt; NamedSpectrum:
+
+    def get_spectrum(
+        self,
+        recalculate=False,
+        is_start_zero=False,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; NamedSpectrum:
         if self.spectrum is None or recalculate:
-            spectrum = self._relation.get_spectrum(recalculate=recalculate, 
-                                            is_start_zero=is_start_zero)
+            spectrum = self._relation.get_spectrum(
+                recalculate=recalculate, is_start_zero=is_start_zero
+            )
             header = self.header.get_spectrum(name, category)
             self.spectrum = NamedSpectrum(spectrum, name=header)
         return self.spectrum
-    
-    def get_reverse_signal(self: CS, 
-                            percent: Union[float, int] = 5, 
-                            subtrack_phase: bool = True,
-                            f_start: float = None, 
-                            f_end: float = None, 
-                            name: InName = None,
-                            category: str = None, 
-                        ) -&gt; CS:
+
+    def get_reverse_signal(
+        self: CS,
+        percent: Union[float, int] = 5,
+        subtrack_phase: bool = True,
+        f_start: float = None,
+        f_end: float = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; CS:
         header = self.header.get_reverse_signal(name, category)
-        signal =  self._relation.get_reverse_signal(
-            percent=percent, 
-            subtrack_phase=subtrack_phase, 
-            f_start=f_start, 
+        signal = self._relation.get_reverse_signal(
+            percent=percent,
+            subtrack_phase=subtrack_phase,
+            f_start=f_start,
             f_end=f_end,
         )
-        return type(self)(signal, name=header) 
-    
-    def add_phase(self: CS, other: Any, name: InName = None,
-                                category: str = None) -&gt; CS:
+        return type(self)(signal, name=header)
+
+    def add_phase(
+        self: CS, other: Any, name: InName = None, category: str = None
+    ) -&gt; CS:
         r_other = super()._convert_input(other)
         header = self.header.add_phase(r_other.header, name, category)
         signal = self._relation.add_phase(r_other.relation)
         return type(self)(signal, name=header)
 
-    def sub_phase(self: CS, other: Any, name: InName = None,
-                                category: str = None) -&gt; CS:
+    def sub_phase(
+        self: CS, other: Any, name: InName = None, category: str = None
+    ) -&gt; CS:
         r_other = super()._convert_input(other)
         header = self.header.sub_phase(r_other.header, name, category)
         signal = self._relation.sub_phase(r_other.relation)
@@ -289,8 +346,9 @@ class NamedSignal(NamedRelation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_phase(self: CS, other: Any, name: InName = None,
-                            category: str = None) -&gt; CS:
+<pre><code class="python">def add_phase(
+    self: CS, other: Any, name: InName = None, category: str = None
+) -&gt; CS:
     r_other = super()._convert_input(other)
     header = self.header.add_phase(r_other.header, name, category)
     signal = self._relation.add_phase(r_other.relation)
@@ -306,11 +364,17 @@ class NamedSignal(NamedRelation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_amplitude_spectrum(self, recalculate=False, is_start_zero=False,
-        name: InName = None, category: str = None) -&gt; NamedRelation:
-   
-    amplitude_spectrum = self._relation.get_amplitude_spectrum(recalculate=recalculate, 
-                                    is_start_zero=is_start_zero)
+<pre><code class="python">def get_amplitude_spectrum(
+    self,
+    recalculate=False,
+    is_start_zero=False,
+    name: InName = None,
+    category: str = None,
+) -&gt; NamedRelation:
+
+    amplitude_spectrum = self._relation.get_amplitude_spectrum(
+        recalculate=recalculate, is_start_zero=is_start_zero
+    )
     header = self.header.get_amlitude_spectrum(name, category)
     return NamedRelation(amplitude_spectrum, name=header)</code></pre>
 </details>
@@ -324,11 +388,17 @@ class NamedSignal(NamedRelation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_phase_spectrum(self, recalculate=False, is_start_zero=False,
-        name: InName = None, category: str = None) -&gt; NamedRelation:
+<pre><code class="python">def get_phase_spectrum(
+    self,
+    recalculate=False,
+    is_start_zero=False,
+    name: InName = None,
+    category: str = None,
+) -&gt; NamedRelation:
 
-    phase_spectrum = self._relation.get_phase_spectrum(recalculate=recalculate, 
-                                        is_start_zero=is_start_zero)
+    phase_spectrum = self._relation.get_phase_spectrum(
+        recalculate=recalculate, is_start_zero=is_start_zero
+    )
     header = self.header.get_phase_spectrum(name, category)
     return NamedRelation(phase_spectrum, name=header)</code></pre>
 </details>
@@ -342,22 +412,23 @@ class NamedSignal(NamedRelation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_reverse_signal(self: CS, 
-                        percent: Union[float, int] = 5, 
-                        subtrack_phase: bool = True,
-                        f_start: float = None, 
-                        f_end: float = None, 
-                        name: InName = None,
-                        category: str = None, 
-                    ) -&gt; CS:
+<pre><code class="python">def get_reverse_signal(
+    self: CS,
+    percent: Union[float, int] = 5,
+    subtrack_phase: bool = True,
+    f_start: float = None,
+    f_end: float = None,
+    name: InName = None,
+    category: str = None,
+) -&gt; CS:
     header = self.header.get_reverse_signal(name, category)
-    signal =  self._relation.get_reverse_signal(
-        percent=percent, 
-        subtrack_phase=subtrack_phase, 
-        f_start=f_start, 
+    signal = self._relation.get_reverse_signal(
+        percent=percent,
+        subtrack_phase=subtrack_phase,
+        f_start=f_start,
         f_end=f_end,
     )
-    return type(self)(signal, name=header) </code></pre>
+    return type(self)(signal, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_signal.NamedSignal.get_spectrum"><code class="name flex">
@@ -369,11 +440,17 @@ class NamedSignal(NamedRelation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_spectrum(self, recalculate=False, is_start_zero=False,
-        name: InName = None, category: str = None) -&gt; NamedSpectrum:
+<pre><code class="python">def get_spectrum(
+    self,
+    recalculate=False,
+    is_start_zero=False,
+    name: InName = None,
+    category: str = None,
+) -&gt; NamedSpectrum:
     if self.spectrum is None or recalculate:
-        spectrum = self._relation.get_spectrum(recalculate=recalculate, 
-                                        is_start_zero=is_start_zero)
+        spectrum = self._relation.get_spectrum(
+            recalculate=recalculate, is_start_zero=is_start_zero
+        )
         header = self.header.get_spectrum(name, category)
         self.spectrum = NamedSpectrum(spectrum, name=header)
     return self.spectrum</code></pre>
@@ -388,8 +465,9 @@ class NamedSignal(NamedRelation):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sub_phase(self: CS, other: Any, name: InName = None,
-                            category: str = None) -&gt; CS:
+<pre><code class="python">def sub_phase(
+    self: CS, other: Any, name: InName = None, category: str = None
+) -&gt; CS:
     r_other = super()._convert_input(other)
     header = self.header.sub_phase(r_other.header, name, category)
     signal = self._relation.sub_phase(r_other.relation)
@@ -417,56 +495,74 @@ class NamedSignal(NamedRelation):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class NamedSpectrum(NamedRelation):
-
-    def __init__(self, f: Any, s_a: Any = None, name: InName = None, 
-        category=&#39;spectrum&#39;) -&gt; None:
+    def __init__(
+        self, f: Any, s_a: Any = None, name: InName = None, category=&#34;spectrum&#34;
+    ) -&gt; None:
         f, s_a = NamedConfig.extract_input(f, s_a)
         self._relation: Spectrum = Spectrum(f, s_a)
-        self.header: HeaderSpectrum = HeaderSpectrum(name=name, 
-                                                      category=category)
+        self.header: HeaderSpectrum = HeaderSpectrum(name=name, category=category)
         self.signal: Optional[NamedSignal] = None
 
-    def get_signal(self, recalculate=False, start_time: float = None,
-            name: InName = None, category: str = None) -&gt; &#39;NamedSignal&#39;:
-        
+    def get_signal(
+        self,
+        recalculate=False,
+        start_time: float = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; &#34;NamedSignal&#34;:
+
         if self.signal is None or recalculate:
-            signal = self._relation.get_signal(recalculate=recalculate, 
-                                                    start_time=start_time)
+            signal = self._relation.get_signal(
+                recalculate=recalculate, start_time=start_time
+            )
             header = self.header.get_signal(name, category)
             self.signal = NamedSignal(signal, name=header)
         return self.signal
-    
-    def get_amp_spectrum(self, name: InName = None, 
-                        category: str = &#39;amp_spectrum&#39;) -&gt; NamedRelation:
+
+    def get_amp_spectrum(
+        self, name: InName = None, category: str = &#34;amp_spectrum&#34;
+    ) -&gt; NamedRelation:
         relation = self._relation.get_amp_spectrum()
         header = self.header.get_amp_spectrum(name, category)
         return NamedRelation(relation, name=header)
 
-    def get_phase_spectrum(self, name: InName = None,
-                        category: str = &#39;phase_spectrum&#39;) -&gt; NamedRelation:
+    def get_phase_spectrum(
+        self, name: InName = None, category: str = &#34;phase_spectrum&#34;
+    ) -&gt; NamedRelation:
         relation = self._relation.get_phase_spectrum()
         header = self.header.get_phase_spectrum(name, category)
-        return NamedRelation(relation, name=header)        
+        return NamedRelation(relation, name=header)
 
-    def get_reverse_filter(self: CSP, percent: Union[float, int] = 5, 
-                            subtrack_phase=True, f_start: float = None, 
-                            f_end: float = None, name: InName = None,
-                            category: str = None) -&gt; CSP:
+    def get_reverse_filter(
+        self: CSP,
+        percent: Union[float, int] = 5,
+        subtrack_phase=True,
+        f_start: float = None,
+        f_end: float = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; CSP:
         header = self.header.get_reverse_filter(name, category)
-        spectrum = self._relation.get_reverse_filter(percent=percent, 
-                    subtrack_phase=subtrack_phase, f_start=f_start, 
-                    f_end=f_end, name=header)
+        spectrum = self._relation.get_reverse_filter(
+            percent=percent,
+            subtrack_phase=subtrack_phase,
+            f_start=f_start,
+            f_end=f_end,
+            name=header,
+        )
         return type(self)(spectrum, name=header)
 
-    def add_phase(self: CSP, other: Any, name: InName = None,
-                    category: str = None) -&gt; CSP:
+    def add_phase(
+        self: CSP, other: Any, name: InName = None, category: str = None
+    ) -&gt; CSP:
         c_other = super()._convert_input(other)
         header = self.header.add_phase(c_other.header, name, category)
         spectrum = self._relation.add_phase(c_other.relation, name=header)
         return type(self)(spectrum, name=header)
 
-    def sub_phase(self: CSP, other: Any, name: InName = None,
-                  category: str = None) -&gt; CSP:
+    def sub_phase(
+        self: CSP, other: Any, name: InName = None, category: str = None
+    ) -&gt; CSP:
         c_other = super()._convert_input(other)
         header = self.header.sub_phase(c_other.header, name, category)
         spectrum = self._relation.add_phase(c_other.relation, name=header)
@@ -474,15 +570,18 @@ class NamedSignal(NamedRelation):
 
     @classmethod
     def get_spectrum_from_amp_phase(
-        cls: Type[CSP], r1: Any, r2: Any, 
-        name: InName = None, category=&#39;spectrum&#39;, 
-        ) -&gt; CSP:
+        cls: Type[CSP],
+        r1: Any,
+        r2: Any,
+        name: InName = None,
+        category=&#34;spectrum&#34;,
+    ) -&gt; CSP:
         c_r1 = super()._convert_input(r1)
         c_r2 = super()._convert_input(r2)
-        header = HeaderSpectrum.get_spectrum_from_amp_phase(c_r1.header, 
-                                            c_r2.header, name, category)
-        spectrum =  Spectrum.get_spectrum_from_amp_phase(c_r1.relation, 
-                                                          c_r2.relation)
+        header = HeaderSpectrum.get_spectrum_from_amp_phase(
+            c_r1.header, c_r2.header, name, category
+        )
+        spectrum = Spectrum.get_spectrum_from_amp_phase(c_r1.relation, c_r2.relation)
         return cls(spectrum, name=header)</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -502,15 +601,18 @@ class NamedSignal(NamedRelation):
 </summary>
 <pre><code class="python">@classmethod
 def get_spectrum_from_amp_phase(
-    cls: Type[CSP], r1: Any, r2: Any, 
-    name: InName = None, category=&#39;spectrum&#39;, 
-    ) -&gt; CSP:
+    cls: Type[CSP],
+    r1: Any,
+    r2: Any,
+    name: InName = None,
+    category=&#34;spectrum&#34;,
+) -&gt; CSP:
     c_r1 = super()._convert_input(r1)
     c_r2 = super()._convert_input(r2)
-    header = HeaderSpectrum.get_spectrum_from_amp_phase(c_r1.header, 
-                                        c_r2.header, name, category)
-    spectrum =  Spectrum.get_spectrum_from_amp_phase(c_r1.relation, 
-                                                      c_r2.relation)
+    header = HeaderSpectrum.get_spectrum_from_amp_phase(
+        c_r1.header, c_r2.header, name, category
+    )
+    spectrum = Spectrum.get_spectrum_from_amp_phase(c_r1.relation, c_r2.relation)
     return cls(spectrum, name=header)</code></pre>
 </details>
 </dd>
@@ -526,8 +628,9 @@ def get_spectrum_from_amp_phase(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_phase(self: CSP, other: Any, name: InName = None,
-                category: str = None) -&gt; CSP:
+<pre><code class="python">def add_phase(
+    self: CSP, other: Any, name: InName = None, category: str = None
+) -&gt; CSP:
     c_other = super()._convert_input(other)
     header = self.header.add_phase(c_other.header, name, category)
     spectrum = self._relation.add_phase(c_other.relation, name=header)
@@ -543,8 +646,9 @@ def get_spectrum_from_amp_phase(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_amp_spectrum(self, name: InName = None, 
-                    category: str = &#39;amp_spectrum&#39;) -&gt; NamedRelation:
+<pre><code class="python">def get_amp_spectrum(
+    self, name: InName = None, category: str = &#34;amp_spectrum&#34;
+) -&gt; NamedRelation:
     relation = self._relation.get_amp_spectrum()
     header = self.header.get_amp_spectrum(name, category)
     return NamedRelation(relation, name=header)</code></pre>
@@ -559,11 +663,12 @@ def get_spectrum_from_amp_phase(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_phase_spectrum(self, name: InName = None,
-                    category: str = &#39;phase_spectrum&#39;) -&gt; NamedRelation:
+<pre><code class="python">def get_phase_spectrum(
+    self, name: InName = None, category: str = &#34;phase_spectrum&#34;
+) -&gt; NamedRelation:
     relation = self._relation.get_phase_spectrum()
     header = self.header.get_phase_spectrum(name, category)
-    return NamedRelation(relation, name=header)        </code></pre>
+    return NamedRelation(relation, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_signal.NamedSpectrum.get_reverse_filter"><code class="name flex">
@@ -575,14 +680,23 @@ def get_spectrum_from_amp_phase(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_reverse_filter(self: CSP, percent: Union[float, int] = 5, 
-                        subtrack_phase=True, f_start: float = None, 
-                        f_end: float = None, name: InName = None,
-                        category: str = None) -&gt; CSP:
+<pre><code class="python">def get_reverse_filter(
+    self: CSP,
+    percent: Union[float, int] = 5,
+    subtrack_phase=True,
+    f_start: float = None,
+    f_end: float = None,
+    name: InName = None,
+    category: str = None,
+) -&gt; CSP:
     header = self.header.get_reverse_filter(name, category)
-    spectrum = self._relation.get_reverse_filter(percent=percent, 
-                subtrack_phase=subtrack_phase, f_start=f_start, 
-                f_end=f_end, name=header)
+    spectrum = self._relation.get_reverse_filter(
+        percent=percent,
+        subtrack_phase=subtrack_phase,
+        f_start=f_start,
+        f_end=f_end,
+        name=header,
+    )
     return type(self)(spectrum, name=header)</code></pre>
 </details>
 </dd>
@@ -595,12 +709,18 @@ def get_spectrum_from_amp_phase(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_signal(self, recalculate=False, start_time: float = None,
-        name: InName = None, category: str = None) -&gt; &#39;NamedSignal&#39;:
-    
+<pre><code class="python">def get_signal(
+    self,
+    recalculate=False,
+    start_time: float = None,
+    name: InName = None,
+    category: str = None,
+) -&gt; &#34;NamedSignal&#34;:
+
     if self.signal is None or recalculate:
-        signal = self._relation.get_signal(recalculate=recalculate, 
-                                                start_time=start_time)
+        signal = self._relation.get_signal(
+            recalculate=recalculate, start_time=start_time
+        )
         header = self.header.get_signal(name, category)
         self.signal = NamedSignal(signal, name=header)
     return self.signal</code></pre>
@@ -615,8 +735,9 @@ def get_spectrum_from_amp_phase(
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sub_phase(self: CSP, other: Any, name: InName = None,
-              category: str = None) -&gt; CSP:
+<pre><code class="python">def sub_phase(
+    self: CSP, other: Any, name: InName = None, category: str = None
+) -&gt; CSP:
     c_other = super()._convert_input(other)
     header = self.header.sub_phase(c_other.header, name, category)
     spectrum = self._relation.add_phase(c_other.relation, name=header)

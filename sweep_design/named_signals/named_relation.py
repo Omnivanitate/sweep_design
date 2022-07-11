@@ -227,3 +227,11 @@ class NamedRelation:
 
     def __ipow__(self: CR, other: Any, name: InName = None, category="relation") -> CR:
         return self.__pow__(other, name, category)
+
+    def __getitem__(self, item: Union[float, slice]):
+        if isinstance(item, float):
+            x = self._relation._x 
+            idx = (np.abs(x - item)).argmin()
+            return x[idx], self._relation._y[idx]
+        if isinstance(item, slice):
+            return self.select_data(item.start, item.stop)

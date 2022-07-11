@@ -26,36 +26,64 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from ..framemakers.ipywidgetframer.figwidget.bokehfig import \
-    BokehFigureMaker
+<pre><code class="python">from ..framemakers.ipywidgetframer.figwidget.bokehfig import BokehFigureMaker
 
-from ..framemakers.ipywidgetframer.ipywidgetframe import \
-    WidgetFrameMaker
+from ..framemakers.ipywidgetframer.ipywidgetframe import WidgetFrameMaker
 
 from .common_view_builder import CommonVeiwSweepBuilder
 
-from ..framemakers.ipywidgetframer.default_ipywidget_properties import get_checkbox_frame, get_dropdown_frame, get_figure_frame
-from ..framemakers.ipywidgetframer.figwidget.default_bokeh_properties import get_figure_window
+from ..framemakers.ipywidgetframer.default_ipywidget_properties import (
+    get_checkbox_frame,
+    get_dropdown_frame,
+    get_figure_frame,
+)
+from ..framemakers.ipywidgetframer.figwidget.default_bokeh_properties import (
+    get_figure_window,
+)
 
-def get_view_sweep_bokeh_ipywidget(k_width = 1., k_height= 1.,):
+
+def get_view_sweep_bokeh_ipywidget(
+    k_width=1.0,
+    k_height=1.0,
+):
     return CommonVeiwSweepBuilder(
         BokehFigureMaker,
         WidgetFrameMaker,
-        get_figure_window(&#39;Signal&#39;, &#39;Time, s&#39;, &#39;Amplitude&#39;,0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_checkbox_frame(&#39;Signals&#39;, &#39;No signal&#39;, 0.2*k_width, 0.4*k_height),
-        get_figure_window(&#39;Amplitude spectrum&#39;, &#39;Frequency, Hz&#39;, &#39;Amplitude&#39;, 0.7*0.5*k_width, 0.4*k_height),
-        get_figure_frame(0.7*0.5*k_width, 0.4*k_height),
-        get_figure_window(&#39;Phase spectrum&#39;, &#39;Frequency, Hz&#39;, &#39;Phase&#39;, 0.7*0.5*k_width, 0.4*k_height),
-        get_figure_frame(0.7*0.5*k_width, 0.4*k_height),
-        get_figure_window(&#39;Sweep&#39;, &#39;Time, s&#39;, &#39;Amplitude&#39;,0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_figure_window(&#39;Spectrogram&#39;, &#39;Time, s&#39;, &#39;Frequency, Hz&#39;,0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_dropdown_frame(&#39;Sweeps&#39;, &#39;No sweep&#39;),
-        get_figure_window(&#39;Envelop&#39;, &#39;Time, s&#39;, &#39;Amplitude&#39;, 0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_checkbox_frame(&#39;Sweeps&#39;, &#39;No sweep&#39;, 0.2*k_width, 0.4*k_height)
+        get_figure_window(
+            &#34;Signal&#34;, &#34;Time, s&#34;, &#34;Amplitude&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_checkbox_frame(&#34;Signals&#34;, &#34;No signal&#34;, 0.2 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Amplitude spectrum&#34;,
+            &#34;Frequency, Hz&#34;,
+            &#34;Amplitude&#34;,
+            0.7 * 0.5 * k_width,
+            0.4 * k_height,
+        ),
+        get_figure_frame(0.7 * 0.5 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Phase spectrum&#34;,
+            &#34;Frequency, Hz&#34;,
+            &#34;Phase&#34;,
+            0.7 * 0.5 * k_width,
+            0.4 * k_height,
+        ),
+        get_figure_frame(0.7 * 0.5 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Sweep&#34;, &#34;Time, s&#34;, &#34;Amplitude&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Spectrogram&#34;, &#34;Time, s&#34;, &#34;Frequency, Hz&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_dropdown_frame(&#34;Sweeps&#34;, &#34;No sweep&#34;),
+        get_figure_window(
+            &#34;Envelop&#34;, &#34;Time, s&#34;, &#34;Amplitude&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_checkbox_frame(&#34;Sweeps&#34;, &#34;No sweep&#34;, 0.2 * k_width, 0.4 * k_height),
     )</code></pre>
 </details>
 </section>
@@ -75,25 +103,48 @@ def get_view_sweep_bokeh_ipywidget(k_width = 1., k_height= 1.,):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_view_sweep_bokeh_ipywidget(k_width = 1., k_height= 1.,):
+<pre><code class="python">def get_view_sweep_bokeh_ipywidget(
+    k_width=1.0,
+    k_height=1.0,
+):
     return CommonVeiwSweepBuilder(
         BokehFigureMaker,
         WidgetFrameMaker,
-        get_figure_window(&#39;Signal&#39;, &#39;Time, s&#39;, &#39;Amplitude&#39;,0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_checkbox_frame(&#39;Signals&#39;, &#39;No signal&#39;, 0.2*k_width, 0.4*k_height),
-        get_figure_window(&#39;Amplitude spectrum&#39;, &#39;Frequency, Hz&#39;, &#39;Amplitude&#39;, 0.7*0.5*k_width, 0.4*k_height),
-        get_figure_frame(0.7*0.5*k_width, 0.4*k_height),
-        get_figure_window(&#39;Phase spectrum&#39;, &#39;Frequency, Hz&#39;, &#39;Phase&#39;, 0.7*0.5*k_width, 0.4*k_height),
-        get_figure_frame(0.7*0.5*k_width, 0.4*k_height),
-        get_figure_window(&#39;Sweep&#39;, &#39;Time, s&#39;, &#39;Amplitude&#39;,0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_figure_window(&#39;Spectrogram&#39;, &#39;Time, s&#39;, &#39;Frequency, Hz&#39;,0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_dropdown_frame(&#39;Sweeps&#39;, &#39;No sweep&#39;),
-        get_figure_window(&#39;Envelop&#39;, &#39;Time, s&#39;, &#39;Amplitude&#39;, 0.7*k_width, 0.4*k_height),
-        get_figure_frame(0.7*k_width, 0.4*k_height),
-        get_checkbox_frame(&#39;Sweeps&#39;, &#39;No sweep&#39;, 0.2*k_width, 0.4*k_height)
+        get_figure_window(
+            &#34;Signal&#34;, &#34;Time, s&#34;, &#34;Amplitude&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_checkbox_frame(&#34;Signals&#34;, &#34;No signal&#34;, 0.2 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Amplitude spectrum&#34;,
+            &#34;Frequency, Hz&#34;,
+            &#34;Amplitude&#34;,
+            0.7 * 0.5 * k_width,
+            0.4 * k_height,
+        ),
+        get_figure_frame(0.7 * 0.5 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Phase spectrum&#34;,
+            &#34;Frequency, Hz&#34;,
+            &#34;Phase&#34;,
+            0.7 * 0.5 * k_width,
+            0.4 * k_height,
+        ),
+        get_figure_frame(0.7 * 0.5 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Sweep&#34;, &#34;Time, s&#34;, &#34;Amplitude&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_figure_window(
+            &#34;Spectrogram&#34;, &#34;Time, s&#34;, &#34;Frequency, Hz&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_dropdown_frame(&#34;Sweeps&#34;, &#34;No sweep&#34;),
+        get_figure_window(
+            &#34;Envelop&#34;, &#34;Time, s&#34;, &#34;Amplitude&#34;, 0.7 * k_width, 0.4 * k_height
+        ),
+        get_figure_frame(0.7 * k_width, 0.4 * k_height),
+        get_checkbox_frame(&#34;Sweeps&#34;, &#34;No sweep&#34;, 0.2 * k_width, 0.4 * k_height),
     )</code></pre>
 </details>
 </dd>

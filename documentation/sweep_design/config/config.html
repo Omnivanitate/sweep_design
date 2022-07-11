@@ -53,14 +53,14 @@ class Config:
     &gt; The methods returns a function that takes a new x sequence and
     return a new y sequence.
 
-    &gt; **new_x** = `numpy.ndarray`  
+    &gt; **new_x** = `numpy.ndarray`
     &gt; **new_y** = `numpy.ndarray`
 
     &gt; Method derived from default function:
     &gt;&gt; sweep_design.math_signals.defaults.methods.interpolate_extrapolate
 
     &gt; **input**:
-    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **x**: `numpy.ndarray`
     &gt;&gt; **y**: `numpy.ndarray`
 
     &gt; **output**:
@@ -77,9 +77,9 @@ class Config:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.math_operation`
 
     &gt; **input**:
-    &gt;&gt; **x**: `numpy.ndarray`  
-    &gt;&gt; **y1**: `numpy.ndarray`  
-    &gt;&gt; **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]  
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y1**: `numpy.ndarray`
+    &gt;&gt; **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]
     &gt;&gt; **name_operation**: `sweep_design.math_signals.defaults.base_structures.MathOperation`
 
     &gt; **output**:
@@ -91,7 +91,7 @@ class Config:
     - - -
 
     **integrate_one_method**:
-    &gt; Method for calculating the integral of a sequence on a segment.  
+    &gt; Method for calculating the integral of a sequence on a segment.
     &gt; Method derived from default function:
 
     &gt;&gt; `sweep_design.math_signals.defaults.methods.one_integrate`
@@ -106,44 +106,44 @@ class Config:
     - - -
 
     **integrate_method**:
-    &gt; The method by which the integration is performed.  
+    &gt; The method by which the integration is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.integrate`
 
     &gt; **input**:
-    &gt;&gt; **x**: `numpy.ndarray`  
-    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y**: `numpy.ndarray`
     &gt;&gt; d**x**: float - sequence sample rate x
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **x**: `numpy.ndarray`,      
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **differentiate_method**:
-    &gt; The method by which differentiation is performed.  
+    &gt; The method by which differentiation is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.differentiate`
 
     &gt; **input**:
 
-    &gt;&gt; **x**: `numpy.ndarray`  
-    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y**: `numpy.ndarray`
     &gt;&gt; **dx**: `float` - sequence sample rate **x**
 
     &gt; **output**:
-    &gt;&gt;Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt;Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **correlate_method**:
-    &gt; The method by which the correlation is performed.  
+    &gt; The method by which the correlation is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.correlate`
 
@@ -153,15 +153,15 @@ class Config:
     &gt;&gt; r2: Relation
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **convolve_method**:
-    &gt; The method by which the convolution is performed.  
+    &gt; The method by which the convolution is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.convolve`
 
@@ -171,23 +171,23 @@ class Config:
     &gt;&gt; r2: Relation
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **get_common_x**:
     &gt; A method by which to find the common sequence of numbers along
-    &gt; the x-axis, obtained from two other sequences along the x-axis.  
+    &gt; the x-axis, obtained from two other sequences along the x-axis.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.get_common_x`
 
     &gt; **input**:
-    &gt;&gt; **x1**: `numpy.ndarray`  
-    &gt;&gt; **x2**: `numpy.ndarray`  
-    &gt;&gt; **dx1**: float  - sample rate first sequence  
+    &gt;&gt; **x1**: `numpy.ndarray`
+    &gt;&gt; **x2**: `numpy.ndarray`
+    &gt;&gt; **dx1**: float  - sample rate first sequence
     &gt;&gt; **dx2**: float  - sample rate second sequence
 
     &gt; **output**:
@@ -196,39 +196,39 @@ class Config:
     - - -
 
     **spectrum2signal_method**:
-    &gt; Method for converting a spectrum into a signal. (Using Fourier transform)  
+    &gt; Method for converting a spectrum into a signal. (Using Fourier transform)
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
     &gt; **input**:
-    &gt;&gt; **frequenc**: `numpy.ndarray`  
-    **specturm**: `numpy.ndarray`  
-    **start_time**: `float` = `None`  
+    &gt;&gt; **frequenc**: `numpy.ndarray`
+    **specturm**: `numpy.ndarray`
+    **start_time**: `float` = `None`
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **time**: `numpy.ndarray`,  
-        **amplitude**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **time**: `numpy.ndarray`,
+        **amplitude**: `numpy.ndarray`
+    ]
 
     - - -
 
     **signal2spectrum_method**:
-    &gt; Method for converting a signal into a spectrum. (Using Fourier transform)  
+    &gt; Method for converting a signal into a spectrum. (Using Fourier transform)
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
     &gt; **input**:
 
-    &gt;&gt; **time**: `numpy.ndarray`  
-    &gt;&gt; **amplitude**: `numpy.ndarray`  
-    &gt;&gt; **is_start_zero** = `False`  
+    &gt;&gt; **time**: `numpy.ndarray`
+    &gt;&gt; **amplitude**: `numpy.ndarray`
+    &gt;&gt; **is_start_zero** = `False`
 
-    &gt; **output**:  
-    &gt;&gt; Tuple [  
-        **frequency**: `numpy.ndarray`,  
-        **spectrum**: `numpy.ndarray`  
-    ]  
+    &gt; **output**:
+    &gt;&gt; Tuple [
+        **frequency**: `numpy.ndarray`,
+        **spectrum**: `numpy.ndarray`
+    ]
 
     - - -
 
@@ -289,7 +289,7 @@ in the constructor of class <code>Relation</code>.</p>
 <p>The method by which interpolation and extrapolation are performed.
 The methods returns a function that takes a new x sequence and
 return a new y sequence.</p>
-<p><strong>new_x</strong> = <code>numpy.ndarray</code><br>
+<p><strong>new_x</strong> = <code>numpy.ndarray</code>
 <strong>new_y</strong> = <code>numpy.ndarray</code></p>
 <p>Method derived from default function:</p>
 <blockquote>
@@ -297,7 +297,7 @@ return a new y sequence.</p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>x</strong>: <code>numpy.ndarray</code><br>
+<p><strong>x</strong>: <code>numpy.ndarray</code>
 <strong>y</strong>: <code>numpy.ndarray</code></p>
 </blockquote>
 <p><strong>output</strong>:</p>
@@ -317,9 +317,9 @@ and their unary operations (+=, -=, </em>=, /=).</p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>x</strong>: <code>numpy.ndarray</code><br>
-<strong>y1</strong>: <code>numpy.ndarray</code><br>
-<strong>y2</strong>: <code>Union</code>[<code>numpy.ndarray</code>, <code>float</code>, <code>int</code>, <code>complex</code>]<br>
+<p><strong>x</strong>: <code>numpy.ndarray</code>
+<strong>y1</strong>: <code>numpy.ndarray</code>
+<strong>y2</strong>: <code>Union</code>[<code>numpy.ndarray</code>, <code>float</code>, <code>int</code>, <code>complex</code>]
 <strong>name_operation</strong>: <code><a title="sweep_design.math_signals.defaults.base_structures.MathOperation" href="../math_signals/defaults/base_structures.html#sweep_design.math_signals.defaults.base_structures.MathOperation">MathOperation</a></code></p>
 </blockquote>
 <p><strong>output</strong>:</p>
@@ -333,7 +333,7 @@ and their unary operations (+=, -=, </em>=, /=).</p>
 <hr>
 <p><strong>integrate_one_method</strong>:</p>
 <blockquote>
-<p>Method for calculating the integral of a sequence on a segment.<br>
+<p>Method for calculating the integral of a sequence on a segment.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.one_integrate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.one_integrate">one_integrate()</a></code></p>
@@ -351,54 +351,51 @@ Method derived from default function:</p>
 <hr>
 <p><strong>integrate_method</strong>:</p>
 <blockquote>
-<p>The method by which the integration is performed.<br>
+<p>The method by which the integration is performed.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.integrate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.integrate">integrate()</a></code></p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>x</strong>: <code>numpy.ndarray</code><br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
+<p><strong>x</strong>: <code>numpy.ndarray</code>
+<strong>y</strong>: <code>numpy.ndarray</code>
 d<strong>x</strong>: float - sequence sample rate x</p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
+<p>Tuple [
 <strong>x</strong>: <code>numpy.ndarray</code>,
-<br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<strong>y</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
 <p><strong>differentiate_method</strong>:</p>
 <blockquote>
-<p>The method by which differentiation is performed.<br>
+<p>The method by which differentiation is performed.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.differentiate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.differentiate">differentiate()</a></code></p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>x</strong>: <code>numpy.ndarray</code><br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
+<p><strong>x</strong>: <code>numpy.ndarray</code>
+<strong>y</strong>: <code>numpy.ndarray</code>
 <strong>dx</strong>: <code>float</code> - sequence sample rate <strong>x</strong></p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
-<strong>x</strong>: <code>numpy.ndarray</code>,<br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p>Tuple [
+<strong>x</strong>: <code>numpy.ndarray</code>,
+<strong>y</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
 <p><strong>correlate_method</strong>:</p>
 <blockquote>
-<p>The method by which the correlation is performed.<br>
+<p>The method by which the correlation is performed.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.correlate" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.correlate">correlate()</a></code></p>
@@ -411,17 +408,16 @@ r2: Relation</p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
-<strong>x</strong>: <code>numpy.ndarray</code>,<br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p>Tuple [
+<strong>x</strong>: <code>numpy.ndarray</code>,
+<strong>y</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
 <p><strong>convolve_method</strong>:</p>
 <blockquote>
-<p>The method by which the convolution is performed.<br>
+<p>The method by which the convolution is performed.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.convolve" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.convolve">convolve()</a></code></p>
@@ -434,28 +430,27 @@ r2: Relation</p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
-<strong>x</strong>: <code>numpy.ndarray</code>,<br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p>Tuple [
+<strong>x</strong>: <code>numpy.ndarray</code>,
+<strong>y</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
 <p><strong>get_common_x</strong>:</p>
 <blockquote>
 <p>A method by which to find the common sequence of numbers along
-the x-axis, obtained from two other sequences along the x-axis.<br>
+the x-axis, obtained from two other sequences along the x-axis.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.get_common_x" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.get_common_x">get_common_x()</a></code></p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>x1</strong>: <code>numpy.ndarray</code><br>
-<strong>x2</strong>: <code>numpy.ndarray</code><br>
+<p><strong>x1</strong>: <code>numpy.ndarray</code>
+<strong>x2</strong>: <code>numpy.ndarray</code>
 <strong>dx1</strong>: float
-- sample rate first sequence<br>
+- sample rate first sequence
 <strong>dx2</strong>: float
 - sample rate second sequence</p>
 </blockquote>
@@ -467,50 +462,45 @@ Method derived from default function:</p>
 <hr>
 <p><strong>spectrum2signal_method</strong>:</p>
 <blockquote>
-<p>Method for converting a spectrum into a signal. (Using Fourier transform)<br>
+<p>Method for converting a spectrum into a signal. (Using Fourier transform)
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.spectrum2sigmal" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.spectrum2sigmal">spectrum2sigmal()</a></code></p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>frequenc</strong>: <code>numpy.ndarray</code><br>
-<strong>specturm</strong>: <code>numpy.ndarray</code><br>
-<strong>start_time</strong>: <code>float</code> = <code>None</code>
-</p>
+<p><strong>frequenc</strong>: <code>numpy.ndarray</code>
+<strong>specturm</strong>: <code>numpy.ndarray</code>
+<strong>start_time</strong>: <code>float</code> = <code>None</code></p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
-<strong>time</strong>: <code>numpy.ndarray</code>,<br>
-<strong>amplitude</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p>Tuple [
+<strong>time</strong>: <code>numpy.ndarray</code>,
+<strong>amplitude</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
 <p><strong>signal2spectrum_method</strong>:</p>
 <blockquote>
-<p>Method for converting a signal into a spectrum. (Using Fourier transform)<br>
+<p>Method for converting a signal into a spectrum. (Using Fourier transform)
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.methods.spectrum2sigmal" href="../math_signals/defaults/methods.html#sweep_design.math_signals.defaults.methods.spectrum2sigmal">spectrum2sigmal()</a></code></p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>time</strong>: <code>numpy.ndarray</code><br>
-<strong>amplitude</strong>: <code>numpy.ndarray</code><br>
-<strong>is_start_zero</strong> = <code>False</code>
-</p>
+<p><strong>time</strong>: <code>numpy.ndarray</code>
+<strong>amplitude</strong>: <code>numpy.ndarray</code>
+<strong>is_start_zero</strong> = <code>False</code></p>
 </blockquote>
-<p><strong>output</strong>:
-</p>
+<p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
-<strong>frequency</strong>: <code>numpy.ndarray</code>,<br>
-<strong>spectrum</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p>Tuple [
+<strong>frequency</strong>: <code>numpy.ndarray</code>,
+<strong>spectrum</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
@@ -545,14 +535,14 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     &gt; The methods returns a function that takes a new x sequence and
     return a new y sequence.
 
-    &gt; **new_x** = `numpy.ndarray`  
+    &gt; **new_x** = `numpy.ndarray`
     &gt; **new_y** = `numpy.ndarray`
 
     &gt; Method derived from default function:
     &gt;&gt; sweep_design.math_signals.defaults.methods.interpolate_extrapolate
 
     &gt; **input**:
-    &gt;&gt; **x**: `numpy.ndarray`  
+    &gt;&gt; **x**: `numpy.ndarray`
     &gt;&gt; **y**: `numpy.ndarray`
 
     &gt; **output**:
@@ -569,9 +559,9 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     &gt;&gt; `sweep_design.math_signals.defaults.methods.math_operation`
 
     &gt; **input**:
-    &gt;&gt; **x**: `numpy.ndarray`  
-    &gt;&gt; **y1**: `numpy.ndarray`  
-    &gt;&gt; **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]  
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y1**: `numpy.ndarray`
+    &gt;&gt; **y2**: `Union`[`numpy.ndarray`, `float`, `int`, `complex`]
     &gt;&gt; **name_operation**: `sweep_design.math_signals.defaults.base_structures.MathOperation`
 
     &gt; **output**:
@@ -583,7 +573,7 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     - - -
 
     **integrate_one_method**:
-    &gt; Method for calculating the integral of a sequence on a segment.  
+    &gt; Method for calculating the integral of a sequence on a segment.
     &gt; Method derived from default function:
 
     &gt;&gt; `sweep_design.math_signals.defaults.methods.one_integrate`
@@ -598,44 +588,44 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     - - -
 
     **integrate_method**:
-    &gt; The method by which the integration is performed.  
+    &gt; The method by which the integration is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.integrate`
 
     &gt; **input**:
-    &gt;&gt; **x**: `numpy.ndarray`  
-    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y**: `numpy.ndarray`
     &gt;&gt; d**x**: float - sequence sample rate x
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **x**: `numpy.ndarray`,      
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **differentiate_method**:
-    &gt; The method by which differentiation is performed.  
+    &gt; The method by which differentiation is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.differentiate`
 
     &gt; **input**:
 
-    &gt;&gt; **x**: `numpy.ndarray`  
-    &gt;&gt; **y**: `numpy.ndarray`  
+    &gt;&gt; **x**: `numpy.ndarray`
+    &gt;&gt; **y**: `numpy.ndarray`
     &gt;&gt; **dx**: `float` - sequence sample rate **x**
 
     &gt; **output**:
-    &gt;&gt;Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt;Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **correlate_method**:
-    &gt; The method by which the correlation is performed.  
+    &gt; The method by which the correlation is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.correlate`
 
@@ -645,15 +635,15 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     &gt;&gt; r2: Relation
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **convolve_method**:
-    &gt; The method by which the convolution is performed.  
+    &gt; The method by which the convolution is performed.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.convolve`
 
@@ -663,23 +653,23 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     &gt;&gt; r2: Relation
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+    ]
 
     - - -
 
     **get_common_x**:
     &gt; A method by which to find the common sequence of numbers along
-    &gt; the x-axis, obtained from two other sequences along the x-axis.  
+    &gt; the x-axis, obtained from two other sequences along the x-axis.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.get_common_x`
 
     &gt; **input**:
-    &gt;&gt; **x1**: `numpy.ndarray`  
-    &gt;&gt; **x2**: `numpy.ndarray`  
-    &gt;&gt; **dx1**: float  - sample rate first sequence  
+    &gt;&gt; **x1**: `numpy.ndarray`
+    &gt;&gt; **x2**: `numpy.ndarray`
+    &gt;&gt; **dx1**: float  - sample rate first sequence
     &gt;&gt; **dx2**: float  - sample rate second sequence
 
     &gt; **output**:
@@ -688,39 +678,39 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
     - - -
 
     **spectrum2signal_method**:
-    &gt; Method for converting a spectrum into a signal. (Using Fourier transform)  
+    &gt; Method for converting a spectrum into a signal. (Using Fourier transform)
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
     &gt; **input**:
-    &gt;&gt; **frequenc**: `numpy.ndarray`  
-    **specturm**: `numpy.ndarray`  
-    **start_time**: `float` = `None`  
+    &gt;&gt; **frequenc**: `numpy.ndarray`
+    **specturm**: `numpy.ndarray`
+    **start_time**: `float` = `None`
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-        **time**: `numpy.ndarray`,  
-        **amplitude**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+        **time**: `numpy.ndarray`,
+        **amplitude**: `numpy.ndarray`
+    ]
 
     - - -
 
     **signal2spectrum_method**:
-    &gt; Method for converting a signal into a spectrum. (Using Fourier transform)  
+    &gt; Method for converting a signal into a spectrum. (Using Fourier transform)
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.methods.spectrum2sigmal`
 
     &gt; **input**:
 
-    &gt;&gt; **time**: `numpy.ndarray`  
-    &gt;&gt; **amplitude**: `numpy.ndarray`  
-    &gt;&gt; **is_start_zero** = `False`  
+    &gt;&gt; **time**: `numpy.ndarray`
+    &gt;&gt; **amplitude**: `numpy.ndarray`
+    &gt;&gt; **is_start_zero** = `False`
 
-    &gt; **output**:  
-    &gt;&gt; Tuple [  
-        **frequency**: `numpy.ndarray`,  
-        **spectrum**: `numpy.ndarray`  
-    ]  
+    &gt; **output**:
+    &gt;&gt; Tuple [
+        **frequency**: `numpy.ndarray`,
+        **spectrum**: `numpy.ndarray`
+    ]
 
     - - -
 
@@ -774,18 +764,17 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def convolve(cls: Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
-            -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Convolution.
+<pre><code class="python">def convolve(cls: Type[&#34;Relation&#34;], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Convolution.
 
     Using the numpy.convlove function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     r1 = r1.shift(-r1._x[0])
     r2 = r2.shift(-r2._x[0])
     r1, r2 = cls.equalize(r1, r2)
     x, y1 = r1.get_data()
     _, y2 = r2.get_data()
-    return np.append(np.sort(-1*x)[:-1], x), np.convolve(y1, y2, &#39;full&#39;)</code></pre>
+    return np.append(np.sort(-1 * x)[:-1], x), np.convolve(y1, y2, &#34;full&#34;)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.config.config.Config.correlate_method"><code class="name flex">
@@ -798,18 +787,17 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def correlate(cls:  Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
-            -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Correlation.
+<pre><code class="python">def correlate(cls: Type[&#34;Relation&#34;], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Correlation.
 
     Using the numpy.correlate function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     r1 = r1.shift(-r1._x[0])
     r2 = r2.shift(-r2._x[0])
     r1, r2 = cls.equalize(r1, r2)
     x, y1 = r1.get_data()
     _, y2 = r2.get_data()
-    return np.append(np.sort(-1*x)[:-1], x), np.correlate(y1, y2, &#39;full&#39;)</code></pre>
+    return np.append(np.sort(-1 * x)[:-1], x), np.correlate(y1, y2, &#34;full&#34;)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.config.config.Config.differentiate_method"><code class="name flex">
@@ -823,12 +811,12 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def differentiate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Differentiation.
+    &#34;&#34;&#34;Differentiation.
 
-    Using the numpy.diff function.&#39;&#39;&#39;
+    Using the numpy.diff function.&#34;&#34;&#34;
     if dx is None:
         dx = x[1] - x[0]
-    return x[:-1]+(dx)/2, np.diff(y)/(dx)</code></pre>
+    return x[:-1] + (dx) / 2, np.diff(y) / (dx)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.config.config.Config.get_common_x"><code class="name flex">
@@ -841,40 +829,42 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_common_x(x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None) -&gt; x:
-    &#39;&#39;&#39;Specifies the overall x-axis.
+<pre><code class="python">def get_common_x(
+    x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None
+) -&gt; x:
+    &#34;&#34;&#34;Specifies the overall x-axis.
 
-    Finds the general sample rate and beginning and end of sequence. 
-    &#39;&#39;&#39;
+    Finds the general sample rate and beginning and end of sequence.
+    &#34;&#34;&#34;
     if dx1 is None:
-        dx1 = x1[1]-x1[0]
+        dx1 = x1[1] - x1[0]
     if dx2 is None:
-        dx2 = x2[1]-x2[0]
+        dx2 = x2[1] - x2[0]
     dx = dx1 if dx1 &lt;= dx2 else dx2
     x_start = x1[0] if x1[0] &lt;= x2[0] else x2[0]
     x_end = x1[-1] if x1[-1] &gt;= x2[-1] else x2[-1]
-    X = x_end-x_start
-    return np.linspace(x_start, (int(X/dx))*dx, int(X/dx)+1)</code></pre>
+    X = x_end - x_start
+    return np.linspace(x_start, (int(X / dx)) * dx, int(X / dx) + 1)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.config.config.Config.integrate_method"><code class="name flex">
 <span>def <span class="ident">integrate_method</span></span>(<span>x: numpy.ndarray, y: numpy.ndarray, dx: float = None) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Integration. </p>
+<div class="desc"><p>Integration.</p>
 <p>Using the scipy.integrate.cumtrapz function.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def integrate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Integration. 
-        
+    &#34;&#34;&#34;Integration.
+
     Using the scipy.integrate.cumtrapz function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if dx is None:
         dx = x[1] - x[0]
-    return x[1:], cumulative_trapezoid(y)*(dx)</code></pre>
+    return x[1:], cumulative_trapezoid(y) * (dx)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.config.config.Config.integrate_one_method"><code class="name flex">
@@ -888,10 +878,10 @@ the <strong>input</strong> and <strong>output</strong> parameters)</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def one_integrate(y: np.ndarray, x: np.ndarray = None) -&gt; float:
-    &#39;&#39;&#39;Integration.
+    &#34;&#34;&#34;Integration.
 
-    Taking the integral on a segment. Return of the area under the graph. 
-    &#39;&#39;&#39;
+    Taking the integral on a segment. Return of the area under the graph.
+    &#34;&#34;&#34;
     return trapz(y, x)</code></pre>
 </details>
 </dd>
@@ -906,13 +896,14 @@ Returning function of interpolation.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def interpolate_extrapolate(x: np.ndarray, y: np.ndarray, bounds_error=False,
-                            fill_value=0.) -&gt; Callable[[x], y]:
-    &#39;&#39;&#39;Interpolation.
+<pre><code class="python">def interpolate_extrapolate(
+    x: np.ndarray, y: np.ndarray, bounds_error=False, fill_value=0.0
+) -&gt; Callable[[x], y]:
+    &#34;&#34;&#34;Interpolation.
 
     Using the scyipy.interpolate.interp1d function.
     Returning function of interpolation.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     return interp1d(x, y, bounds_error=bounds_error, fill_value=fill_value)</code></pre>
 </details>
 </dd>
@@ -927,17 +918,17 @@ Returning function of interpolation.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def math_operation(
-        x: np.ndarray,
-        y1: np.ndarray,
-        y2: Union[np.ndarray, Number],
-        name_operation: MathOperation,
-    ) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Math operations.
-    
+    x: np.ndarray,
+    y1: np.ndarray,
+    y2: Union[np.ndarray, Number],
+    name_operation: MathOperation,
+) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Math operations.
+
     Using numpy math operations.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if name_operation == MathOperation.POW:
-        y = np.abs(y1).__getattribute__(name_operation.value)(y2)*np.sign(y1)
+        y = np.abs(y1).__getattribute__(name_operation.value)(y2) * np.sign(y1)
     else:
         y = y1.__getattribute__(name_operation.value)(y2)
 
@@ -954,24 +945,29 @@ Returning function of interpolation.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def signal2spectrum(time: np.ndarray, amplitude: np.ndarray, 
-                        is_start_zero=False) -&gt; Tuple[frequency, spectrum]:
-    &#39;&#39;&#39;Forward Fourier Transform.
-    
+<pre><code class="python">def signal2spectrum(
+    time: np.ndarray, amplitude: np.ndarray, is_start_zero=False
+) -&gt; Tuple[frequency, spectrum]:
+    &#34;&#34;&#34;Forward Fourier Transform.
+
     Using the numpy.fft.rfft function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if not is_start_zero:
-        if time[0] &gt; 0.:
-            time = np.linspace(0., time[-1], int(time[-1]/(time[1]-time[0]))+1)
-            amplitude = np.append(np.zeros(time.size-amplitude.size), amplitude)
-        elif time[-1] &lt; 0.:
-            time = np.linspace(time[0], 0., int(abs(time[0])/(time[1]-time[0]))+1)
-            amplitude = np.append(amplitude, np.zeros(time.size-amplitude.size))
-        
-        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
-    
+        if time[0] &gt; 0.0:
+            time = np.linspace(0.0, time[-1], int(time[-1] / (time[1] - time[0])) + 1)
+            amplitude = np.append(np.zeros(time.size - amplitude.size), amplitude)
+        elif time[-1] &lt; 0.0:
+            time = np.linspace(
+                time[0], 0.0, int(abs(time[0]) / (time[1] - time[0])) + 1
+            )
+            amplitude = np.append(amplitude, np.zeros(time.size - amplitude.size))
+
+        amplitude = np.append(amplitude[time &gt;= 0.0], amplitude[time &lt; 0.0])
+
     spectrum = np.fft.rfft(amplitude)
-    frequency = np.fft.rfftfreq(amplitude.size, d=(time[-1]-time[0])/(amplitude.size))
+    frequency = np.fft.rfftfreq(
+        amplitude.size, d=(time[-1] - time[0]) / (amplitude.size)
+    )
     return frequency, spectrum</code></pre>
 </details>
 </dd>
@@ -985,18 +981,27 @@ Returning function of interpolation.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray, 
-                    time_start: float = None) -&gt; Tuple[time, amplitude]:
-    &#39;&#39;&#39;Inverse Fourier Transform.
-    
+<pre><code class="python">def spectrum2sigmal(
+    frequency: np.ndarray, spectrum: np.ndarray, time_start: float = None
+) -&gt; Tuple[time, amplitude]:
+    &#34;&#34;&#34;Inverse Fourier Transform.
+
     Using the numpy.fft.irfft function.
-    &#39;&#39;&#39;
-    amplitude = np.fft.irfft(spectrum) # type: np.ndarray
+    &#34;&#34;&#34;
+    amplitude = np.fft.irfft(spectrum)  # type: np.ndarray
     if time_start is None:
-        time = np.linspace(0, (amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
+        time = np.linspace(
+            0,
+            (amplitude.size - 1) / (2 * (frequency[-1] - frequency[0])),
+            amplitude.size,
+        )
     else:
-        time = np.linspace(time_start, time_start+(amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
-        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
+        time = np.linspace(
+            time_start,
+            time_start + (amplitude.size - 1) / (2 * (frequency[-1] - frequency[0])),
+            amplitude.size,
+        )
+        amplitude = np.append(amplitude[time &gt;= 0.0], amplitude[time &lt; 0.0])
 
     return time, amplitude</code></pre>
 </details>

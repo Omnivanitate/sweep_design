@@ -30,52 +30,60 @@
 import numpy as np
 from enum import Enum
 
+
 class NotEqualError(Exception):
     def __init__(self, *args: object) -&gt; None:
-        message = f&#39;Different size x_array({args[0]}) and y_array({args[1]})&#39;
+        message = f&#34;Different size x_array({args[0]}) and y_array({args[1]})&#34;
         super().__init__(message)
+
 
 class BadInputError(Exception):
     pass
 
-class ConvertingError(Exception):
 
+class ConvertingError(Exception):
     def __init__(self, *args: object) -&gt; None:
-        message = f&#39;Can not convert type {args[0]} into type {args[1]}.&#39;
+        message = f&#34;Can not convert type {args[0]} into type {args[1]}.&#34;
         super().__init__(message)
 
-class TypeFuncError(Exception):
 
+class TypeFuncError(Exception):
     def __init__(self, *args: object) -&gt; None:
         message = f&#39;operation &#34;{args[0]}&#34; did not complite with type {args[1]} and type {args[2]}&#39;
         super().__init__(message)
 
+
 @runtime_checkable
 class RelationProtocol(Protocol):
+    @property
+    def x(self) -&gt; np.ndarray:
+        ...
 
     @property
-    def x(self) -&gt; np.ndarray: ...
+    def y(self) -&gt; np.ndarray:
+        ...
 
-    @property
-    def y(self) -&gt; np.ndarray: ...
+    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
+        ...
 
-    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]: ...
 
 class MathOperation(Enum):
-    ADD = &#39;__add__&#39;
-    RADD = &#39;__radd__&#39;
-    SUB = &#39;__sub__&#39;
-    RSUB = &#39;__rsub__&#39;
-    MUL = &#39;__mul__&#39;
-    RMUL = &#39;__rmul__&#39;
-    TRUEDIV = &#39;__truediv__&#39;
-    RTRUEDIV = &#39;__rtruediv__&#39;
-    POW = &#39;__pow__&#39;
-    RPOW = &#39;__rpow__&#39;
+    ADD = &#34;__add__&#34;
+    RADD = &#34;__radd__&#34;
+    SUB = &#34;__sub__&#34;
+    RSUB = &#34;__rsub__&#34;
+    MUL = &#34;__mul__&#34;
+    RMUL = &#34;__rmul__&#34;
+    TRUEDIV = &#34;__truediv__&#34;
+    RTRUEDIV = &#34;__rtruediv__&#34;
+    POW = &#34;__pow__&#34;
+    RPOW = &#34;__rpow__&#34;
+
 
 class BaseXY(NamedTuple):
     x: np.ndarray
     y: np.ndarray
+
 
 class Spectrogram(NamedTuple):
     time: np.ndarray
@@ -152,9 +160,8 @@ class Spectrogram(NamedTuple):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ConvertingError(Exception):
-
     def __init__(self, *args: object) -&gt; None:
-        message = f&#39;Can not convert type {args[0]} into type {args[1]}.&#39;
+        message = f&#34;Can not convert type {args[0]} into type {args[1]}.&#34;
         super().__init__(message)</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -174,16 +181,16 @@ class Spectrogram(NamedTuple):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class MathOperation(Enum):
-    ADD = &#39;__add__&#39;
-    RADD = &#39;__radd__&#39;
-    SUB = &#39;__sub__&#39;
-    RSUB = &#39;__rsub__&#39;
-    MUL = &#39;__mul__&#39;
-    RMUL = &#39;__rmul__&#39;
-    TRUEDIV = &#39;__truediv__&#39;
-    RTRUEDIV = &#39;__rtruediv__&#39;
-    POW = &#39;__pow__&#39;
-    RPOW = &#39;__rpow__&#39;</code></pre>
+    ADD = &#34;__add__&#34;
+    RADD = &#34;__radd__&#34;
+    SUB = &#34;__sub__&#34;
+    RSUB = &#34;__rsub__&#34;
+    MUL = &#34;__mul__&#34;
+    RMUL = &#34;__rmul__&#34;
+    TRUEDIV = &#34;__truediv__&#34;
+    RTRUEDIV = &#34;__rtruediv__&#34;
+    POW = &#34;__pow__&#34;
+    RPOW = &#34;__rpow__&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -245,7 +252,7 @@ class Spectrogram(NamedTuple):
 </summary>
 <pre><code class="python">class NotEqualError(Exception):
     def __init__(self, *args: object) -&gt; None:
-        message = f&#39;Different size x_array({args[0]}) and y_array({args[1]})&#39;
+        message = f&#34;Different size x_array({args[0]}) and y_array({args[1]})&#34;
         super().__init__(message)</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -290,14 +297,16 @@ Protocol classes can be generic, they are defined as::</p>
 </summary>
 <pre><code class="python">@runtime_checkable
 class RelationProtocol(Protocol):
+    @property
+    def x(self) -&gt; np.ndarray:
+        ...
 
     @property
-    def x(self) -&gt; np.ndarray: ...
+    def y(self) -&gt; np.ndarray:
+        ...
 
-    @property
-    def y(self) -&gt; np.ndarray: ...
-
-    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]: ...</code></pre>
+    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
+        ...</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -314,7 +323,8 @@ class RelationProtocol(Protocol):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def x(self) -&gt; np.ndarray: ...</code></pre>
+def x(self) -&gt; np.ndarray:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.defaults.base_structures.RelationProtocol.y"><code class="name">var <span class="ident">y</span> : numpy.ndarray</code></dt>
@@ -325,7 +335,8 @@ def x(self) -&gt; np.ndarray: ...</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@property
-def y(self) -&gt; np.ndarray: ...</code></pre>
+def y(self) -&gt; np.ndarray:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -340,7 +351,8 @@ def y(self) -&gt; np.ndarray: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]: ...</code></pre>
+<pre><code class="python">def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -391,7 +403,6 @@ def y(self) -&gt; np.ndarray: ...</code></pre>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TypeFuncError(Exception):
-
     def __init__(self, *args: object) -&gt; None:
         message = f&#39;operation &#34;{args[0]}&#34; did not complite with type {args[1]} and type {args[2]}&#39;
         super().__init__(message)</code></pre>

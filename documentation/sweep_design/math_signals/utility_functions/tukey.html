@@ -32,42 +32,48 @@ from scipy.signal.windows import tukey
 
 
 def tukey_a_t2(time: np.ndarray, t_tapper: float) -&gt; np.ndarray:
-    &#39;&#39;&#39;Tukey function to build the envelop for sweep signal.
-    
+    &#34;&#34;&#34;Tukey function to build the envelop for sweep signal.
+
     Parametrs:
     &gt; time: np.ndarray - time axis
     &gt; t_tapper: float - shape of tukey window in time.
     Returns:
     &gt; envelope: np.ndarray
-    &#39;&#39;&#39;
-    
+    &#34;&#34;&#34;
 
-    if t_tapper&lt;=time[int(time.size/2)]:
-        tapper = time[time&lt;=t_tapper].size*2/time.size
+    if t_tapper &lt;= time[int(time.size / 2)]:
+        tapper = time[time &lt;= t_tapper].size * 2 / time.size
     else:
-        tapper = 1.
+        tapper = 1.0
     return tukey(time.size, alpha=tapper)
 
-def tukey_a_t(time: np.ndarray, t_tapper: float, location: Literal[&#39;left&#39;, &#39;right&#39;, &#39;both&#39;] = &#39;both&#39;):
 
-    if t_tapper&lt;=time[int(time.size/2)]:
-        tapper = time[time&lt;=t_tapper].size*2/time.size
+def tukey_a_t(
+    time: np.ndarray,
+    t_tapper: float,
+    location: Literal[&#34;left&#34;, &#34;right&#34;, &#34;both&#34;] = &#34;both&#34;,
+):
+
+    if t_tapper &lt;= time[int(time.size / 2)]:
+        tapper = time[time &lt;= t_tapper].size * 2 / time.size
     else:
-        tapper = 1.
+        tapper = 1.0
 
     result = tukey(time.size, alpha=tapper)
 
-    if location == &#39;both&#39;:
+    if location == &#34;both&#34;:
         return result
 
-    result = np.append(result[:int(time.size/2)], np.ones(time.size-int(time.size/2)))
-    
-    if location == &#39;left&#39;:
+    result = np.append(
+        result[: int(time.size / 2)], np.ones(time.size - int(time.size / 2))
+    )
+
+    if location == &#34;left&#34;:
         return result
 
-    if location == &#39;right&#39;:
+    if location == &#34;right&#34;:
         return np.flip(result)
-    
+
     return np.ones(time.size)</code></pre>
 </details>
 </section>
@@ -87,26 +93,32 @@ def tukey_a_t(time: np.ndarray, t_tapper: float, location: Literal[&#39;left&#39
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def tukey_a_t(time: np.ndarray, t_tapper: float, location: Literal[&#39;left&#39;, &#39;right&#39;, &#39;both&#39;] = &#39;both&#39;):
+<pre><code class="python">def tukey_a_t(
+    time: np.ndarray,
+    t_tapper: float,
+    location: Literal[&#34;left&#34;, &#34;right&#34;, &#34;both&#34;] = &#34;both&#34;,
+):
 
-    if t_tapper&lt;=time[int(time.size/2)]:
-        tapper = time[time&lt;=t_tapper].size*2/time.size
+    if t_tapper &lt;= time[int(time.size / 2)]:
+        tapper = time[time &lt;= t_tapper].size * 2 / time.size
     else:
-        tapper = 1.
+        tapper = 1.0
 
     result = tukey(time.size, alpha=tapper)
 
-    if location == &#39;both&#39;:
+    if location == &#34;both&#34;:
         return result
 
-    result = np.append(result[:int(time.size/2)], np.ones(time.size-int(time.size/2)))
-    
-    if location == &#39;left&#39;:
+    result = np.append(
+        result[: int(time.size / 2)], np.ones(time.size - int(time.size / 2))
+    )
+
+    if location == &#34;left&#34;:
         return result
 
-    if location == &#39;right&#39;:
+    if location == &#34;right&#34;:
         return np.flip(result)
-    
+
     return np.ones(time.size)</code></pre>
 </details>
 </dd>
@@ -127,20 +139,19 @@ envelope: np.ndarray</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def tukey_a_t2(time: np.ndarray, t_tapper: float) -&gt; np.ndarray:
-    &#39;&#39;&#39;Tukey function to build the envelop for sweep signal.
-    
+    &#34;&#34;&#34;Tukey function to build the envelop for sweep signal.
+
     Parametrs:
     &gt; time: np.ndarray - time axis
     &gt; t_tapper: float - shape of tukey window in time.
     Returns:
     &gt; envelope: np.ndarray
-    &#39;&#39;&#39;
-    
+    &#34;&#34;&#34;
 
-    if t_tapper&lt;=time[int(time.size/2)]:
-        tapper = time[time&lt;=t_tapper].size*2/time.size
+    if t_tapper &lt;= time[int(time.size / 2)]:
+        tapper = time[time &lt;= t_tapper].size * 2 / time.size
     else:
-        tapper = 1.
+        tapper = 1.0
     return tukey(time.size, alpha=tapper)</code></pre>
 </details>
 </dd>

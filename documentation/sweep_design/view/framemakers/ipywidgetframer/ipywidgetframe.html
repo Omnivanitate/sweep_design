@@ -33,93 +33,100 @@ from typing import Any, Dict, Set, Union
 import ipywidgets as widgets
 
 from ...base_view.abc_common_framer_grapher.controller import CommonController
-from ...base_view.abc_common_framer_grapher.frame import (CommonCheckBox,
-                                                           CommonCheckBoxFrame,
-                                                           CommonController,
-                                                           CommonDropdownFrame,
-                                                           CommonFigureFrame,
-                                                           CommonFrame,
-                                                           CommonFrameMaker)
+from ...base_view.abc_common_framer_grapher.frame import (
+    CommonCheckBox,
+    CommonCheckBoxFrame,
+    CommonController,
+    CommonDropdownFrame,
+    CommonFigureFrame,
+    CommonFrame,
+    CommonFrameMaker,
+)
 
 
 class WidgetFrameMaker(CommonFrameMaker):
+    @staticmethod
+    def get_figure_frame(figure, frame_properties: Dict[str, Any]) -&gt; &#34;FigureFrame&#34;:
+
+        window = widgets.HBox([figure])
+        window.layout = widgets.Layout(**frame_properties)
+        return FigureFrame(figure, window)
 
     @staticmethod
-    def get_figure_frame(figure, 
-                            frame_properties: Dict[str, Any]) -&gt; &#39;FigureFrame&#39;:
-        
-        window = widgets.HBox([figure])
-        window.layout = widgets.Layout(**frame_properties)     
-        return FigureFrame(figure, window)
-    
-    @staticmethod
-    def get_checkbox_frame(frame_properties: Dict[str, Any], 
-                            controller: CommonController) -&gt; &#39;CheckBoxFrame&#39;:
-        
-        header_label = frame_properties[&#39;description&#39;]
+    def get_checkbox_frame(
+        frame_properties: Dict[str, Any], controller: CommonController
+    ) -&gt; &#34;CheckBoxFrame&#34;:
+
+        header_label = frame_properties[&#34;description&#34;]
         label = widgets.HTML(value=f&#34;&lt;b&gt;&lt;font color=&#39;black&#39;&gt;{header_label}:&lt;/b&gt;&#34;)
         output = widgets.VBox([label])
         output.layout = widgets.Layout(**frame_properties)
         return CheckBoxFrame(output, controller)
-    
+
     @staticmethod
-    def get_dropdown_frame(dropdown_frame_properties: Dict[str, Any], 
-                                            controller: CommonController) -&gt; &#39;DropdownFrame&#39;:
+    def get_dropdown_frame(
+        dropdown_frame_properties: Dict[str, Any], controller: CommonController
+    ) -&gt; &#34;DropdownFrame&#34;:
         w = widgets.Dropdown(
-            options=[dropdown_frame_properties[&#39;name_no_data&#39;]],
-            value= dropdown_frame_properties[&#39;name_no_data&#39;],
-            description=dropdown_frame_properties[&#39;description&#39;],
-            disabled=False
+            options=[dropdown_frame_properties[&#34;name_no_data&#34;]],
+            value=dropdown_frame_properties[&#34;name_no_data&#34;],
+            description=dropdown_frame_properties[&#34;description&#34;],
+            disabled=False,
         )
         w.layout = widgets.Layout(**dropdown_frame_properties)
-        return DropdownFrame(w, dropdown_frame_properties[&#39;name_no_data&#39;], controller)
+        return DropdownFrame(w, dropdown_frame_properties[&#34;name_no_data&#34;], controller)
+
 
 class WidgetFrame(CommonFrame[widgets.Box, CommonController]):
-    
-    def h_add(self, other: &#39;WidgetFrame&#39;) -&gt; &#39;WidgetFrame&#39;:
-        if not (self._output is None or other._output is None): 
+    def h_add(self, other: &#34;WidgetFrame&#34;) -&gt; &#34;WidgetFrame&#34;:
+        if not (self._output is None or other._output is None):
             return WidgetFrame(widgets.HBox([self._output, other._output]))
         elif self._output is None:
             return other
         else:
             return self
-    
-    def v_add(self, other: &#39;WidgetFrame&#39;) -&gt; &#39;WidgetFrame&#39;:
-        if not (self._output is None or other._output is None): 
+
+    def v_add(self, other: &#34;WidgetFrame&#34;) -&gt; &#34;WidgetFrame&#34;:
+        if not (self._output is None or other._output is None):
             return WidgetFrame(widgets.VBox([self._output, other._output]))
         elif self._output is None:
             return other
         else:
             return self
-    
+
     def add_outputs(self, other: Any) -&gt; None:
         self._output.children += (other,)
-    
+
     def remove_outputs(self, other: Any) -&gt; None:
         list_outputs = list(self._output.children)
         list_outputs.pop(list_outputs.index(other))
         self._output.children = tuple(list_outputs)
 
+
 class FigureFrame(WidgetFrame, CommonFigureFrame):
     pass
 
-class CheckBoxFrame(WidgetFrame, CommonCheckBoxFrame[&#39;CheckBox&#39;]):
 
-    def add_choise(self, choise: str, groups: str, 
-                    checkbox_properties: Dict[str, Any], 
-                    controller: CommonController) -&gt; None:
-        
-        text = &#39;____ {0}&#39;.format(choise)
+class CheckBoxFrame(WidgetFrame, CommonCheckBoxFrame[&#34;CheckBox&#34;]):
+    def add_choise(
+        self,
+        choise: str,
+        groups: str,
+        checkbox_properties: Dict[str, Any],
+        controller: CommonController,
+    ) -&gt; None:
+
+        text = &#34;____ {0}&#34;.format(choise)
         checkbox = widgets.Checkbox(
             value=True,
             description=f&#39;&lt;b&gt;&lt;font color={checkbox_properties[&#34;color&#34;]}&gt;{text}&lt;/b&gt;&#39;,
             disabled=False,
-            indent=False
+            indent=False,
         )
         choise_box = CheckBox(checkbox, choise, groups, controller)
         self.add_outputs(choise_box._output)
         self._checkboxs.update({choise: choise_box})
-    
+
     def return_choise(self, choise: str) -&gt; None:
         self._checkboxs[choise]._checkbox.value = True
         self.add_outputs(self._checkboxs[choise]._output)
@@ -128,37 +135,45 @@ class CheckBoxFrame(WidgetFrame, CommonCheckBoxFrame[&#39;CheckBox&#39;]):
         self._checkboxs[choise]._checkbox.value = False
         self.remove_outputs(self._checkboxs[choise]._output)
 
-class DropdownFrame(WidgetFrame, CommonDropdownFrame[widgets.Dropdown]):
 
-    def __init__(self, dropdown: widgets.Dropdown, no_data_name: str, 
-                                        controller: CommonController) -&gt; None:
+class DropdownFrame(WidgetFrame, CommonDropdownFrame[widgets.Dropdown]):
+    def __init__(
+        self,
+        dropdown: widgets.Dropdown,
+        no_data_name: str,
+        controller: CommonController,
+    ) -&gt; None:
         super().__init__(dropdown, no_data_name, controller)
-        self._dropdown.observe(self._controller.widget_notify(self), &#39;value&#39;)
+        self._dropdown.observe(self._controller.widget_notify(self), &#34;value&#34;)
 
     def add_choise(self, choise: str) -&gt; None:
         options = list(self._dropdown.options)
         options.append(choise)
         self._dropdown.options = options
         self._dropdown.value = choise
-    
+
     def remove_choise(self, choise: str) -&gt; None:
         options = list(self._dropdown.options)
         options.remove(choise)
         self._dropdown.options = options
-    
+
     def get_choise(self) -&gt; None:
         return self._dropdown.value
 
-    
-class CheckBox(WidgetFrame, CommonCheckBox[widgets.Checkbox, CommonController]):
 
-    def __init__(self, output: widgets.Checkbox, name: str, groups: Union[str, Set[str], None], controller: CommonController) -&gt; None:
+class CheckBox(WidgetFrame, CommonCheckBox[widgets.Checkbox, CommonController]):
+    def __init__(
+        self,
+        output: widgets.Checkbox,
+        name: str,
+        groups: Union[str, Set[str], None],
+        controller: CommonController,
+    ) -&gt; None:
         super().__init__(output, name, groups, controller)
-        self._checkbox.observe(self._controller.widget_notify(self), &#39;value&#39;)
+        self._checkbox.observe(self._controller.widget_notify(self), &#34;value&#34;)
 
     def set_select(self, value: bool) -&gt; None:
-        self._checkbox.value = value
-    </code></pre>
+        self._checkbox.value = value</code></pre>
 </details>
 </section>
 <section>
@@ -194,10 +209,15 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CheckBox(WidgetFrame, CommonCheckBox[widgets.Checkbox, CommonController]):
-
-    def __init__(self, output: widgets.Checkbox, name: str, groups: Union[str, Set[str], None], controller: CommonController) -&gt; None:
+    def __init__(
+        self,
+        output: widgets.Checkbox,
+        name: str,
+        groups: Union[str, Set[str], None],
+        controller: CommonController,
+    ) -&gt; None:
         super().__init__(output, name, groups, controller)
-        self._checkbox.observe(self._controller.widget_notify(self), &#39;value&#39;)
+        self._checkbox.observe(self._controller.widget_notify(self), &#34;value&#34;)
 
     def set_select(self, value: bool) -&gt; None:
         self._checkbox.value = value</code></pre>
@@ -249,23 +269,26 @@ return default</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class CheckBoxFrame(WidgetFrame, CommonCheckBoxFrame[&#39;CheckBox&#39;]):
+<pre><code class="python">class CheckBoxFrame(WidgetFrame, CommonCheckBoxFrame[&#34;CheckBox&#34;]):
+    def add_choise(
+        self,
+        choise: str,
+        groups: str,
+        checkbox_properties: Dict[str, Any],
+        controller: CommonController,
+    ) -&gt; None:
 
-    def add_choise(self, choise: str, groups: str, 
-                    checkbox_properties: Dict[str, Any], 
-                    controller: CommonController) -&gt; None:
-        
-        text = &#39;____ {0}&#39;.format(choise)
+        text = &#34;____ {0}&#34;.format(choise)
         checkbox = widgets.Checkbox(
             value=True,
             description=f&#39;&lt;b&gt;&lt;font color={checkbox_properties[&#34;color&#34;]}&gt;{text}&lt;/b&gt;&#39;,
             disabled=False,
-            indent=False
+            indent=False,
         )
         choise_box = CheckBox(checkbox, choise, groups, controller)
         self.add_outputs(choise_box._output)
         self._checkboxs.update({choise: choise_box})
-    
+
     def return_choise(self, choise: str) -&gt; None:
         self._checkboxs[choise]._checkbox.value = True
         self.add_outputs(self._checkboxs[choise]._output)
@@ -292,16 +315,20 @@ return default</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_choise(self, choise: str, groups: str, 
-                checkbox_properties: Dict[str, Any], 
-                controller: CommonController) -&gt; None:
-    
-    text = &#39;____ {0}&#39;.format(choise)
+<pre><code class="python">def add_choise(
+    self,
+    choise: str,
+    groups: str,
+    checkbox_properties: Dict[str, Any],
+    controller: CommonController,
+) -&gt; None:
+
+    text = &#34;____ {0}&#34;.format(choise)
     checkbox = widgets.Checkbox(
         value=True,
         description=f&#39;&lt;b&gt;&lt;font color={checkbox_properties[&#34;color&#34;]}&gt;{text}&lt;/b&gt;&#39;,
         disabled=False,
-        indent=False
+        indent=False,
     )
     choise_box = CheckBox(checkbox, choise, groups, controller)
     self.add_outputs(choise_box._output)
@@ -362,23 +389,26 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class DropdownFrame(WidgetFrame, CommonDropdownFrame[widgets.Dropdown]):
-
-    def __init__(self, dropdown: widgets.Dropdown, no_data_name: str, 
-                                        controller: CommonController) -&gt; None:
+    def __init__(
+        self,
+        dropdown: widgets.Dropdown,
+        no_data_name: str,
+        controller: CommonController,
+    ) -&gt; None:
         super().__init__(dropdown, no_data_name, controller)
-        self._dropdown.observe(self._controller.widget_notify(self), &#39;value&#39;)
+        self._dropdown.observe(self._controller.widget_notify(self), &#34;value&#34;)
 
     def add_choise(self, choise: str) -&gt; None:
         options = list(self._dropdown.options)
         options.append(choise)
         self._dropdown.options = options
         self._dropdown.value = choise
-    
+
     def remove_choise(self, choise: str) -&gt; None:
         options = list(self._dropdown.options)
         options.remove(choise)
         self._dropdown.options = options
-    
+
     def get_choise(self) -&gt; None:
         return self._dropdown.value</code></pre>
 </details>
@@ -495,26 +525,25 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class WidgetFrame(CommonFrame[widgets.Box, CommonController]):
-    
-    def h_add(self, other: &#39;WidgetFrame&#39;) -&gt; &#39;WidgetFrame&#39;:
-        if not (self._output is None or other._output is None): 
+    def h_add(self, other: &#34;WidgetFrame&#34;) -&gt; &#34;WidgetFrame&#34;:
+        if not (self._output is None or other._output is None):
             return WidgetFrame(widgets.HBox([self._output, other._output]))
         elif self._output is None:
             return other
         else:
             return self
-    
-    def v_add(self, other: &#39;WidgetFrame&#39;) -&gt; &#39;WidgetFrame&#39;:
-        if not (self._output is None or other._output is None): 
+
+    def v_add(self, other: &#34;WidgetFrame&#34;) -&gt; &#34;WidgetFrame&#34;:
+        if not (self._output is None or other._output is None):
             return WidgetFrame(widgets.VBox([self._output, other._output]))
         elif self._output is None:
             return other
         else:
             return self
-    
+
     def add_outputs(self, other: Any) -&gt; None:
         self._output.children += (other,)
-    
+
     def remove_outputs(self, other: Any) -&gt; None:
         list_outputs = list(self._output.children)
         list_outputs.pop(list_outputs.index(other))
@@ -556,8 +585,8 @@ return default</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def h_add(self, other: &#39;WidgetFrame&#39;) -&gt; &#39;WidgetFrame&#39;:
-    if not (self._output is None or other._output is None): 
+<pre><code class="python">def h_add(self, other: &#34;WidgetFrame&#34;) -&gt; &#34;WidgetFrame&#34;:
+    if not (self._output is None or other._output is None):
         return WidgetFrame(widgets.HBox([self._output, other._output]))
     elif self._output is None:
         return other
@@ -589,8 +618,8 @@ return default</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def v_add(self, other: &#39;WidgetFrame&#39;) -&gt; &#39;WidgetFrame&#39;:
-    if not (self._output is None or other._output is None): 
+<pre><code class="python">def v_add(self, other: &#34;WidgetFrame&#34;) -&gt; &#34;WidgetFrame&#34;:
+    if not (self._output is None or other._output is None):
         return WidgetFrame(widgets.VBox([self._output, other._output]))
     elif self._output is None:
         return other
@@ -623,36 +652,36 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class WidgetFrameMaker(CommonFrameMaker):
+    @staticmethod
+    def get_figure_frame(figure, frame_properties: Dict[str, Any]) -&gt; &#34;FigureFrame&#34;:
+
+        window = widgets.HBox([figure])
+        window.layout = widgets.Layout(**frame_properties)
+        return FigureFrame(figure, window)
 
     @staticmethod
-    def get_figure_frame(figure, 
-                            frame_properties: Dict[str, Any]) -&gt; &#39;FigureFrame&#39;:
-        
-        window = widgets.HBox([figure])
-        window.layout = widgets.Layout(**frame_properties)     
-        return FigureFrame(figure, window)
-    
-    @staticmethod
-    def get_checkbox_frame(frame_properties: Dict[str, Any], 
-                            controller: CommonController) -&gt; &#39;CheckBoxFrame&#39;:
-        
-        header_label = frame_properties[&#39;description&#39;]
+    def get_checkbox_frame(
+        frame_properties: Dict[str, Any], controller: CommonController
+    ) -&gt; &#34;CheckBoxFrame&#34;:
+
+        header_label = frame_properties[&#34;description&#34;]
         label = widgets.HTML(value=f&#34;&lt;b&gt;&lt;font color=&#39;black&#39;&gt;{header_label}:&lt;/b&gt;&#34;)
         output = widgets.VBox([label])
         output.layout = widgets.Layout(**frame_properties)
         return CheckBoxFrame(output, controller)
-    
+
     @staticmethod
-    def get_dropdown_frame(dropdown_frame_properties: Dict[str, Any], 
-                                            controller: CommonController) -&gt; &#39;DropdownFrame&#39;:
+    def get_dropdown_frame(
+        dropdown_frame_properties: Dict[str, Any], controller: CommonController
+    ) -&gt; &#34;DropdownFrame&#34;:
         w = widgets.Dropdown(
-            options=[dropdown_frame_properties[&#39;name_no_data&#39;]],
-            value= dropdown_frame_properties[&#39;name_no_data&#39;],
-            description=dropdown_frame_properties[&#39;description&#39;],
-            disabled=False
+            options=[dropdown_frame_properties[&#34;name_no_data&#34;]],
+            value=dropdown_frame_properties[&#34;name_no_data&#34;],
+            description=dropdown_frame_properties[&#34;description&#34;],
+            disabled=False,
         )
         w.layout = widgets.Layout(**dropdown_frame_properties)
-        return DropdownFrame(w, dropdown_frame_properties[&#39;name_no_data&#39;], controller)</code></pre>
+        return DropdownFrame(w, dropdown_frame_properties[&#34;name_no_data&#34;], controller)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -671,10 +700,11 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def get_checkbox_frame(frame_properties: Dict[str, Any], 
-                        controller: CommonController) -&gt; &#39;CheckBoxFrame&#39;:
-    
-    header_label = frame_properties[&#39;description&#39;]
+def get_checkbox_frame(
+    frame_properties: Dict[str, Any], controller: CommonController
+) -&gt; &#34;CheckBoxFrame&#34;:
+
+    header_label = frame_properties[&#34;description&#34;]
     label = widgets.HTML(value=f&#34;&lt;b&gt;&lt;font color=&#39;black&#39;&gt;{header_label}:&lt;/b&gt;&#34;)
     output = widgets.VBox([label])
     output.layout = widgets.Layout(**frame_properties)
@@ -691,16 +721,17 @@ def get_checkbox_frame(frame_properties: Dict[str, Any],
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def get_dropdown_frame(dropdown_frame_properties: Dict[str, Any], 
-                                        controller: CommonController) -&gt; &#39;DropdownFrame&#39;:
+def get_dropdown_frame(
+    dropdown_frame_properties: Dict[str, Any], controller: CommonController
+) -&gt; &#34;DropdownFrame&#34;:
     w = widgets.Dropdown(
-        options=[dropdown_frame_properties[&#39;name_no_data&#39;]],
-        value= dropdown_frame_properties[&#39;name_no_data&#39;],
-        description=dropdown_frame_properties[&#39;description&#39;],
-        disabled=False
+        options=[dropdown_frame_properties[&#34;name_no_data&#34;]],
+        value=dropdown_frame_properties[&#34;name_no_data&#34;],
+        description=dropdown_frame_properties[&#34;description&#34;],
+        disabled=False,
     )
     w.layout = widgets.Layout(**dropdown_frame_properties)
-    return DropdownFrame(w, dropdown_frame_properties[&#39;name_no_data&#39;], controller)</code></pre>
+    return DropdownFrame(w, dropdown_frame_properties[&#34;name_no_data&#34;], controller)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.framemakers.ipywidgetframer.ipywidgetframe.WidgetFrameMaker.get_figure_frame"><code class="name flex">
@@ -713,11 +744,10 @@ def get_dropdown_frame(dropdown_frame_properties: Dict[str, Any],
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def get_figure_frame(figure, 
-                        frame_properties: Dict[str, Any]) -&gt; &#39;FigureFrame&#39;:
-    
+def get_figure_frame(figure, frame_properties: Dict[str, Any]) -&gt; &#34;FigureFrame&#34;:
+
     window = widgets.HBox([figure])
-    window.layout = widgets.Layout(**frame_properties)     
+    window.layout = widgets.Layout(**frame_properties)
     return FigureFrame(figure, window)</code></pre>
 </details>
 </dd>

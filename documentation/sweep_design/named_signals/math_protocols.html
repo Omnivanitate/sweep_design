@@ -31,153 +31,215 @@
 import numpy as np
 
 Num = Union[float, int, complex]
-R = TypeVar(&#39;R&#39;, bound=&#39;MathRelation&#39;)
-R2 = TypeVar(&#39;R2&#39;, bound=&#39;MathRelation&#39;)
-SP = TypeVar(&#39;SP&#39;, bound=&#39;MathSpectrum&#39;)
-S = TypeVar(&#39;S&#39;, bound=&#39;MathSignal&#39;)
-SPRN = Union[&#39;MathSpectrum&#39;, &#39;MathRelation&#39;, Num]
-SSPR = Union[&#39;MathSpectrum&#39;, &#39;MathSignal&#39;, &#39;MathRelation&#39;]
-SSPRN = Union[&#39;MathSpectrum&#39;, &#39;MathSignal&#39;, &#39;MathRelation&#39;, Num]
+R = TypeVar(&#34;R&#34;, bound=&#34;MathRelation&#34;)
+R2 = TypeVar(&#34;R2&#34;, bound=&#34;MathRelation&#34;)
+SP = TypeVar(&#34;SP&#34;, bound=&#34;MathSpectrum&#34;)
+S = TypeVar(&#34;S&#34;, bound=&#34;MathSignal&#34;)
+SPRN = Union[&#34;MathSpectrum&#34;, &#34;MathRelation&#34;, Num]
+SSPR = Union[&#34;MathSpectrum&#34;, &#34;MathSignal&#34;, &#34;MathRelation&#34;]
+SSPRN = Union[&#34;MathSpectrum&#34;, &#34;MathSignal&#34;, &#34;MathRelation&#34;, Num]
+
 
 class MathRelation(Sized, Protocol):
     _x: np.ndarray
     _y: np.ndarray
 
-    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]: ...
+    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
+        ...
 
-    def max(self) -&gt; Num: ...
+    def max(self) -&gt; Num:
+        ...
 
-    def min(self) -&gt; Num: ...
+    def min(self) -&gt; Num:
+        ...
 
-    def get_norm(self) -&gt; float: ...
+    def get_norm(self) -&gt; float:
+        ...
 
-    def select_data(
-            self: R, x_start: Num = None, x_end: Num = None, **kwargs
-        ) -&gt; R: ...
+    def select_data(self: R, x_start: Num = None, x_end: Num = None, **kwargs) -&gt; R:
+        ...
 
-    def exp(self: R, **kwargs) -&gt; R: ...
+    def exp(self: R, **kwargs) -&gt; R:
+        ...
 
-    def diff(self: R, **kwargs) -&gt; R: ...
+    def diff(self: R, **kwargs) -&gt; R:
+        ...
 
-    def integrate(self: R, **kwargs) -&gt; R: ...
+    def integrate(self: R, **kwargs) -&gt; R:
+        ...
 
-    def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R: ...
+    def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R:
+        ...
 
-    def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R: ...
+    def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R:
+        ...
 
-    def __add__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __add__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __radd__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __radd__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __sub__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __sub__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rsub__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __rsub__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __mul__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __mul__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rmul__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __rmul__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __truediv__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __truediv__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rtruediv__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __rtruediv__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __pow__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __pow__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rpow__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R:...
+    def __rpow__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __iadd__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __iadd__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __isub__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __isub__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __imul__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __imul__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __idiv__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __idiv__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __ipow__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __ipow__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
     @staticmethod
-    def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...
+    def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]:
+        ...
 
     @classmethod
-    def correlate(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39;, **kwargs) -&gt; R: ...
+    def correlate(cls: Type[R], r1: &#34;MathRelation&#34;, r2: &#34;MathRelation&#34;, **kwargs) -&gt; R:
+        ...
 
     @classmethod
-    def convolve(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39;, **kwargs) -&gt; R: ...
+    def convolve(cls: Type[R], r1: &#34;MathRelation&#34;, r2: &#34;MathRelation&#34;, **kwargs) -&gt; R:
+        ...
+
 
 class MathSpectrum(MathRelation, Protocol):
 
     spectrum: Any
 
-    def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#39;MathSignal&#39;:...
+    def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#34;MathSignal&#34;:
+        ...
 
-    def get_amp_spectrum(self: R, **kwargs) -&gt; &#39;MathRelation&#39;: ...
+    def get_amp_spectrum(self: R, **kwargs) -&gt; &#34;MathRelation&#34;:
+        ...
 
-    def get_phase_spectrum(self: R, **kwargs) -&gt; &#39;MathRelation&#39;: ...
-     
-    def get_reverse_filter(self: SP, percent: Union[float, int] = 5.,
-                           subtrack_phase=True,
-                           f_start: float = None,
-                           f_end: float = None, **kwargs) -&gt; SP: ...
-                           
-    def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP: ...
-        
-    def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP: ...
-       
+    def get_phase_spectrum(self: R, **kwargs) -&gt; &#34;MathRelation&#34;:
+        ...
+
+    def get_reverse_filter(
+        self: SP,
+        percent: Union[float, int] = 5.0,
+        subtrack_phase=True,
+        f_start: float = None,
+        f_end: float = None,
+        **kwargs
+    ) -&gt; SP:
+        ...
+
+    def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        ...
+
+    def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        ...
+
     @classmethod
-    def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
-                                    s2: MathRelation, **kwargs) -&gt; SP: ...
+    def get_spectrum_from_amp_phase(
+        cls: Type[SP], s1: MathRelation, s2: MathRelation, **kwargs
+    ) -&gt; SP:
+        ...
+
     @classmethod
-    def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...
-     
+    def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        ...
+
     @classmethod
-    def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...
-     
-    def __add__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ... 
-    
-    def __sub__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
-    
-    def __mul__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
-    
-    def __truediv__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
-      
-    def __pow__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
+    def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        ...
+
+    def __add__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __sub__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __mul__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __truediv__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __pow__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
 
 
 class MathSignal(MathRelation, Protocol):
-   
-    def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#39;MathSpectrum&#39;: ...
+    def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#34;MathSpectrum&#34;:
+        ...
 
-    def get_reverse_signal(self: S, percent: Union[float, int] = 5.,
-                           subtrack_phase: bool = True,
-                           f_start: float = None,
-                           f_end: float = None,
-                           **kwargs) -&gt; S: ...
-        
-    def add_phase(self: S, other: SSPR, **kwargs) -&gt; S: ...
+    def get_reverse_signal(
+        self: S,
+        percent: Union[float, int] = 5.0,
+        subtrack_phase: bool = True,
+        f_start: float = None,
+        f_end: float = None,
+        **kwargs
+    ) -&gt; S:
+        ...
 
-    def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S: ...
-        
+    def add_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        ...
+
+    def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        ...
+
     @classmethod
-    def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...
-        
+    def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        ...
+
     @classmethod
-    def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...
-     
-    def __add__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        ...
 
-    def __sub__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __add__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
-    def __mul__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __sub__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
-    def __truediv__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __mul__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
-    def __pow__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __truediv__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
+
+    def __pow__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
 
 class MathSpectrogram(Protocol):
     t: np.ndarray
     f: np.ndarray
     S: np.ndarray
+
 
 class MathSweep(MathSignal, Protocol):
     f_t: MathRelation
@@ -233,66 +295,92 @@ Protocol classes can be generic, they are defined as::</p>
     _x: np.ndarray
     _y: np.ndarray
 
-    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]: ...
+    def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
+        ...
 
-    def max(self) -&gt; Num: ...
+    def max(self) -&gt; Num:
+        ...
 
-    def min(self) -&gt; Num: ...
+    def min(self) -&gt; Num:
+        ...
 
-    def get_norm(self) -&gt; float: ...
+    def get_norm(self) -&gt; float:
+        ...
 
-    def select_data(
-            self: R, x_start: Num = None, x_end: Num = None, **kwargs
-        ) -&gt; R: ...
+    def select_data(self: R, x_start: Num = None, x_end: Num = None, **kwargs) -&gt; R:
+        ...
 
-    def exp(self: R, **kwargs) -&gt; R: ...
+    def exp(self: R, **kwargs) -&gt; R:
+        ...
 
-    def diff(self: R, **kwargs) -&gt; R: ...
+    def diff(self: R, **kwargs) -&gt; R:
+        ...
 
-    def integrate(self: R, **kwargs) -&gt; R: ...
+    def integrate(self: R, **kwargs) -&gt; R:
+        ...
 
-    def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R: ...
+    def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R:
+        ...
 
-    def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R: ...
+    def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R:
+        ...
 
-    def __add__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __add__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __radd__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __radd__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __sub__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __sub__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rsub__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __rsub__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __mul__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __mul__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rmul__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __rmul__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __truediv__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __truediv__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rtruediv__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __rtruediv__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __pow__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __pow__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __rpow__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R:...
+    def __rpow__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __iadd__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __iadd__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __isub__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __isub__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __imul__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __imul__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __idiv__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __idiv__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
-    def __ipow__(self: R, other: Union[&#39;MathRelation&#39;, Num], **kwargs) -&gt; R: ...
+    def __ipow__(self: R, other: Union[&#34;MathRelation&#34;, Num], **kwargs) -&gt; R:
+        ...
 
     @staticmethod
-    def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...
+    def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]:
+        ...
 
     @classmethod
-    def correlate(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39;, **kwargs) -&gt; R: ...
+    def correlate(cls: Type[R], r1: &#34;MathRelation&#34;, r2: &#34;MathRelation&#34;, **kwargs) -&gt; R:
+        ...
 
     @classmethod
-    def convolve(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39;, **kwargs) -&gt; R: ...</code></pre>
+    def convolve(cls: Type[R], r1: &#34;MathRelation&#34;, r2: &#34;MathRelation&#34;, **kwargs) -&gt; R:
+        ...</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -317,7 +405,8 @@ Protocol classes can be generic, they are defined as::</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def convolve(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39;, **kwargs) -&gt; R: ...</code></pre>
+def convolve(cls: Type[R], r1: &#34;MathRelation&#34;, r2: &#34;MathRelation&#34;, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.correlate"><code class="name flex">
@@ -330,7 +419,8 @@ def convolve(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def correlate(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#39;, **kwargs) -&gt; R: ...</code></pre>
+def correlate(cls: Type[R], r1: &#34;MathRelation&#34;, r2: &#34;MathRelation&#34;, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.equalize"><code class="name flex">
@@ -343,7 +433,8 @@ def correlate(cls: Type[R], r1: &#39;MathRelation&#39;, r2: &#39;MathRelation&#3
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
+def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -358,7 +449,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def diff(self: R, **kwargs) -&gt; R: ...</code></pre>
+<pre><code class="python">def diff(self: R, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.exp"><code class="name flex">
@@ -370,7 +462,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def exp(self: R, **kwargs) -&gt; R: ...</code></pre>
+<pre><code class="python">def exp(self: R, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.get_data"><code class="name flex">
@@ -382,7 +475,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]: ...</code></pre>
+<pre><code class="python">def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.get_norm"><code class="name flex">
@@ -394,7 +488,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_norm(self) -&gt; float: ...</code></pre>
+<pre><code class="python">def get_norm(self) -&gt; float:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.integrate"><code class="name flex">
@@ -406,7 +501,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def integrate(self: R, **kwargs) -&gt; R: ...</code></pre>
+<pre><code class="python">def integrate(self: R, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.interpolate_extrapolate"><code class="name flex">
@@ -418,7 +514,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R: ...</code></pre>
+<pre><code class="python">def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.max"><code class="name flex">
@@ -430,7 +527,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def max(self) -&gt; Num: ...</code></pre>
+<pre><code class="python">def max(self) -&gt; Num:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.min"><code class="name flex">
@@ -442,7 +540,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def min(self) -&gt; Num: ...</code></pre>
+<pre><code class="python">def min(self) -&gt; Num:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.select_data"><code class="name flex">
@@ -454,9 +553,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def select_data(
-        self: R, x_start: Num = None, x_end: Num = None, **kwargs
-    ) -&gt; R: ...</code></pre>
+<pre><code class="python">def select_data(self: R, x_start: Num = None, x_end: Num = None, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathRelation.shift"><code class="name flex">
@@ -468,7 +566,8 @@ def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]: ...</code></pre>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R: ...</code></pre>
+<pre><code class="python">def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -508,34 +607,47 @@ Protocol classes can be generic, they are defined as::</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class MathSignal(MathRelation, Protocol):
-   
-    def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#39;MathSpectrum&#39;: ...
+    def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#34;MathSpectrum&#34;:
+        ...
 
-    def get_reverse_signal(self: S, percent: Union[float, int] = 5.,
-                           subtrack_phase: bool = True,
-                           f_start: float = None,
-                           f_end: float = None,
-                           **kwargs) -&gt; S: ...
-        
-    def add_phase(self: S, other: SSPR, **kwargs) -&gt; S: ...
+    def get_reverse_signal(
+        self: S,
+        percent: Union[float, int] = 5.0,
+        subtrack_phase: bool = True,
+        f_start: float = None,
+        f_end: float = None,
+        **kwargs
+    ) -&gt; S:
+        ...
 
-    def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S: ...
-        
+    def add_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        ...
+
+    def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+        ...
+
     @classmethod
-    def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...
-        
+    def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        ...
+
     @classmethod
-    def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...
-     
-    def __add__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+        ...
 
-    def __sub__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __add__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
-    def __mul__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __sub__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
-    def __truediv__(self: S, a: SSPRN, **kwargs) -&gt; S: ...
+    def __mul__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
 
-    def __pow__(self: S, a: SSPRN, **kwargs) -&gt; S: ...</code></pre>
+    def __truediv__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...
+
+    def __pow__(self: S, a: SSPRN, **kwargs) -&gt; S:
+        ...</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -560,7 +672,8 @@ Protocol classes can be generic, they are defined as::</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></pre>
+def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSignal.correlate"><code class="name flex">
@@ -573,7 +686,8 @@ def convolve(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></pr
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></pre>
+def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -588,7 +702,8 @@ def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></p
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_phase(self: S, other: SSPR, **kwargs) -&gt; S: ...</code></pre>
+<pre><code class="python">def add_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSignal.get_reverse_signal"><code class="name flex">
@@ -600,11 +715,15 @@ def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></p
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_reverse_signal(self: S, percent: Union[float, int] = 5.,
-                       subtrack_phase: bool = True,
-                       f_start: float = None,
-                       f_end: float = None,
-                       **kwargs) -&gt; S: ...</code></pre>
+<pre><code class="python">def get_reverse_signal(
+    self: S,
+    percent: Union[float, int] = 5.0,
+    subtrack_phase: bool = True,
+    f_start: float = None,
+    f_end: float = None,
+    **kwargs
+) -&gt; S:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSignal.get_spectrum"><code class="name flex">
@@ -616,7 +735,8 @@ def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></p
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#39;MathSpectrum&#39;: ...</code></pre>
+<pre><code class="python">def get_spectrum(self, recalculate=False, is_start_zero=False) -&gt; &#34;MathSpectrum&#34;:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSignal.sub_phase"><code class="name flex">
@@ -628,7 +748,8 @@ def correlate(cls: Type[S], r1: SSPR, r2: SSPR, **kwargs) -&gt; S: ...</code></p
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S: ...</code></pre>
+<pre><code class="python">def sub_phase(self: S, other: SSPR, **kwargs) -&gt; S:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -731,39 +852,59 @@ Protocol classes can be generic, they are defined as::</p>
 
     spectrum: Any
 
-    def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#39;MathSignal&#39;:...
+    def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#34;MathSignal&#34;:
+        ...
 
-    def get_amp_spectrum(self: R, **kwargs) -&gt; &#39;MathRelation&#39;: ...
+    def get_amp_spectrum(self: R, **kwargs) -&gt; &#34;MathRelation&#34;:
+        ...
 
-    def get_phase_spectrum(self: R, **kwargs) -&gt; &#39;MathRelation&#39;: ...
-     
-    def get_reverse_filter(self: SP, percent: Union[float, int] = 5.,
-                           subtrack_phase=True,
-                           f_start: float = None,
-                           f_end: float = None, **kwargs) -&gt; SP: ...
-                           
-    def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP: ...
-        
-    def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP: ...
-       
+    def get_phase_spectrum(self: R, **kwargs) -&gt; &#34;MathRelation&#34;:
+        ...
+
+    def get_reverse_filter(
+        self: SP,
+        percent: Union[float, int] = 5.0,
+        subtrack_phase=True,
+        f_start: float = None,
+        f_end: float = None,
+        **kwargs
+    ) -&gt; SP:
+        ...
+
+    def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        ...
+
+    def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+        ...
+
     @classmethod
-    def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
-                                    s2: MathRelation, **kwargs) -&gt; SP: ...
+    def get_spectrum_from_amp_phase(
+        cls: Type[SP], s1: MathRelation, s2: MathRelation, **kwargs
+    ) -&gt; SP:
+        ...
+
     @classmethod
-    def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...
-     
+    def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        ...
+
     @classmethod
-    def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...
-     
-    def __add__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ... 
-    
-    def __sub__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
-    
-    def __mul__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
-    
-    def __truediv__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...
-      
-    def __pow__(self: SP, a: SSPRN, **kwargs) -&gt; SP: ...</code></pre>
+    def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+        ...
+
+    def __add__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __sub__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __mul__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __truediv__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...
+
+    def __pow__(self: SP, a: SSPRN, **kwargs) -&gt; SP:
+        ...</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -791,7 +932,8 @@ Protocol classes can be generic, they are defined as::</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...</code></pre>
+def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.correlate"><code class="name flex">
@@ -804,7 +946,8 @@ def convolve(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...</code></
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...</code></pre>
+def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.get_spectrum_from_amp_phase"><code class="name flex">
@@ -817,8 +960,10 @@ def correlate(cls: Type[SP], r1: SSPR, r2: SSPR, **kwargs) -&gt; SP: ...</code><
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
-                                s2: MathRelation, **kwargs) -&gt; SP: ...</code></pre>
+def get_spectrum_from_amp_phase(
+    cls: Type[SP], s1: MathRelation, s2: MathRelation, **kwargs
+) -&gt; SP:
+    ...</code></pre>
 </details>
 </dd>
 </dl>
@@ -833,7 +978,8 @@ def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP: ...</code></pre>
+<pre><code class="python">def add_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.get_amp_spectrum"><code class="name flex">
@@ -845,7 +991,8 @@ def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_amp_spectrum(self: R, **kwargs) -&gt; &#39;MathRelation&#39;: ...</code></pre>
+<pre><code class="python">def get_amp_spectrum(self: R, **kwargs) -&gt; &#34;MathRelation&#34;:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.get_phase_spectrum"><code class="name flex">
@@ -857,7 +1004,8 @@ def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_phase_spectrum(self: R, **kwargs) -&gt; &#39;MathRelation&#39;: ...</code></pre>
+<pre><code class="python">def get_phase_spectrum(self: R, **kwargs) -&gt; &#34;MathRelation&#34;:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.get_reverse_filter"><code class="name flex">
@@ -869,10 +1017,15 @@ def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_reverse_filter(self: SP, percent: Union[float, int] = 5.,
-                       subtrack_phase=True,
-                       f_start: float = None,
-                       f_end: float = None, **kwargs) -&gt; SP: ...</code></pre>
+<pre><code class="python">def get_reverse_filter(
+    self: SP,
+    percent: Union[float, int] = 5.0,
+    subtrack_phase=True,
+    f_start: float = None,
+    f_end: float = None,
+    **kwargs
+) -&gt; SP:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.get_signal"><code class="name flex">
@@ -884,7 +1037,8 @@ def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#39;MathSignal&#39;:...</code></pre>
+<pre><code class="python">def get_signal(self, recalculate=False, start_time: float = None) -&gt; &#34;MathSignal&#34;:
+    ...</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.math_protocols.MathSpectrum.sub_phase"><code class="name flex">
@@ -896,7 +1050,8 @@ def get_spectrum_from_amp_phase(cls: Type[SP], s1: MathRelation,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP: ...</code></pre>
+<pre><code class="python">def sub_phase(self: SP, other: SSPR, **kwargs) -&gt; SP:
+    ...</code></pre>
 </details>
 </dd>
 </dl>

@@ -27,42 +27,46 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">from ...base_view.default_screen_properties import get_screen_params
+
 _result = get_screen_params()
 
-_width, _height = _result[&#39;width&#39;], _result[&#39;height&#39;]
+_width, _height = _result[&#34;width&#34;], _result[&#34;height&#34;]
 
-def get_figure_frame(k_width=1., k_height=1.):
-        
+
+def get_figure_frame(k_width=1.0, k_height=1.0):
+
     figure_frame = {
-        &#39;width&#39;: f&#39;{int(_width*k_width)}px&#39;,
-        &#39;hieght&#39;: f&#39;{int(_height*k_height)}px&#39;,
-        &#39;border&#39;:&#39;solid 1px black&#39;,
-        &#39;margins&#39;:&#39;10px, 10px, 10px, 10px&#39;,
-        &#39;padding&#39;:&#39;5px, 5px, 5px, 5px&#39;,
+        &#34;width&#34;: f&#34;{int(_width*k_width)}px&#34;,
+        &#34;hieght&#34;: f&#34;{int(_height*k_height)}px&#34;,
+        &#34;border&#34;: &#34;solid 1px black&#34;,
+        &#34;margins&#34;: &#34;10px, 10px, 10px, 10px&#34;,
+        &#34;padding&#34;: &#34;5px, 5px, 5px, 5px&#34;,
     }
     return figure_frame
 
-def get_checkbox_frame(description: str, no_data: str = &#39;&#39;, k_width = 1., k_height=1.):
+
+def get_checkbox_frame(description: str, no_data: str = &#34;&#34;, k_width=1.0, k_height=1.0):
     checkbox_frame = {
-        &#39;width&#39;: f&#39;{int(_width*k_width)}px&#39;,
-        &#39;hieght&#39;: f&#39;{int(_height**k_height)}px&#39;,
-        &#39;border&#39;:&#39;solid 1px black&#39;,
-        &#39;margins&#39;:&#39;10px, 10px, 10px, 10px&#39;,
-        &#39;padding&#39;:&#39;5px, 5px, 5px, 5px&#39;,
-        &#39;name_no_data&#39;: no_data,
-        &#39;description&#39;: description
+        &#34;width&#34;: f&#34;{int(_width*k_width)}px&#34;,
+        &#34;hieght&#34;: f&#34;{int(_height**k_height)}px&#34;,
+        &#34;border&#34;: &#34;solid 1px black&#34;,
+        &#34;margins&#34;: &#34;10px, 10px, 10px, 10px&#34;,
+        &#34;padding&#34;: &#34;5px, 5px, 5px, 5px&#34;,
+        &#34;name_no_data&#34;: no_data,
+        &#34;description&#34;: description,
     }
     return checkbox_frame
 
-def get_dropdown_frame(description: str, no_data: str): 
+
+def get_dropdown_frame(description: str, no_data: str):
     dropdown_frame = {
-        &#39;description&#39;: description,
-        &#39;name_no_data&#39;: no_data,
-        &#39;border&#39;:&#39;solid 0px black&#39;,
-        &#39;margins&#39;:&#39;10px, 10px, 10px, 10px&#39;,
-        &#39;padding&#39;:&#39;5px, 5px, 5px, 5px&#39;,
-        &#39;name_no_data&#39;: &#39;No sweep signals!&#39;,
-        &#39;description&#39;: &#39;Sweep signals:&#39;,
+        &#34;description&#34;: description,
+        &#34;name_no_data&#34;: no_data,
+        &#34;border&#34;: &#34;solid 0px black&#34;,
+        &#34;margins&#34;: &#34;10px, 10px, 10px, 10px&#34;,
+        &#34;padding&#34;: &#34;5px, 5px, 5px, 5px&#34;,
+        &#34;name_no_data&#34;: &#34;No sweep signals!&#34;,
+        &#34;description&#34;: &#34;Sweep signals:&#34;,
     }
     return dropdown_frame</code></pre>
 </details>
@@ -83,15 +87,15 @@ def get_dropdown_frame(description: str, no_data: str):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_checkbox_frame(description: str, no_data: str = &#39;&#39;, k_width = 1., k_height=1.):
+<pre><code class="python">def get_checkbox_frame(description: str, no_data: str = &#34;&#34;, k_width=1.0, k_height=1.0):
     checkbox_frame = {
-        &#39;width&#39;: f&#39;{int(_width*k_width)}px&#39;,
-        &#39;hieght&#39;: f&#39;{int(_height**k_height)}px&#39;,
-        &#39;border&#39;:&#39;solid 1px black&#39;,
-        &#39;margins&#39;:&#39;10px, 10px, 10px, 10px&#39;,
-        &#39;padding&#39;:&#39;5px, 5px, 5px, 5px&#39;,
-        &#39;name_no_data&#39;: no_data,
-        &#39;description&#39;: description
+        &#34;width&#34;: f&#34;{int(_width*k_width)}px&#34;,
+        &#34;hieght&#34;: f&#34;{int(_height**k_height)}px&#34;,
+        &#34;border&#34;: &#34;solid 1px black&#34;,
+        &#34;margins&#34;: &#34;10px, 10px, 10px, 10px&#34;,
+        &#34;padding&#34;: &#34;5px, 5px, 5px, 5px&#34;,
+        &#34;name_no_data&#34;: no_data,
+        &#34;description&#34;: description,
     }
     return checkbox_frame</code></pre>
 </details>
@@ -105,15 +109,15 @@ def get_dropdown_frame(description: str, no_data: str):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_dropdown_frame(description: str, no_data: str): 
+<pre><code class="python">def get_dropdown_frame(description: str, no_data: str):
     dropdown_frame = {
-        &#39;description&#39;: description,
-        &#39;name_no_data&#39;: no_data,
-        &#39;border&#39;:&#39;solid 0px black&#39;,
-        &#39;margins&#39;:&#39;10px, 10px, 10px, 10px&#39;,
-        &#39;padding&#39;:&#39;5px, 5px, 5px, 5px&#39;,
-        &#39;name_no_data&#39;: &#39;No sweep signals!&#39;,
-        &#39;description&#39;: &#39;Sweep signals:&#39;,
+        &#34;description&#34;: description,
+        &#34;name_no_data&#34;: no_data,
+        &#34;border&#34;: &#34;solid 0px black&#34;,
+        &#34;margins&#34;: &#34;10px, 10px, 10px, 10px&#34;,
+        &#34;padding&#34;: &#34;5px, 5px, 5px, 5px&#34;,
+        &#34;name_no_data&#34;: &#34;No sweep signals!&#34;,
+        &#34;description&#34;: &#34;Sweep signals:&#34;,
     }
     return dropdown_frame</code></pre>
 </details>
@@ -127,14 +131,14 @@ def get_dropdown_frame(description: str, no_data: str):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_figure_frame(k_width=1., k_height=1.):
-        
+<pre><code class="python">def get_figure_frame(k_width=1.0, k_height=1.0):
+
     figure_frame = {
-        &#39;width&#39;: f&#39;{int(_width*k_width)}px&#39;,
-        &#39;hieght&#39;: f&#39;{int(_height*k_height)}px&#39;,
-        &#39;border&#39;:&#39;solid 1px black&#39;,
-        &#39;margins&#39;:&#39;10px, 10px, 10px, 10px&#39;,
-        &#39;padding&#39;:&#39;5px, 5px, 5px, 5px&#39;,
+        &#34;width&#34;: f&#34;{int(_width*k_width)}px&#34;,
+        &#34;hieght&#34;: f&#34;{int(_height*k_height)}px&#34;,
+        &#34;border&#34;: &#34;solid 1px black&#34;,
+        &#34;margins&#34;: &#34;10px, 10px, 10px, 10px&#34;,
+        &#34;padding&#34;: &#34;5px, 5px, 5px, 5px&#34;,
     }
     return figure_frame</code></pre>
 </details>

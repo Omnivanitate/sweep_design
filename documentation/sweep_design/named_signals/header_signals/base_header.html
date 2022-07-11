@@ -30,12 +30,12 @@
 from abc import ABCMeta, abstractmethod
 
 
-InName = Union[&#39;HeaderBase&#39;, str, Callable[..., str]]
+InName = Union[&#34;HeaderBase&#34;, str, Callable[..., str]]
+
 
 class HeaderBase(metaclass=ABCMeta):
-
     def __init__(self, name: InName, category: str) -&gt; None:
-        
+
         if callable(name):
             self._name = name
             self._category = category
@@ -44,21 +44,22 @@ class HeaderBase(metaclass=ABCMeta):
             self._category = name._category
         else:
             r_name = str(name)
+
             def call() -&gt; str:
                 return r_name
+
             self._name = call
             self._category = category
-    
+
     @property
     @abstractmethod
     def category(self) -&gt; str:
         pass
-  
+
     @property
     @abstractmethod
     def name(self) -&gt; Callable[..., str]:
-        pass
-    </code></pre>
+        pass</code></pre>
 </details>
 </section>
 <section>
@@ -81,9 +82,8 @@ class HeaderBase(metaclass=ABCMeta):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class HeaderBase(metaclass=ABCMeta):
-
     def __init__(self, name: InName, category: str) -&gt; None:
-        
+
         if callable(name):
             self._name = name
             self._category = category
@@ -92,16 +92,18 @@ class HeaderBase(metaclass=ABCMeta):
             self._category = name._category
         else:
             r_name = str(name)
+
             def call() -&gt; str:
                 return r_name
+
             self._name = call
             self._category = category
-    
+
     @property
     @abstractmethod
     def category(self) -&gt; str:
         pass
-  
+
     @property
     @abstractmethod
     def name(self) -&gt; Callable[..., str]:

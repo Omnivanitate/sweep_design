@@ -28,29 +28,39 @@
 </summary>
 <pre><code class="python">import numpy as np
 from abc import ABCMeta, abstractmethod, abstractstaticmethod
-from typing import Any, Dict, Iterable, List, Literal, Optional, Set, Union, TypeVar, Generic
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    List,
+    Literal,
+    Optional,
+    Set,
+    Union,
+    TypeVar,
+    Generic,
+)
 
-Figure = TypeVar(&#39;Figure&#39;)
-Line = TypeVar(&#39;Line&#39;)
-Image = TypeVar(&#39;Image&#39;)
+Figure = TypeVar(&#34;Figure&#34;)
+Line = TypeVar(&#34;Line&#34;)
+Image = TypeVar(&#34;Image&#34;)
+
 
 class CommonFigureMaker(metaclass=ABCMeta):
-    
     @abstractstaticmethod
-    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;CommonFigure&#39;:
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;CommonFigure&#34;:
         pass
 
     @abstractmethod
     def get_next_line_properties(self) -&gt; Dict[str, Any]:
         pass
-    
+
     @abstractmethod
     def get_next_image_properties(self) -&gt; Dict[str, Any]:
         pass
-    
+
 
 class CommonFigure(Generic[Figure], metaclass=ABCMeta):
-
     @abstractmethod
     def __init__(self, figure: Figure) -&gt; None:
         self._figure = figure
@@ -62,47 +72,72 @@ class CommonFigure(Generic[Figure], metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str, 
-        groups: Union[str, Set[str]], line_properties: Dict[str, Any]) -&gt; &#39;CommonLine&#39;:
+    def add_line(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        unique_name: str,
+        groups: Union[str, Set[str]],
+        line_properties: Dict[str, Any],
+    ) -&gt; &#34;CommonLine&#34;:
         pass
-    
+
     @abstractmethod
-    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str,
-        groups: Set[str], image_properties: Dict[str, Any]) -&gt; None:
+    def add_image(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        s_xy: np.ndarray,
+        unique_name: str,
+        groups: Set[str],
+        image_properties: Dict[str, Any],
+    ) -&gt; None:
         pass
-    
+
     @abstractmethod
-    def add_infty_line(self, k: float, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+    def add_infty_line(
+        self,
+        k: float,
+        axis: Literal[&#34;x&#34;, &#34;y&#34;],
+        unique_name: str,
+        groups: Set[str],
+        line_properties: Dict[str, Any],
+    ) -&gt; None:
         pass
 
     def get_figure(self) -&gt; Figure:
         return self._figure
 
-    def get_line(self, unique_name) -&gt; Optional[&#39;CommonLine&#39;]:
+    def get_line(self, unique_name) -&gt; Optional[&#34;CommonLine&#34;]:
         return self._lines.get(unique_name, None)
 
-    def get_image(self, unique_name) -&gt; Optional[&#39;CommonImage&#39;]:
+    def get_image(self, unique_name) -&gt; Optional[&#34;CommonImage&#34;]:
         return self._images.get(unique_name, None)
 
-    def get_lines_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#39;CommonLine&#39;]:
+    def get_lines_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#34;CommonLine&#34;]:
         if isinstance(groups, str):
             groups = set([groups])
-        return [line for line in self._lines.values() if groups.issubset(line.get_groups())]
+        return [
+            line for line in self._lines.values() if groups.issubset(line.get_groups())
+        ]
 
-    def get_images_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#39;CommonImage&#39;]:
+    def get_images_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#34;CommonImage&#34;]:
         if isinstance(groups, str):
             groups = set([groups])
-        return [image for image in self._images.values() if groups.issubset(image.get_groups())]
+        return [
+            image
+            for image in self._images.values()
+            if groups.issubset(image.get_groups())
+        ]
+
 
 class CommonGraphElement(metaclass=ABCMeta):
-    
     def __init__(self, name: str, groups: Union[str, Set[str]]) -&gt; None:
         self._name = name
         if isinstance(groups, str):
             groups = set([groups])
         self._groups = groups
-    
+
     def set_groups(self, groups: Union[str, Iterable[str]]) -&gt; None:
         if isinstance(groups, str):
             groups = set([groups])
@@ -124,8 +159,8 @@ class CommonGraphElement(metaclass=ABCMeta):
     def set_visible(self, is_visible: bool) -&gt; None:
         pass
 
+
 class CommonLine(CommonGraphElement, Generic[Line]):
-    
     def __init__(self, line: Line, name: str, groups: Union[str, Set[str]]) -&gt; None:
         self._line = line
         super().__init__(name, groups)
@@ -136,7 +171,6 @@ class CommonLine(CommonGraphElement, Generic[Line]):
 
 
 class CommonImage(CommonGraphElement, Generic[Image]):
-    
     def __init__(self, image: Image, name: str, groups: Union[str, Set[str]]) -&gt; None:
         self._image = image
         super().__init__(name, groups)</code></pre>
@@ -175,7 +209,6 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonFigure(Generic[Figure], metaclass=ABCMeta):
-
     @abstractmethod
     def __init__(self, figure: Figure) -&gt; None:
         self._figure = figure
@@ -187,38 +220,63 @@ return default</p></div>
         pass
 
     @abstractmethod
-    def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str, 
-        groups: Union[str, Set[str]], line_properties: Dict[str, Any]) -&gt; &#39;CommonLine&#39;:
+    def add_line(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        unique_name: str,
+        groups: Union[str, Set[str]],
+        line_properties: Dict[str, Any],
+    ) -&gt; &#34;CommonLine&#34;:
         pass
-    
+
     @abstractmethod
-    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str,
-        groups: Set[str], image_properties: Dict[str, Any]) -&gt; None:
+    def add_image(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        s_xy: np.ndarray,
+        unique_name: str,
+        groups: Set[str],
+        image_properties: Dict[str, Any],
+    ) -&gt; None:
         pass
-    
+
     @abstractmethod
-    def add_infty_line(self, k: float, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+    def add_infty_line(
+        self,
+        k: float,
+        axis: Literal[&#34;x&#34;, &#34;y&#34;],
+        unique_name: str,
+        groups: Set[str],
+        line_properties: Dict[str, Any],
+    ) -&gt; None:
         pass
 
     def get_figure(self) -&gt; Figure:
         return self._figure
 
-    def get_line(self, unique_name) -&gt; Optional[&#39;CommonLine&#39;]:
+    def get_line(self, unique_name) -&gt; Optional[&#34;CommonLine&#34;]:
         return self._lines.get(unique_name, None)
 
-    def get_image(self, unique_name) -&gt; Optional[&#39;CommonImage&#39;]:
+    def get_image(self, unique_name) -&gt; Optional[&#34;CommonImage&#34;]:
         return self._images.get(unique_name, None)
 
-    def get_lines_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#39;CommonLine&#39;]:
+    def get_lines_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#34;CommonLine&#34;]:
         if isinstance(groups, str):
             groups = set([groups])
-        return [line for line in self._lines.values() if groups.issubset(line.get_groups())]
+        return [
+            line for line in self._lines.values() if groups.issubset(line.get_groups())
+        ]
 
-    def get_images_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#39;CommonImage&#39;]:
+    def get_images_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#34;CommonImage&#34;]:
         if isinstance(groups, str):
             groups = set([groups])
-        return [image for image in self._images.values() if groups.issubset(image.get_groups())]</code></pre>
+        return [
+            image
+            for image in self._images.values()
+            if groups.issubset(image.get_groups())
+        ]</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -255,8 +313,15 @@ def add_extra_axis(self, axis_name: str, axis_titel: str, location: str) -&gt; N
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str,
-    groups: Set[str], image_properties: Dict[str, Any]) -&gt; None:
+def add_image(
+    self,
+    x: np.ndarray,
+    y: np.ndarray,
+    s_xy: np.ndarray,
+    unique_name: str,
+    groups: Set[str],
+    image_properties: Dict[str, Any],
+) -&gt; None:
     pass</code></pre>
 </details>
 </dd>
@@ -270,8 +335,14 @@ def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def add_infty_line(self, k: float, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-    groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+def add_infty_line(
+    self,
+    k: float,
+    axis: Literal[&#34;x&#34;, &#34;y&#34;],
+    unique_name: str,
+    groups: Set[str],
+    line_properties: Dict[str, Any],
+) -&gt; None:
     pass</code></pre>
 </details>
 </dd>
@@ -285,8 +356,14 @@ def add_infty_line(self, k: float, axis: Literal[&#39;x&#39;, &#39;y&#39;], uniq
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str, 
-    groups: Union[str, Set[str]], line_properties: Dict[str, Any]) -&gt; &#39;CommonLine&#39;:
+def add_line(
+    self,
+    x: np.ndarray,
+    y: np.ndarray,
+    unique_name: str,
+    groups: Union[str, Set[str]],
+    line_properties: Dict[str, Any],
+) -&gt; &#34;CommonLine&#34;:
     pass</code></pre>
 </details>
 </dd>
@@ -312,7 +389,7 @@ def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_image(self, unique_name) -&gt; Optional[&#39;CommonImage&#39;]:
+<pre><code class="python">def get_image(self, unique_name) -&gt; Optional[&#34;CommonImage&#34;]:
     return self._images.get(unique_name, None)</code></pre>
 </details>
 </dd>
@@ -325,10 +402,14 @@ def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_images_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#39;CommonImage&#39;]:
+<pre><code class="python">def get_images_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#34;CommonImage&#34;]:
     if isinstance(groups, str):
         groups = set([groups])
-    return [image for image in self._images.values() if groups.issubset(image.get_groups())]</code></pre>
+    return [
+        image
+        for image in self._images.values()
+        if groups.issubset(image.get_groups())
+    ]</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.base_view.abc_common_framer_grapher.figure.CommonFigure.get_line"><code class="name flex">
@@ -340,7 +421,7 @@ def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_line(self, unique_name) -&gt; Optional[&#39;CommonLine&#39;]:
+<pre><code class="python">def get_line(self, unique_name) -&gt; Optional[&#34;CommonLine&#34;]:
     return self._lines.get(unique_name, None)</code></pre>
 </details>
 </dd>
@@ -353,10 +434,12 @@ def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_lines_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#39;CommonLine&#39;]:
+<pre><code class="python">def get_lines_by_groups(self, groups: Union[str, Set[str]]) -&gt; List[&#34;CommonLine&#34;]:
     if isinstance(groups, str):
         groups = set([groups])
-    return [line for line in self._lines.values() if groups.issubset(line.get_groups())]</code></pre>
+    return [
+        line for line in self._lines.values() if groups.issubset(line.get_groups())
+    ]</code></pre>
 </details>
 </dd>
 </dl>
@@ -371,15 +454,14 @@ def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str,
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonFigureMaker(metaclass=ABCMeta):
-    
     @abstractstaticmethod
-    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;CommonFigure&#39;:
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;CommonFigure&#34;:
         pass
 
     @abstractmethod
     def get_next_line_properties(self) -&gt; Dict[str, Any]:
         pass
-    
+
     @abstractmethod
     def get_next_image_properties(self) -&gt; Dict[str, Any]:
         pass</code></pre>
@@ -401,7 +483,7 @@ def add_line(self, x: np.ndarray, y: np.ndarray, unique_name: str,
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractstaticmethod
-def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;CommonFigure&#39;:
+def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;CommonFigure&#34;:
     pass</code></pre>
 </details>
 </dd>
@@ -449,13 +531,12 @@ def get_next_line_properties(self) -&gt; Dict[str, Any]:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonGraphElement(metaclass=ABCMeta):
-    
     def __init__(self, name: str, groups: Union[str, Set[str]]) -&gt; None:
         self._name = name
         if isinstance(groups, str):
             groups = set([groups])
         self._groups = groups
-    
+
     def set_groups(self, groups: Union[str, Iterable[str]]) -&gt; None:
         if isinstance(groups, str):
             groups = set([groups])
@@ -581,7 +662,6 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonImage(CommonGraphElement, Generic[Image]):
-    
     def __init__(self, image: Image, name: str, groups: Union[str, Set[str]]) -&gt; None:
         self._image = image
         super().__init__(name, groups)</code></pre>
@@ -621,7 +701,6 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonLine(CommonGraphElement, Generic[Line]):
-    
     def __init__(self, line: Line, name: str, groups: Union[str, Set[str]]) -&gt; None:
         self._line = line
         super().__init__(name, groups)

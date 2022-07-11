@@ -26,7 +26,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from typing import  Callable, Optional, Union
+<pre><code class="python">from typing import Callable, Optional, Union
 import numpy as np
 
 from ....math_signals.defaults.base_structures import MathOperation
@@ -35,137 +35,171 @@ from ..base_header import HeaderBase
 Num = Union[float, int, complex]
 InName = Union[HeaderBase, str, Callable[[], str]]
 
-def make_default_names_operations(obj1: HeaderBase, 
-            obj2: Union[HeaderBase, Num], operation: MathOperation) -&gt; str:
+
+def make_default_names_operations(
+    obj1: HeaderBase, obj2: Union[HeaderBase, Num], operation: MathOperation
+) -&gt; str:
     default_names_operations = {
-        &#39;__add__&#39;: &#39;({0} + {1})&#39;,
-        &#39;__sub__&#39;: &#39;({0} - {1})&#39;,
-        &#39;__mul__&#39;: &#39;({0} * {1})&#39;,
-        &#39;__truediv__&#39;: &#39;({0} / {1})&#39;,
-        &#39;__pow__&#39;: &#39;({0} ** {1})&#39;,
-        &#39;__radd__&#39;: &#39;({0} + {1})&#39;,
-        &#39;__rsub__&#39;: &#39;({0} - {1})&#39;,
-        &#39;__rmul__&#39;: &#39;({0} * {1})&#39;,
-        &#39;__rtruediv__&#39;: &#39;({0} / {1})&#39;,
-        &#39;__rpow__&#39;: &#39;({0}) ** {1})&#39;
+        &#34;__add__&#34;: &#34;({0} + {1})&#34;,
+        &#34;__sub__&#34;: &#34;({0} - {1})&#34;,
+        &#34;__mul__&#34;: &#34;({0} * {1})&#34;,
+        &#34;__truediv__&#34;: &#34;({0} / {1})&#34;,
+        &#34;__pow__&#34;: &#34;({0} ** {1})&#34;,
+        &#34;__radd__&#34;: &#34;({0} + {1})&#34;,
+        &#34;__rsub__&#34;: &#34;({0} - {1})&#34;,
+        &#34;__rmul__&#34;: &#34;({0} * {1})&#34;,
+        &#34;__rtruediv__&#34;: &#34;({0} / {1})&#34;,
+        &#34;__rpow__&#34;: &#34;({0}) ** {1})&#34;,
     }
     return default_names_operations[operation.value].format(obj1, obj2)
 
-def make_default_name_select_data(obj: HeaderBase, x_start: Num, 
-                                    x_end: Num) -&gt; str:
-    return &#39;{0} [{1}-{2}]&#39;.format(obj.name(), x_start, x_end)
-    
+
+def make_default_name_select_data(obj: HeaderBase, x_start: Num, x_end: Num) -&gt; str:
+    return &#34;{0} [{1}-{2}]&#34;.format(obj.name(), x_start, x_end)
+
+
 def make_default_name_exp(obj: HeaderBase) -&gt; str:
-    return &#39;exp({0})&#39;.format(obj.name())
+    return &#34;exp({0})&#34;.format(obj.name())
+
 
 def make_default_diff_name(obj: HeaderBase) -&gt; str:
-    return &#39;diff({0})&#39;.format(obj.name())
+    return &#34;diff({0})&#34;.format(obj.name())
+
 
 def make_default_integrate_name(obj: HeaderBase) -&gt; str:
-    return &#39;integrate({0})&#39;.format(obj.name())
+    return &#34;integrate({0})&#34;.format(obj.name())
+
 
 def make_default_shift_name(obj: HeaderBase, x_shift: Num) -&gt; str:
-    return &#39;Shift({0}) by {1}&#39;.format(obj.name(), x_shift)
+    return &#34;Shift({0}) by {1}&#34;.format(obj.name(), x_shift)
 
-def make_default_interpolate_name(obj: HeaderBase, 
-                                            new_x: np.ndarray) -&gt; str:
-    return &#39;inerp({0} {1}-{2} dx:{3})&#39;.format(
-            obj.name(), new_x[0], new_x[-1], new_x[1]-new_x[0]
-            )
 
-def make_default_name_correlation(obj1:HeaderBase, 
-                                    obj2: HeaderBase) -&gt; str:
-    return &#39;(Corr({0} &amp; {1}))&#39;.format(obj1._name(), obj2._name())
+def make_default_interpolate_name(obj: HeaderBase, new_x: np.ndarray) -&gt; str:
+    return &#34;inerp({0} {1}-{2} dx:{3})&#34;.format(
+        obj.name(), new_x[0], new_x[-1], new_x[1] - new_x[0]
+    )
 
-def make_default_name_convolution(obj1: HeaderBase, 
-                                        obj2: HeaderBase) -&gt; str:
-    return &#39;(Conv({0} &amp; {1}))&#39;.format(obj1, obj2)
+
+def make_default_name_correlation(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
+    return &#34;(Corr({0} &amp; {1}))&#34;.format(obj1._name(), obj2._name())
+
+
+def make_default_name_convolution(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
+    return &#34;(Conv({0} &amp; {1}))&#34;.format(obj1, obj2)
+
 
 def make_default_relation_name(name: int) -&gt; str:
-    return &#39;R_{0}&#39;.format(name)
+    return &#34;R_{0}&#34;.format(name)
+
 
 def make_diff_category_name(name: str) -&gt; str:
-    return &#39;diff_{0}&#39;.format(name)
+    return &#34;diff_{0}&#34;.format(name)
+
 
 def make_integrate_category_name(name: str) -&gt; str:
-    return &#39;integrate_{0}&#39;.format(name)
+    return &#34;integrate_{0}&#34;.format(name)
 
-#==============================================================================
+
+# ==============================================================================
+
 
 def get_default_spectrum_name(obj: HeaderBase) -&gt; str:
-    return &#39;{0}&#39;.format(obj)
+    return &#34;{0}&#34;.format(obj)
+
 
 def make_default_spectrum2signal_name(obj: HeaderBase) -&gt; str:
-    return &#39;({0})toS&#39;.format(obj)
+    return &#34;({0})toS&#34;.format(obj)
+
 
 def make_default_signal2spectrum_name(obj: HeaderBase) -&gt; str:
-    return &#39;({0})toSP&#39;.format(obj)
+    return &#34;({0})toSP&#34;.format(obj)
 
-def make_default_spectrum_from_amp_phase_name(obj_amp: HeaderBase, 
-    obj_phase: HeaderBase) -&gt; str:
-    return &#39;SP(amp({0}) phase({1}))&#39;.format(obj_amp, obj_phase)
 
-def make_default_spectrum_from_phase_name( 
-    obj_phase: HeaderBase) -&gt; str:
-    return &#39;SP(phase({0}))&#39;.format(obj_phase)
+def make_default_spectrum_from_amp_phase_name(
+    obj_amp: HeaderBase, obj_phase: HeaderBase
+) -&gt; str:
+    return &#34;SP(amp({0}) phase({1}))&#34;.format(obj_amp, obj_phase)
+
+
+def make_default_spectrum_from_phase_name(obj_phase: HeaderBase) -&gt; str:
+    return &#34;SP(phase({0}))&#34;.format(obj_phase)
+
 
 def make_default_spectrum_from_amp_name(obj_amp: HeaderBase) -&gt; str:
-    return &#39;SP(amp({0}))&#39;.format(obj_amp)
+    return &#34;SP(amp({0}))&#34;.format(obj_amp)
+
 
 def make_default_name_reverse_filter(obj: HeaderBase) -&gt; str:
-    return &#39;reverse filter ({0})&#39;.format(obj)
+    return &#34;reverse filter ({0})&#34;.format(obj)
+
 
 def make_default_name_reverse_signal(obj: HeaderBase) -&gt; str:
-    return &#39;recerse signal ({0})&#39;. format(obj)
+    return &#34;recerse signal ({0})&#34;.format(obj)
+
 
 def make_default_add_phase_name(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
-    return &#39;{0}+phase({1})&#39;.format(obj1, obj2)
+    return &#34;{0}+phase({1})&#34;.format(obj1, obj2)
 
-def make_default_sub_phase_name(obj1: HeaderBase, obj2:HeaderBase) -&gt; str:
-    return &#39;{0}-phase({1})&#39;.format(obj1, obj2)
+
+def make_default_sub_phase_name(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
+    return &#34;{0}-phase({1})&#34;.format(obj1, obj2)
+
 
 def make_default_spectrum_name(name) -&gt; str:
-    return &#39;SP_{0}&#39;.format(name)
+    return &#34;SP_{0}&#34;.format(name)
+
 
 def make_default_signal_name(name) -&gt; str:
-    return &#39;S_{0}&#39;.format(name)
+    return &#34;S_{0}&#34;.format(name)
+
 
 def make_default_phase_category_name(name) -&gt; str:
-    return &#39;phase_{0}&#39;.format(name)
+    return &#34;phase_{0}&#34;.format(name)
+
 
 def make_default_amp_category_name(name) -&gt; str:
-    return &#39;amp_{0}&#39;.format(name)
+    return &#34;amp_{0}&#34;.format(name)
+
 
 # #============================================================================
 
+
 def default_sweep_name(name) -&gt; str:
-    return &#39;SW_{0}&#39;.format(name)
+    return &#34;SW_{0}&#34;.format(name)
+
 
 def make_default_a_t_name(obj: HeaderBase) -&gt; str:
-    return &#39;a_t({0})&#39;.format(obj)
+    return &#34;a_t({0})&#34;.format(obj)
+
 
 def make_default_f_t_name(obj: HeaderBase) -&gt; str:
-    return &#39;f_t({0})&#39;.format(obj)
+    return &#34;f_t({0})&#34;.format(obj)
+
 
 def make_default_spectrogram_name(obj: HeaderBase) -&gt; str:
-    return &#39;sp_f_t({0})&#39;.format(obj)
+    return &#34;sp_f_t({0})&#34;.format(obj)
 
-#==============================================================================
+
+# ==============================================================================
+
 
 def make_spectrogram_name(name) -&gt; str:
-    return &#39;Spectrogram_{0}&#39;.format(name)
+    return &#34;Spectrogram_{0}&#34;.format(name)
 
-#==============================================================================
+
+# ==============================================================================
+
 
 def default_name_uncalc_sweep(name) -&gt; str:
-    return &#39;USW_{0}&#39;.format(name)
+    return &#34;USW_{0}&#34;.format(name)
 
 
 def default_name_aprior_uncalc_sweep(name) -&gt; str:
-    return &#39;AUSW_{0}&#39;.format(name)
+    return &#34;AUSW_{0}&#34;.format(name)
 
-def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; str:
-    return &#39;{0} dt: {1} T: {2}&#39;.format(obj, dt, T)</code></pre>
+
+def default_name_call_uncalc_sweep(dt: float, T: float, obj: HeaderBase) -&gt; str:
+    return &#34;{0} dt: {1} T: {2}&#34;.format(obj, dt, T)</code></pre>
 </details>
 </section>
 <section>
@@ -185,7 +219,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def default_name_aprior_uncalc_sweep(name) -&gt; str:
-    return &#39;AUSW_{0}&#39;.format(name)</code></pre>
+    return &#34;AUSW_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.default_name_call_uncalc_sweep"><code class="name flex">
@@ -197,8 +231,8 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; str:
-    return &#39;{0} dt: {1} T: {2}&#39;.format(obj, dt, T)</code></pre>
+<pre><code class="python">def default_name_call_uncalc_sweep(dt: float, T: float, obj: HeaderBase) -&gt; str:
+    return &#34;{0} dt: {1} T: {2}&#34;.format(obj, dt, T)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.default_name_uncalc_sweep"><code class="name flex">
@@ -211,7 +245,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def default_name_uncalc_sweep(name) -&gt; str:
-    return &#39;USW_{0}&#39;.format(name)</code></pre>
+    return &#34;USW_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.default_sweep_name"><code class="name flex">
@@ -224,7 +258,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def default_sweep_name(name) -&gt; str:
-    return &#39;SW_{0}&#39;.format(name)</code></pre>
+    return &#34;SW_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.get_default_spectrum_name"><code class="name flex">
@@ -237,7 +271,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_default_spectrum_name(obj: HeaderBase) -&gt; str:
-    return &#39;{0}&#39;.format(obj)</code></pre>
+    return &#34;{0}&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_a_t_name"><code class="name flex">
@@ -250,7 +284,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_a_t_name(obj: HeaderBase) -&gt; str:
-    return &#39;a_t({0})&#39;.format(obj)</code></pre>
+    return &#34;a_t({0})&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_add_phase_name"><code class="name flex">
@@ -263,7 +297,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_add_phase_name(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
-    return &#39;{0}+phase({1})&#39;.format(obj1, obj2)</code></pre>
+    return &#34;{0}+phase({1})&#34;.format(obj1, obj2)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_amp_category_name"><code class="name flex">
@@ -276,7 +310,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_amp_category_name(name) -&gt; str:
-    return &#39;amp_{0}&#39;.format(name)</code></pre>
+    return &#34;amp_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_diff_name"><code class="name flex">
@@ -289,7 +323,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_diff_name(obj: HeaderBase) -&gt; str:
-    return &#39;diff({0})&#39;.format(obj.name())</code></pre>
+    return &#34;diff({0})&#34;.format(obj.name())</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_f_t_name"><code class="name flex">
@@ -302,7 +336,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_f_t_name(obj: HeaderBase) -&gt; str:
-    return &#39;f_t({0})&#39;.format(obj)</code></pre>
+    return &#34;f_t({0})&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_integrate_name"><code class="name flex">
@@ -315,7 +349,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_integrate_name(obj: HeaderBase) -&gt; str:
-    return &#39;integrate({0})&#39;.format(obj.name())</code></pre>
+    return &#34;integrate({0})&#34;.format(obj.name())</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_interpolate_name"><code class="name flex">
@@ -327,11 +361,10 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_interpolate_name(obj: HeaderBase, 
-                                            new_x: np.ndarray) -&gt; str:
-    return &#39;inerp({0} {1}-{2} dx:{3})&#39;.format(
-            obj.name(), new_x[0], new_x[-1], new_x[1]-new_x[0]
-            )</code></pre>
+<pre><code class="python">def make_default_interpolate_name(obj: HeaderBase, new_x: np.ndarray) -&gt; str:
+    return &#34;inerp({0} {1}-{2} dx:{3})&#34;.format(
+        obj.name(), new_x[0], new_x[-1], new_x[1] - new_x[0]
+    )</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_name_convolution"><code class="name flex">
@@ -343,9 +376,8 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_name_convolution(obj1: HeaderBase, 
-                                        obj2: HeaderBase) -&gt; str:
-    return &#39;(Conv({0} &amp; {1}))&#39;.format(obj1, obj2)</code></pre>
+<pre><code class="python">def make_default_name_convolution(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
+    return &#34;(Conv({0} &amp; {1}))&#34;.format(obj1, obj2)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_name_correlation"><code class="name flex">
@@ -357,9 +389,8 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_name_correlation(obj1:HeaderBase, 
-                                    obj2: HeaderBase) -&gt; str:
-    return &#39;(Corr({0} &amp; {1}))&#39;.format(obj1._name(), obj2._name())</code></pre>
+<pre><code class="python">def make_default_name_correlation(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
+    return &#34;(Corr({0} &amp; {1}))&#34;.format(obj1._name(), obj2._name())</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_name_exp"><code class="name flex">
@@ -372,7 +403,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_name_exp(obj: HeaderBase) -&gt; str:
-    return &#39;exp({0})&#39;.format(obj.name())</code></pre>
+    return &#34;exp({0})&#34;.format(obj.name())</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_name_reverse_filter"><code class="name flex">
@@ -385,7 +416,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_name_reverse_filter(obj: HeaderBase) -&gt; str:
-    return &#39;reverse filter ({0})&#39;.format(obj)</code></pre>
+    return &#34;reverse filter ({0})&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_name_reverse_signal"><code class="name flex">
@@ -398,7 +429,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_name_reverse_signal(obj: HeaderBase) -&gt; str:
-    return &#39;recerse signal ({0})&#39;. format(obj)</code></pre>
+    return &#34;recerse signal ({0})&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_name_select_data"><code class="name flex">
@@ -410,9 +441,8 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_name_select_data(obj: HeaderBase, x_start: Num, 
-                                    x_end: Num) -&gt; str:
-    return &#39;{0} [{1}-{2}]&#39;.format(obj.name(), x_start, x_end)</code></pre>
+<pre><code class="python">def make_default_name_select_data(obj: HeaderBase, x_start: Num, x_end: Num) -&gt; str:
+    return &#34;{0} [{1}-{2}]&#34;.format(obj.name(), x_start, x_end)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_names_operations"><code class="name flex">
@@ -424,19 +454,20 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_names_operations(obj1: HeaderBase, 
-            obj2: Union[HeaderBase, Num], operation: MathOperation) -&gt; str:
+<pre><code class="python">def make_default_names_operations(
+    obj1: HeaderBase, obj2: Union[HeaderBase, Num], operation: MathOperation
+) -&gt; str:
     default_names_operations = {
-        &#39;__add__&#39;: &#39;({0} + {1})&#39;,
-        &#39;__sub__&#39;: &#39;({0} - {1})&#39;,
-        &#39;__mul__&#39;: &#39;({0} * {1})&#39;,
-        &#39;__truediv__&#39;: &#39;({0} / {1})&#39;,
-        &#39;__pow__&#39;: &#39;({0} ** {1})&#39;,
-        &#39;__radd__&#39;: &#39;({0} + {1})&#39;,
-        &#39;__rsub__&#39;: &#39;({0} - {1})&#39;,
-        &#39;__rmul__&#39;: &#39;({0} * {1})&#39;,
-        &#39;__rtruediv__&#39;: &#39;({0} / {1})&#39;,
-        &#39;__rpow__&#39;: &#39;({0}) ** {1})&#39;
+        &#34;__add__&#34;: &#34;({0} + {1})&#34;,
+        &#34;__sub__&#34;: &#34;({0} - {1})&#34;,
+        &#34;__mul__&#34;: &#34;({0} * {1})&#34;,
+        &#34;__truediv__&#34;: &#34;({0} / {1})&#34;,
+        &#34;__pow__&#34;: &#34;({0} ** {1})&#34;,
+        &#34;__radd__&#34;: &#34;({0} + {1})&#34;,
+        &#34;__rsub__&#34;: &#34;({0} - {1})&#34;,
+        &#34;__rmul__&#34;: &#34;({0} * {1})&#34;,
+        &#34;__rtruediv__&#34;: &#34;({0} / {1})&#34;,
+        &#34;__rpow__&#34;: &#34;({0}) ** {1})&#34;,
     }
     return default_names_operations[operation.value].format(obj1, obj2)</code></pre>
 </details>
@@ -451,7 +482,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_phase_category_name(name) -&gt; str:
-    return &#39;phase_{0}&#39;.format(name)</code></pre>
+    return &#34;phase_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name"><code class="name flex">
@@ -464,7 +495,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_relation_name(name: int) -&gt; str:
-    return &#39;R_{0}&#39;.format(name)</code></pre>
+    return &#34;R_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_shift_name"><code class="name flex">
@@ -477,7 +508,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_shift_name(obj: HeaderBase, x_shift: Num) -&gt; str:
-    return &#39;Shift({0}) by {1}&#39;.format(obj.name(), x_shift)</code></pre>
+    return &#34;Shift({0}) by {1}&#34;.format(obj.name(), x_shift)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_signal2spectrum_name"><code class="name flex">
@@ -490,7 +521,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_signal2spectrum_name(obj: HeaderBase) -&gt; str:
-    return &#39;({0})toSP&#39;.format(obj)</code></pre>
+    return &#34;({0})toSP&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_signal_name"><code class="name flex">
@@ -503,7 +534,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_signal_name(name) -&gt; str:
-    return &#39;S_{0}&#39;.format(name)</code></pre>
+    return &#34;S_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_spectrogram_name"><code class="name flex">
@@ -516,7 +547,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_spectrogram_name(obj: HeaderBase) -&gt; str:
-    return &#39;sp_f_t({0})&#39;.format(obj)</code></pre>
+    return &#34;sp_f_t({0})&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_spectrum2signal_name"><code class="name flex">
@@ -529,7 +560,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_spectrum2signal_name(obj: HeaderBase) -&gt; str:
-    return &#39;({0})toS&#39;.format(obj)</code></pre>
+    return &#34;({0})toS&#34;.format(obj)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_spectrum_from_amp_name"><code class="name flex">
@@ -542,7 +573,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_spectrum_from_amp_name(obj_amp: HeaderBase) -&gt; str:
-    return &#39;SP(amp({0}))&#39;.format(obj_amp)</code></pre>
+    return &#34;SP(amp({0}))&#34;.format(obj_amp)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_spectrum_from_amp_phase_name"><code class="name flex">
@@ -554,9 +585,10 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_spectrum_from_amp_phase_name(obj_amp: HeaderBase, 
-    obj_phase: HeaderBase) -&gt; str:
-    return &#39;SP(amp({0}) phase({1}))&#39;.format(obj_amp, obj_phase)</code></pre>
+<pre><code class="python">def make_default_spectrum_from_amp_phase_name(
+    obj_amp: HeaderBase, obj_phase: HeaderBase
+) -&gt; str:
+    return &#34;SP(amp({0}) phase({1}))&#34;.format(obj_amp, obj_phase)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_spectrum_from_phase_name"><code class="name flex">
@@ -568,9 +600,8 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_spectrum_from_phase_name( 
-    obj_phase: HeaderBase) -&gt; str:
-    return &#39;SP(phase({0}))&#39;.format(obj_phase)</code></pre>
+<pre><code class="python">def make_default_spectrum_from_phase_name(obj_phase: HeaderBase) -&gt; str:
+    return &#34;SP(phase({0}))&#34;.format(obj_phase)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_spectrum_name"><code class="name flex">
@@ -583,7 +614,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_default_spectrum_name(name) -&gt; str:
-    return &#39;SP_{0}&#39;.format(name)</code></pre>
+    return &#34;SP_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_default_sub_phase_name"><code class="name flex">
@@ -595,8 +626,8 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_default_sub_phase_name(obj1: HeaderBase, obj2:HeaderBase) -&gt; str:
-    return &#39;{0}-phase({1})&#39;.format(obj1, obj2)</code></pre>
+<pre><code class="python">def make_default_sub_phase_name(obj1: HeaderBase, obj2: HeaderBase) -&gt; str:
+    return &#34;{0}-phase({1})&#34;.format(obj1, obj2)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_diff_category_name"><code class="name flex">
@@ -609,7 +640,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_diff_category_name(name: str) -&gt; str:
-    return &#39;diff_{0}&#39;.format(name)</code></pre>
+    return &#34;diff_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_integrate_category_name"><code class="name flex">
@@ -622,7 +653,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_integrate_category_name(name: str) -&gt; str:
-    return &#39;integrate_{0}&#39;.format(name)</code></pre>
+    return &#34;integrate_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.header_signals.defaults.names.make_spectrogram_name"><code class="name flex">
@@ -635,7 +666,7 @@ def default_name_call_uncalc_sweep(dt: float, T: float,obj: HeaderBase) -&gt; st
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def make_spectrogram_name(name) -&gt; str:
-    return &#39;Spectrogram_{0}&#39;.format(name)</code></pre>
+    return &#34;Spectrogram_{0}&#34;.format(name)</code></pre>
 </details>
 </dd>
 </dl>

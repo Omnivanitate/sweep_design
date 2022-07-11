@@ -26,15 +26,19 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import numpy as np 
+<pre><code class="python">import numpy as np
 from loguru import logger
 
-def get_time(end = 10, dt = 0.001, start = 0):
-    &#39;&#39;&#39;Create and return time axis.
-    
-    &#39;&#39;&#39;
-    time = np.linspace(start, end, int((end-start)/dt)+1)
-    logger.info(&#34;Time axis was created with next parameters: start - {}, end - {} dt - {}&#34;, time[0], time[-1], dt)
+
+def get_time(end=10, dt=0.001, start=0):
+    &#34;&#34;&#34;Create and return time axis.&#34;&#34;&#34;
+    time = np.linspace(start, end, int((end - start) / dt) + 1)
+    logger.info(
+        &#34;Time axis was created with next parameters: start - {}, end - {} dt - {}&#34;,
+        time[0],
+        time[-1],
+        dt,
+    )
     return time</code></pre>
 </details>
 </section>
@@ -54,12 +58,15 @@ def get_time(end = 10, dt = 0.001, start = 0):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_time(end = 10, dt = 0.001, start = 0):
-    &#39;&#39;&#39;Create and return time axis.
-    
-    &#39;&#39;&#39;
-    time = np.linspace(start, end, int((end-start)/dt)+1)
-    logger.info(&#34;Time axis was created with next parameters: start - {}, end - {} dt - {}&#34;, time[0], time[-1], dt)
+<pre><code class="python">def get_time(end=10, dt=0.001, start=0):
+    &#34;&#34;&#34;Create and return time axis.&#34;&#34;&#34;
+    time = np.linspace(start, end, int((end - start) / dt) + 1)
+    logger.info(
+        &#34;Time axis was created with next parameters: start - {}, end - {} dt - {}&#34;,
+        time[0],
+        time[-1],
+        dt,
+    )
     return time</code></pre>
 </details>
 </dd>

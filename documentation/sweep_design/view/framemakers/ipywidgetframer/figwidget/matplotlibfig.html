@@ -34,10 +34,12 @@ import numpy as np
 
 from matplotlib.figure import Figure
 
-from ....base_view.abc_common_framer_grapher.figure import (CommonFigure,
-                                                             CommonFigureMaker,
-                                                             CommonImage,
-                                                             CommonLine)
+from ....base_view.abc_common_framer_grapher.figure import (
+    CommonFigure,
+    CommonFigureMaker,
+    CommonImage,
+    CommonLine,
+)
 
 import matplotlib.pyplot as plt
 
@@ -46,45 +48,47 @@ import matplotlib.colors as mcolors
 
 PaletteColors = Iterable[Tuple[float, float, float]]
 
-_px = 1/plt.rcParams[&#39;figure.dpi&#39;]
-_default_line_properties = {
-                        &#39;color&#39;:None,
-                        &#39;linewidth&#39;:2,
-                        &#39;linestyle&#39;:&#39;solid&#39;
-                        }
+_px = 1 / plt.rcParams[&#34;figure.dpi&#34;]
+_default_line_properties = {&#34;color&#34;: None, &#34;linewidth&#34;: 2, &#34;linestyle&#34;: &#34;solid&#34;}
 
 
 _color_palette = itertools.cycle(mcolors.TABLEAU_COLORS)
 
+
 class MetaFigure(type(widgets.Output), type(CommonFigure)):
     pass
 
+
 class MatplotlibFigureMaker(CommonFigureMaker):
-    
-    def __init__(self, default_line_properties = _default_line_properties,
-        color_palette= _color_palette) -&gt; None:
+    def __init__(
+        self,
+        default_line_properties=_default_line_properties,
+        color_palette=_color_palette,
+    ) -&gt; None:
         self._default_line_properties = default_line_properties
         self._color_palette = color_palette
         self._default_image_properties = None
-    
+
     @staticmethod
-    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;PltFigure&#39;:
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;PltFigure&#34;:
         fig, axes = plt.subplots(
             constrained_layout=True,
-            figsize=(0.75*figure_properties[&#39;width&#39;]*_px, 
-                     0.75*figure_properties[&#39;height&#39;]*_px)
+            figsize=(
+                0.75 * figure_properties[&#34;width&#34;] * _px,
+                0.75 * figure_properties[&#34;height&#34;] * _px,
+            ),
         )
-    
+
         fig.canvas.header_visible = False
-        axes.set_xlabel(figure_properties[&#39;x_axis_label&#39;])
-        axes.set_ylabel(figure_properties[&#39;y_axis_label&#39;])
-        axes.set_title(figure_properties[&#39;title&#39;])
-     
+        axes.set_xlabel(figure_properties[&#34;x_axis_label&#34;])
+        axes.set_ylabel(figure_properties[&#34;y_axis_label&#34;])
+        axes.set_title(figure_properties[&#34;title&#34;])
+
         return PltFigure(fig, axes)
-    
+
     def get_next_line_properties(self) -&gt; Dict[str, Any]:
         line_properties = copy.deepcopy(self._default_line_properties)
-        line_properties[&#39;color&#39;] = next(self._color_palette)
+        line_properties[&#34;color&#34;] = next(self._color_palette)
         return line_properties
 
     def get_next_image_properties(self) -&gt; Dict[str, Any]:
@@ -92,7 +96,6 @@ class MatplotlibFigureMaker(CommonFigureMaker):
 
 
 class PltFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
-
     def __init__(self, figuer, axes) -&gt; None:
         super().__init__()
         self.figure = figuer
@@ -104,60 +107,76 @@ class PltFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
         with self:
             plt.show(self.figure)
 
-
-    def update(self):        
+    def update(self):
         self.figure.canvas.draw()
-    
-    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
-        self.mult_axes[axis_name] =  self.axes.twinx()
+
+    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#34;right&#34;) -&gt; None:
+        self.mult_axes[axis_name] = self.axes.twinx()
         self.mult_axes[axis_name].label(axis_label)
-    
-    def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
+
+    def get_axis(self, axis_name: str = None, type_axis: str = &#34;y&#34;):
         return self.mult_axes[axis_name]
 
-    def add_line(self, x, y, unique_name: str, groups: Union[str, Set[str]], line_property: dict) -&gt; &#39;PltLine&#39;:
-        line, = self.axes.plot(x, y, **line_property)
+    def add_line(
+        self, x, y, unique_name: str, groups: Union[str, Set[str]], line_property: dict
+    ) -&gt; &#34;PltLine&#34;:
+        (line,) = self.axes.plot(x, y, **line_property)
         plt_line = PltLine(line, unique_name, groups, self.update)
         self._lines.update({unique_name: plt_line})
         return plt_line
-        
-    
-    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Set[str],
-        image_properties: dict) -&gt; None:
+
+    def add_image(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        s_xy: np.ndarray,
+        unique_name: str,
+        groups: Set[str],
+        image_properties: dict,
+    ) -&gt; None:
         extent = (x[0], x[-1], y[0], y[-1])
-        image = self.axes.imshow(s_xy, extent=extent, origin = &#39;lower&#39;, aspect=&#39;auto&#39;, cmap = image_properties)
-        self._images.update({unique_name: PltImage(image, unique_name, groups, self.update)})
+        image = self.axes.imshow(
+            s_xy, extent=extent, origin=&#34;lower&#34;, aspect=&#34;auto&#34;, cmap=image_properties
+        )
+        self._images.update(
+            {unique_name: PltImage(image, unique_name, groups, self.update)}
+        )
 
-    def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+    def add_infty_line(
+        self,
+        k: np.ndarray,
+        axis: Literal[&#34;x&#34;, &#34;y&#34;],
+        unique_name: str,
+        groups: Set[str],
+        line_properties: Dict[str, Any],
+    ) -&gt; None:
         pass
-
 
     def show(self):
         plt.show(self.figure)
 
-class PltLine(CommonLine):
 
+class PltLine(CommonLine):
     def __init__(self, line, name: str, groups: Union[str, Set[str]], update) -&gt; None:
         super().__init__(line, name, groups)
         self._update = update
-    
+
     def get_color(self) -&gt; str:
-        color = self._line.get_color() 
-        color = color.split(&#39;tab:&#39;)[-1]
+        color = self._line.get_color()
+        color = color.split(&#34;tab:&#34;)[-1]
         return color
 
     def set_visible(self, is_visible: bool) -&gt; None:
-       
+
         self._line.set_visible(is_visible)
         self._update()
-    
-class PltImage(CommonImage):
 
+
+class PltImage(CommonImage):
     def __init__(self, image, name: str, groups: Set[str], update) -&gt; None:
         super().__init__(image, name, groups)
         self._update = update
-    
+
     def set_visible(self, is_visible: bool) -&gt; None:
 
         self._image.set_visible(is_visible)
@@ -184,31 +203,35 @@ class PltImage(CommonImage):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class MatplotlibFigureMaker(CommonFigureMaker):
-    
-    def __init__(self, default_line_properties = _default_line_properties,
-        color_palette= _color_palette) -&gt; None:
+    def __init__(
+        self,
+        default_line_properties=_default_line_properties,
+        color_palette=_color_palette,
+    ) -&gt; None:
         self._default_line_properties = default_line_properties
         self._color_palette = color_palette
         self._default_image_properties = None
-    
+
     @staticmethod
-    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;PltFigure&#39;:
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;PltFigure&#34;:
         fig, axes = plt.subplots(
             constrained_layout=True,
-            figsize=(0.75*figure_properties[&#39;width&#39;]*_px, 
-                     0.75*figure_properties[&#39;height&#39;]*_px)
+            figsize=(
+                0.75 * figure_properties[&#34;width&#34;] * _px,
+                0.75 * figure_properties[&#34;height&#34;] * _px,
+            ),
         )
-    
+
         fig.canvas.header_visible = False
-        axes.set_xlabel(figure_properties[&#39;x_axis_label&#39;])
-        axes.set_ylabel(figure_properties[&#39;y_axis_label&#39;])
-        axes.set_title(figure_properties[&#39;title&#39;])
-     
+        axes.set_xlabel(figure_properties[&#34;x_axis_label&#34;])
+        axes.set_ylabel(figure_properties[&#34;y_axis_label&#34;])
+        axes.set_title(figure_properties[&#34;title&#34;])
+
         return PltFigure(fig, axes)
-    
+
     def get_next_line_properties(self) -&gt; Dict[str, Any]:
         line_properties = copy.deepcopy(self._default_line_properties)
-        line_properties[&#39;color&#39;] = next(self._color_palette)
+        line_properties[&#34;color&#34;] = next(self._color_palette)
         return line_properties
 
     def get_next_image_properties(self) -&gt; Dict[str, Any]:
@@ -230,18 +253,20 @@ class PltImage(CommonImage):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;PltFigure&#39;:
+def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;PltFigure&#34;:
     fig, axes = plt.subplots(
         constrained_layout=True,
-        figsize=(0.75*figure_properties[&#39;width&#39;]*_px, 
-                 0.75*figure_properties[&#39;height&#39;]*_px)
+        figsize=(
+            0.75 * figure_properties[&#34;width&#34;] * _px,
+            0.75 * figure_properties[&#34;height&#34;] * _px,
+        ),
     )
 
     fig.canvas.header_visible = False
-    axes.set_xlabel(figure_properties[&#39;x_axis_label&#39;])
-    axes.set_ylabel(figure_properties[&#39;y_axis_label&#39;])
-    axes.set_title(figure_properties[&#39;title&#39;])
- 
+    axes.set_xlabel(figure_properties[&#34;x_axis_label&#34;])
+    axes.set_ylabel(figure_properties[&#34;y_axis_label&#34;])
+    axes.set_title(figure_properties[&#34;title&#34;])
+
     return PltFigure(fig, axes)</code></pre>
 </details>
 </dd>
@@ -272,7 +297,7 @@ def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;PltFigure&#39;:
 </summary>
 <pre><code class="python">def get_next_line_properties(self) -&gt; Dict[str, Any]:
     line_properties = copy.deepcopy(self._default_line_properties)
-    line_properties[&#39;color&#39;] = next(self._color_palette)
+    line_properties[&#34;color&#34;] = next(self._color_palette)
     return line_properties</code></pre>
 </details>
 </dd>
@@ -335,7 +360,6 @@ def func():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PltFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
-
     def __init__(self, figuer, axes) -&gt; None:
         super().__init__()
         self.figure = figuer
@@ -347,34 +371,50 @@ def func():
         with self:
             plt.show(self.figure)
 
-
-    def update(self):        
+    def update(self):
         self.figure.canvas.draw()
-    
-    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
-        self.mult_axes[axis_name] =  self.axes.twinx()
+
+    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#34;right&#34;) -&gt; None:
+        self.mult_axes[axis_name] = self.axes.twinx()
         self.mult_axes[axis_name].label(axis_label)
-    
-    def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
+
+    def get_axis(self, axis_name: str = None, type_axis: str = &#34;y&#34;):
         return self.mult_axes[axis_name]
 
-    def add_line(self, x, y, unique_name: str, groups: Union[str, Set[str]], line_property: dict) -&gt; &#39;PltLine&#39;:
-        line, = self.axes.plot(x, y, **line_property)
+    def add_line(
+        self, x, y, unique_name: str, groups: Union[str, Set[str]], line_property: dict
+    ) -&gt; &#34;PltLine&#34;:
+        (line,) = self.axes.plot(x, y, **line_property)
         plt_line = PltLine(line, unique_name, groups, self.update)
         self._lines.update({unique_name: plt_line})
         return plt_line
-        
-    
-    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Set[str],
-        image_properties: dict) -&gt; None:
+
+    def add_image(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        s_xy: np.ndarray,
+        unique_name: str,
+        groups: Set[str],
+        image_properties: dict,
+    ) -&gt; None:
         extent = (x[0], x[-1], y[0], y[-1])
-        image = self.axes.imshow(s_xy, extent=extent, origin = &#39;lower&#39;, aspect=&#39;auto&#39;, cmap = image_properties)
-        self._images.update({unique_name: PltImage(image, unique_name, groups, self.update)})
+        image = self.axes.imshow(
+            s_xy, extent=extent, origin=&#34;lower&#34;, aspect=&#34;auto&#34;, cmap=image_properties
+        )
+        self._images.update(
+            {unique_name: PltImage(image, unique_name, groups, self.update)}
+        )
 
-    def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+    def add_infty_line(
+        self,
+        k: np.ndarray,
+        axis: Literal[&#34;x&#34;, &#34;y&#34;],
+        unique_name: str,
+        groups: Set[str],
+        line_properties: Dict[str, Any],
+    ) -&gt; None:
         pass
-
 
     def show(self):
         plt.show(self.figure)</code></pre>
@@ -401,8 +441,8 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
-    self.mult_axes[axis_name] =  self.axes.twinx()
+<pre><code class="python">def add_extra_axis(self, axis_name: str, axis_label: str, location=&#34;right&#34;) -&gt; None:
+    self.mult_axes[axis_name] = self.axes.twinx()
     self.mult_axes[axis_name].label(axis_label)</code></pre>
 </details>
 </dd>
@@ -415,11 +455,22 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Set[str],
-    image_properties: dict) -&gt; None:
+<pre><code class="python">def add_image(
+    self,
+    x: np.ndarray,
+    y: np.ndarray,
+    s_xy: np.ndarray,
+    unique_name: str,
+    groups: Set[str],
+    image_properties: dict,
+) -&gt; None:
     extent = (x[0], x[-1], y[0], y[-1])
-    image = self.axes.imshow(s_xy, extent=extent, origin = &#39;lower&#39;, aspect=&#39;auto&#39;, cmap = image_properties)
-    self._images.update({unique_name: PltImage(image, unique_name, groups, self.update)})</code></pre>
+    image = self.axes.imshow(
+        s_xy, extent=extent, origin=&#34;lower&#34;, aspect=&#34;auto&#34;, cmap=image_properties
+    )
+    self._images.update(
+        {unique_name: PltImage(image, unique_name, groups, self.update)}
+    )</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.matplotlibfig.PltFigure.add_infty_line"><code class="name flex">
@@ -431,8 +482,14 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-    groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+<pre><code class="python">def add_infty_line(
+    self,
+    k: np.ndarray,
+    axis: Literal[&#34;x&#34;, &#34;y&#34;],
+    unique_name: str,
+    groups: Set[str],
+    line_properties: Dict[str, Any],
+) -&gt; None:
     pass</code></pre>
 </details>
 </dd>
@@ -445,8 +502,10 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_line(self, x, y, unique_name: str, groups: Union[str, Set[str]], line_property: dict) -&gt; &#39;PltLine&#39;:
-    line, = self.axes.plot(x, y, **line_property)
+<pre><code class="python">def add_line(
+    self, x, y, unique_name: str, groups: Union[str, Set[str]], line_property: dict
+) -&gt; &#34;PltLine&#34;:
+    (line,) = self.axes.plot(x, y, **line_property)
     plt_line = PltLine(line, unique_name, groups, self.update)
     self._lines.update({unique_name: plt_line})
     return plt_line</code></pre>
@@ -461,7 +520,7 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
+<pre><code class="python">def get_axis(self, axis_name: str = None, type_axis: str = &#34;y&#34;):
     return self.mult_axes[axis_name]</code></pre>
 </details>
 </dd>
@@ -487,7 +546,7 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self):        
+<pre><code class="python">def update(self):
     self.figure.canvas.draw()</code></pre>
 </details>
 </dd>
@@ -517,11 +576,10 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PltImage(CommonImage):
-
     def __init__(self, image, name: str, groups: Set[str], update) -&gt; None:
         super().__init__(image, name, groups)
         self._update = update
-    
+
     def set_visible(self, is_visible: bool) -&gt; None:
 
         self._image.set_visible(is_visible)
@@ -576,18 +634,17 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PltLine(CommonLine):
-
     def __init__(self, line, name: str, groups: Union[str, Set[str]], update) -&gt; None:
         super().__init__(line, name, groups)
         self._update = update
-    
+
     def get_color(self) -&gt; str:
-        color = self._line.get_color() 
-        color = color.split(&#39;tab:&#39;)[-1]
+        color = self._line.get_color()
+        color = color.split(&#34;tab:&#34;)[-1]
         return color
 
     def set_visible(self, is_visible: bool) -&gt; None:
-       
+
         self._line.set_visible(is_visible)
         self._update()</code></pre>
 </details>
@@ -609,8 +666,8 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_color(self) -&gt; str:
-    color = self._line.get_color() 
-    color = color.split(&#39;tab:&#39;)[-1]
+    color = self._line.get_color()
+    color = color.split(&#34;tab:&#34;)[-1]
     return color</code></pre>
 </details>
 </dd>
@@ -624,7 +681,7 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_visible(self, is_visible: bool) -&gt; None:
-   
+
     self._line.set_visible(is_visible)
     self._update()</code></pre>
 </details>

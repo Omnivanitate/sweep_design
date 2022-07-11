@@ -30,8 +30,11 @@
 
 from ..base_view.abc_common_framer_grapher.figure import CommonFigure
 from ..base_view.abc_common_framer_grapher.frame import (
-    CommonCheckBox, CommonCheckBoxFrame, CommonDropdownFrame,
-    CommonFigureFrame)
+    CommonCheckBox,
+    CommonCheckBoxFrame,
+    CommonDropdownFrame,
+    CommonFigureFrame,
+)
 
 from ..base_view.abc_common_framer_grapher.controller import CommonController
 
@@ -43,29 +46,29 @@ class InteracterPlotView(CommonController):
         self._dropdown = None
 
     def set_controlled_object(
-            self,
-            frame: CommonFigureFrame[CommonFigure],
-            checkbox: CommonCheckBoxFrame,
-            dropdown: CommonDropdownFrame
-            ) -&gt; None:
+        self,
+        frame: CommonFigureFrame[CommonFigure],
+        checkbox: CommonCheckBoxFrame,
+        dropdown: CommonDropdownFrame,
+    ) -&gt; None:
 
         self._frame = frame
         self._checkbox = checkbox
         self._dropdown = dropdown
-    
+
     def widget_notify(self, obj: Union[CommonCheckBox, CommonDropdownFrame]):
         def listner(value: Dict):
             if isinstance(obj, CommonCheckBox):
-                self._set_line_by_checkbox(obj, value[&#39;new&#39;])
-            
+                self._set_line_by_checkbox(obj, value[&#34;new&#34;])
+
             if obj is self._dropdown:
-                self._set_image(value[&#39;new&#39;], True)
-                self._set_image(value[&#39;old&#39;], False)
+                self._set_image(value[&#34;new&#34;], True)
+                self._set_image(value[&#34;old&#34;], False)
 
         return listner
-      
+
     def _set_line_by_checkbox(self, checkbox: CommonCheckBox, value: bool) -&gt; None:
-        
+
         line = self._frame.get_figure().get_line(checkbox.get_name())
         if line:
             line.set_visible(value)
@@ -102,29 +105,29 @@ class InteracterPlotView(CommonController):
         self._dropdown = None
 
     def set_controlled_object(
-            self,
-            frame: CommonFigureFrame[CommonFigure],
-            checkbox: CommonCheckBoxFrame,
-            dropdown: CommonDropdownFrame
-            ) -&gt; None:
+        self,
+        frame: CommonFigureFrame[CommonFigure],
+        checkbox: CommonCheckBoxFrame,
+        dropdown: CommonDropdownFrame,
+    ) -&gt; None:
 
         self._frame = frame
         self._checkbox = checkbox
         self._dropdown = dropdown
-    
+
     def widget_notify(self, obj: Union[CommonCheckBox, CommonDropdownFrame]):
         def listner(value: Dict):
             if isinstance(obj, CommonCheckBox):
-                self._set_line_by_checkbox(obj, value[&#39;new&#39;])
-            
+                self._set_line_by_checkbox(obj, value[&#34;new&#34;])
+
             if obj is self._dropdown:
-                self._set_image(value[&#39;new&#39;], True)
-                self._set_image(value[&#39;old&#39;], False)
+                self._set_image(value[&#34;new&#34;], True)
+                self._set_image(value[&#34;old&#34;], False)
 
         return listner
-      
+
     def _set_line_by_checkbox(self, checkbox: CommonCheckBox, value: bool) -&gt; None:
-        
+
         line = self._frame.get_figure().get_line(checkbox.get_name())
         if line:
             line.set_visible(value)
@@ -151,11 +154,11 @@ class InteracterPlotView(CommonController):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_controlled_object(
-        self,
-        frame: CommonFigureFrame[CommonFigure],
-        checkbox: CommonCheckBoxFrame,
-        dropdown: CommonDropdownFrame
-        ) -&gt; None:
+    self,
+    frame: CommonFigureFrame[CommonFigure],
+    checkbox: CommonCheckBoxFrame,
+    dropdown: CommonDropdownFrame,
+) -&gt; None:
 
     self._frame = frame
     self._checkbox = checkbox
@@ -174,11 +177,11 @@ class InteracterPlotView(CommonController):
 <pre><code class="python">def widget_notify(self, obj: Union[CommonCheckBox, CommonDropdownFrame]):
     def listner(value: Dict):
         if isinstance(obj, CommonCheckBox):
-            self._set_line_by_checkbox(obj, value[&#39;new&#39;])
-        
+            self._set_line_by_checkbox(obj, value[&#34;new&#34;])
+
         if obj is self._dropdown:
-            self._set_image(value[&#39;new&#39;], True)
-            self._set_image(value[&#39;old&#39;], False)
+            self._set_image(value[&#34;new&#34;], True)
+            self._set_image(value[&#34;old&#34;], False)
 
     return listner</code></pre>
 </details>

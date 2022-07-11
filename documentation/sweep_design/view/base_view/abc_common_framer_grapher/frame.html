@@ -31,33 +31,34 @@ from typing import Any, Dict, Generic, Iterable, Optional, Set, TypeVar, Union
 
 from ..abc_common_framer_grapher.controller import CommonController
 
-Output = TypeVar(&#39;Output&#39;)
-Figure = TypeVar(&#39;Figure&#39;)
-Controller = TypeVar(&#39;Controller&#39;, bound=CommonController)
-Checkbox = TypeVar(&#39;Checkbox&#39;)
-Dropbown = TypeVar(&#39;Dropbown&#39;)
+Output = TypeVar(&#34;Output&#34;)
+Figure = TypeVar(&#34;Figure&#34;)
+Controller = TypeVar(&#34;Controller&#34;, bound=CommonController)
+Checkbox = TypeVar(&#34;Checkbox&#34;)
+Dropbown = TypeVar(&#34;Dropbown&#34;)
 
 
-
-class CommonFrameMaker(Generic[Figure, Controller], metaclass = ABCMeta):
-
+class CommonFrameMaker(Generic[Figure, Controller], metaclass=ABCMeta):
     @abstractstaticmethod
-    def get_figure_frame(figure: Figure, frame_properties: Dict[str, Any]) -&gt; &#39;CommonFigureFrame[Figure]&#39;:
+    def get_figure_frame(
+        figure: Figure, frame_properties: Dict[str, Any]
+    ) -&gt; &#34;CommonFigureFrame[Figure]&#34;:
         pass
 
     @abstractstaticmethod
-    def get_dropdown_frame(frame_properties: Dict[str, Any], controller: Controller) -&gt; &#39;CommonDropdownFrame&#39;:
+    def get_dropdown_frame(
+        frame_properties: Dict[str, Any], controller: Controller
+    ) -&gt; &#34;CommonDropdownFrame&#34;:
         pass
 
     @abstractstaticmethod
-    def get_checkbox_frame(frame_properties: Dict[str, Any], controller: Controller) -&gt; &#39;CommonCheckBoxFrame&#39;:
+    def get_checkbox_frame(
+        frame_properties: Dict[str, Any], controller: Controller
+    ) -&gt; &#34;CommonCheckBoxFrame&#34;:
         pass
 
-  
-    
 
 class CommonFrame(Generic[Output, Controller], metaclass=ABCMeta):
-
     def __init__(self, output: Output = None, controller: Controller = None) -&gt; None:
         self._output = output
         self._controller = controller
@@ -65,7 +66,7 @@ class CommonFrame(Generic[Output, Controller], metaclass=ABCMeta):
     @property
     def controller(self) -&gt; Optional[Controller]:
         return self._controller
-    
+
     @controller.setter
     def controller(self, controller: Controller) -&gt; None:
         self._controller = controller
@@ -74,35 +75,36 @@ class CommonFrame(Generic[Output, Controller], metaclass=ABCMeta):
         return self._output
 
     @abstractmethod
-    def h_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
+    def h_add(self, other: &#34;CommonFrame&#34;) -&gt; &#34;CommonFrame&#34;:
         pass
 
     @abstractmethod
-    def v_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
+    def v_add(self, other: &#34;CommonFrame&#34;) -&gt; &#34;CommonFrame&#34;:
         pass
 
 
 class CommonFigureFrame(CommonFrame, Generic[Figure]):
-    
     def __init__(self, figure: Figure, output: Output) -&gt; None:
         super().__init__(output)
         self._figure = figure
-    
+
     def get_figure(self) -&gt; Figure:
         return self._figure
-    
 
-    
-    
+
 class CommonCheckBoxFrame(CommonFrame, Generic[Checkbox]):
-    
     def __init__(self, output: Checkbox, controller: Controller = None) -&gt; None:
         super().__init__(output, controller)
         self._checkboxs: Dict[str, CommonCheckBox] = {}
-    
+
     @abstractmethod
-    def add_choise(self, choise: str, groups: Union[str, Iterable[str]], 
-        checkbox_properties: Dict[str, Any], controller: Controller) -&gt; None:
+    def add_choise(
+        self,
+        choise: str,
+        groups: Union[str, Iterable[str]],
+        checkbox_properties: Dict[str, Any],
+        controller: Controller,
+    ) -&gt; None:
         pass
 
     @abstractmethod
@@ -123,23 +125,27 @@ class CommonCheckBoxFrame(CommonFrame, Generic[Checkbox]):
             if groups.issubset(checkbox.get_groups()):
                 self.return_choise(name_checkbox)
 
-    def get_checkboxs(self) -&gt; Dict[str, &#39;CommonCheckBox&#39;]:
+    def get_checkboxs(self) -&gt; Dict[str, &#34;CommonCheckBox&#34;]:
         return self._checkboxs
 
     def set_choise_by_name(self, name: str, value: bool) -&gt; None:
         self._checkboxs[name].set_select(value)
-    
+
     def set_choise_by_groups(self, groups: Union[str, Set[str]], value: bool) -&gt; None:
         for choise_box in self._checkboxs.values():
             if groups.issubset(choise_box.get_groups()):
                 choise_box.set_select(value)
-    
+
 
 class CommonCheckBox(CommonFrame, Generic[Checkbox, Controller]):
+    def __init__(
+        self,
+        checkbox: Checkbox,
+        name: str,
+        groups: Union[str, Iterable[str]],
+        controller: Controller,
+    ) -&gt; None:
 
-    def __init__(self, checkbox: Checkbox , name: str, 
-            groups: Union[str, Iterable[str]], controller: Controller) -&gt; None:
-        
         super().__init__(checkbox, controller)
         self._name = name
         if isinstance(groups, str):
@@ -152,7 +158,7 @@ class CommonCheckBox(CommonFrame, Generic[Checkbox, Controller]):
 
     def get_name(self) -&gt; str:
         return self._name
-    
+
     def get_groups(self) -&gt; Set[str]:
         return self._groups
 
@@ -160,9 +166,11 @@ class CommonCheckBox(CommonFrame, Generic[Checkbox, Controller]):
     def set_select(self, value: bool) -&gt; None:
         pass
 
-class CommonDropdownFrame(CommonFrame, Generic[Dropbown]):
 
-    def __init__(self, dropdown: Dropbown, no_data_name: str, controller: Controller = None) -&gt; None:
+class CommonDropdownFrame(CommonFrame, Generic[Dropbown]):
+    def __init__(
+        self, dropdown: Dropbown, no_data_name: str, controller: Controller = None
+    ) -&gt; None:
         super().__init__(dropdown, controller)
         self._no_data_name = no_data_name
         self._dropdown = dropdown
@@ -170,7 +178,7 @@ class CommonDropdownFrame(CommonFrame, Generic[Dropbown]):
     @abstractmethod
     def add_choise(self, choise: str) -&gt; None:
         pass
-    
+
     @abstractmethod
     def remove_choise(self, choise: str) -&gt; None:
         pass
@@ -213,10 +221,14 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonCheckBox(CommonFrame, Generic[Checkbox, Controller]):
+    def __init__(
+        self,
+        checkbox: Checkbox,
+        name: str,
+        groups: Union[str, Iterable[str]],
+        controller: Controller,
+    ) -&gt; None:
 
-    def __init__(self, checkbox: Checkbox , name: str, 
-            groups: Union[str, Iterable[str]], controller: Controller) -&gt; None:
-        
         super().__init__(checkbox, controller)
         self._name = name
         if isinstance(groups, str):
@@ -229,7 +241,7 @@ return default</p></div>
 
     def get_name(self) -&gt; str:
         return self._name
-    
+
     def get_groups(self) -&gt; Set[str]:
         return self._groups
 
@@ -314,14 +326,18 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonCheckBoxFrame(CommonFrame, Generic[Checkbox]):
-    
     def __init__(self, output: Checkbox, controller: Controller = None) -&gt; None:
         super().__init__(output, controller)
         self._checkboxs: Dict[str, CommonCheckBox] = {}
-    
+
     @abstractmethod
-    def add_choise(self, choise: str, groups: Union[str, Iterable[str]], 
-        checkbox_properties: Dict[str, Any], controller: Controller) -&gt; None:
+    def add_choise(
+        self,
+        choise: str,
+        groups: Union[str, Iterable[str]],
+        checkbox_properties: Dict[str, Any],
+        controller: Controller,
+    ) -&gt; None:
         pass
 
     @abstractmethod
@@ -342,12 +358,12 @@ return default</p></div>
             if groups.issubset(checkbox.get_groups()):
                 self.return_choise(name_checkbox)
 
-    def get_checkboxs(self) -&gt; Dict[str, &#39;CommonCheckBox&#39;]:
+    def get_checkboxs(self) -&gt; Dict[str, &#34;CommonCheckBox&#34;]:
         return self._checkboxs
 
     def set_choise_by_name(self, name: str, value: bool) -&gt; None:
         self._checkboxs[name].set_select(value)
-    
+
     def set_choise_by_groups(self, groups: Union[str, Set[str]], value: bool) -&gt; None:
         for choise_box in self._checkboxs.values():
             if groups.issubset(choise_box.get_groups()):
@@ -374,8 +390,13 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def add_choise(self, choise: str, groups: Union[str, Iterable[str]], 
-    checkbox_properties: Dict[str, Any], controller: Controller) -&gt; None:
+def add_choise(
+    self,
+    choise: str,
+    groups: Union[str, Iterable[str]],
+    checkbox_properties: Dict[str, Any],
+    controller: Controller,
+) -&gt; None:
     pass</code></pre>
 </details>
 </dd>
@@ -388,7 +409,7 @@ def add_choise(self, choise: str, groups: Union[str, Iterable[str]],
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_checkboxs(self) -&gt; Dict[str, &#39;CommonCheckBox&#39;]:
+<pre><code class="python">def get_checkboxs(self) -&gt; Dict[str, &#34;CommonCheckBox&#34;]:
     return self._checkboxs</code></pre>
 </details>
 </dd>
@@ -504,8 +525,9 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonDropdownFrame(CommonFrame, Generic[Dropbown]):
-
-    def __init__(self, dropdown: Dropbown, no_data_name: str, controller: Controller = None) -&gt; None:
+    def __init__(
+        self, dropdown: Dropbown, no_data_name: str, controller: Controller = None
+    ) -&gt; None:
         super().__init__(dropdown, controller)
         self._no_data_name = no_data_name
         self._dropdown = dropdown
@@ -513,7 +535,7 @@ return default</p></div>
     @abstractmethod
     def add_choise(self, choise: str) -&gt; None:
         pass
-    
+
     @abstractmethod
     def remove_choise(self, choise: str) -&gt; None:
         pass
@@ -601,11 +623,10 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonFigureFrame(CommonFrame, Generic[Figure]):
-    
     def __init__(self, figure: Figure, output: Output) -&gt; None:
         super().__init__(output)
         self._figure = figure
-    
+
     def get_figure(self) -&gt; Figure:
         return self._figure</code></pre>
 </details>
@@ -659,7 +680,6 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CommonFrame(Generic[Output, Controller], metaclass=ABCMeta):
-
     def __init__(self, output: Output = None, controller: Controller = None) -&gt; None:
         self._output = output
         self._controller = controller
@@ -667,7 +687,7 @@ return default</p></div>
     @property
     def controller(self) -&gt; Optional[Controller]:
         return self._controller
-    
+
     @controller.setter
     def controller(self, controller: Controller) -&gt; None:
         self._controller = controller
@@ -676,11 +696,11 @@ return default</p></div>
         return self._output
 
     @abstractmethod
-    def h_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
+    def h_add(self, other: &#34;CommonFrame&#34;) -&gt; &#34;CommonFrame&#34;:
         pass
 
     @abstractmethod
-    def v_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
+    def v_add(self, other: &#34;CommonFrame&#34;) -&gt; &#34;CommonFrame&#34;:
         pass</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -735,7 +755,7 @@ def controller(self) -&gt; Optional[Controller]:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def h_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
+def h_add(self, other: &#34;CommonFrame&#34;) -&gt; &#34;CommonFrame&#34;:
     pass</code></pre>
 </details>
 </dd>
@@ -749,7 +769,7 @@ def h_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractmethod
-def v_add(self, other: &#39;CommonFrame&#39;) -&gt; &#39;CommonFrame&#39;:
+def v_add(self, other: &#34;CommonFrame&#34;) -&gt; &#34;CommonFrame&#34;:
     pass</code></pre>
 </details>
 </dd>
@@ -777,18 +797,23 @@ return default</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class CommonFrameMaker(Generic[Figure, Controller], metaclass = ABCMeta):
-
+<pre><code class="python">class CommonFrameMaker(Generic[Figure, Controller], metaclass=ABCMeta):
     @abstractstaticmethod
-    def get_figure_frame(figure: Figure, frame_properties: Dict[str, Any]) -&gt; &#39;CommonFigureFrame[Figure]&#39;:
+    def get_figure_frame(
+        figure: Figure, frame_properties: Dict[str, Any]
+    ) -&gt; &#34;CommonFigureFrame[Figure]&#34;:
         pass
 
     @abstractstaticmethod
-    def get_dropdown_frame(frame_properties: Dict[str, Any], controller: Controller) -&gt; &#39;CommonDropdownFrame&#39;:
+    def get_dropdown_frame(
+        frame_properties: Dict[str, Any], controller: Controller
+    ) -&gt; &#34;CommonDropdownFrame&#34;:
         pass
 
     @abstractstaticmethod
-    def get_checkbox_frame(frame_properties: Dict[str, Any], controller: Controller) -&gt; &#39;CommonCheckBoxFrame&#39;:
+    def get_checkbox_frame(
+        frame_properties: Dict[str, Any], controller: Controller
+    ) -&gt; &#34;CommonCheckBoxFrame&#34;:
         pass</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -811,7 +836,9 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractstaticmethod
-def get_checkbox_frame(frame_properties: Dict[str, Any], controller: Controller) -&gt; &#39;CommonCheckBoxFrame&#39;:
+def get_checkbox_frame(
+    frame_properties: Dict[str, Any], controller: Controller
+) -&gt; &#34;CommonCheckBoxFrame&#34;:
     pass</code></pre>
 </details>
 </dd>
@@ -825,7 +852,9 @@ def get_checkbox_frame(frame_properties: Dict[str, Any], controller: Controller)
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractstaticmethod
-def get_dropdown_frame(frame_properties: Dict[str, Any], controller: Controller) -&gt; &#39;CommonDropdownFrame&#39;:
+def get_dropdown_frame(
+    frame_properties: Dict[str, Any], controller: Controller
+) -&gt; &#34;CommonDropdownFrame&#34;:
     pass</code></pre>
 </details>
 </dd>
@@ -839,7 +868,9 @@ def get_dropdown_frame(frame_properties: Dict[str, Any], controller: Controller)
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@abstractstaticmethod
-def get_figure_frame(figure: Figure, frame_properties: Dict[str, Any]) -&gt; &#39;CommonFigureFrame[Figure]&#39;:
+def get_figure_frame(
+    figure: Figure, frame_properties: Dict[str, Any]
+) -&gt; &#34;CommonFigureFrame[Figure]&#34;:
     pass</code></pre>
 </details>
 </dd>

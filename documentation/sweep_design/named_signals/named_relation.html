@@ -37,37 +37,44 @@ from .header_signals.base_header import HeaderBase
 from .header_signals.relation_header import HeaderRelation
 
 Num = Union[float, int, complex]
-CR = TypeVar(&#39;CR&#39;, bound=&#39;NamedRelation&#39;)
-CR2 = TypeVar(&#39;CR2&#39;, bound=&#39;NamedRelation&#39;)
+CR = TypeVar(&#34;CR&#34;, bound=&#34;NamedRelation&#34;)
+CR2 = TypeVar(&#34;CR2&#34;, bound=&#34;NamedRelation&#34;)
 InName = Union[HeaderBase, str, Callable[[], str]]
 InData = Union[CR, Relation]
 Any = Union[InData, Num]
-T = TypeVar(&#39;T&#39;)
+T = TypeVar(&#34;T&#34;)
 
-default_name_composed_relation = &#39;DR&#39;
+default_name_composed_relation = &#34;DR&#34;
+
 
 class NamedRelation:
-    
+
     extract_input_default = NamedConfig.extract_input
 
-    def __init__(self, x: Any, y: Any = None, name: InName = None, category: str = None) -&gt; None:
+    def __init__(
+        self, x: Any, y: Any = None, name: InName = None, category: str = None
+    ) -&gt; None:
 
-        x, y = NamedConfig.extract_input(x, y)        
+        x, y = NamedConfig.extract_input(x, y)
 
         if category is None:
-            category = &#39;relation&#39;
-        
+            category = &#34;relation&#34;
+
         self._relation = Relation(x, y)
-        self.header = HeaderRelation(name, category)        
+        self.header = HeaderRelation(name, category)
 
     @property
     def x(self):
         return self._relation.x
-    
+
     @property
     def y(self):
         return self._relation.y
-    
+
+    @property
+    def dx(self):
+        return self._relation.dx
+
     @property
     def relation(self):
         return self._relation
@@ -77,16 +84,22 @@ class NamedRelation:
         return self.header.category
 
     @classmethod
-    def _convert_input(cls: Type[CR], data: Any, name: InName = None) -&gt; &#39;NamedRelation&#39;:
+    def _convert_input(
+        cls: Type[CR], data: Any, name: InName = None
+    ) -&gt; &#34;NamedRelation&#34;:
         if not isinstance(data, NamedRelation):
             if not name:
                 name = default_name_composed_relation
             return NamedRelation(cls.extract_input_default(data, None), name=name)
         return data
 
-    def _operate(self: CR, other: Any, operation: MathOperation, 
-            name: Optional[InName], category: Optional[str], 
-            ) -&gt; CR:
+    def _operate(
+        self: CR,
+        other: Any,
+        operation: MathOperation,
+        name: Optional[InName],
+        category: Optional[str],
+    ) -&gt; CR:
 
         if not isinstance(other, (NamedRelation, float, int, complex)):
             other = self._convert_input(other)
@@ -97,144 +110,159 @@ class NamedRelation:
 
     def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
         return self._relation.get_data()
-        
-    def select_data(self: CR, x_start: Num = None, x_end: Num = None, 
-        name: InName = None, category: str = None) -&gt; CR:
-         
+
+    def select_data(
+        self: CR,
+        x_start: Num = None,
+        x_end: Num = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; CR:
+
         if x_start is None:
             x_start = self._relation._x[0]
-    
+
         if x_end is None:
             x_end = self._relation._x[-1]
 
-        header = self.header.select_data(x_start, x_end, name, 
-                                                    category)
+        header = self.header.select_data(x_start, x_end, name, category)
         relation = self._relation.select_data(x_start, x_end)
-        return type(self)(relation, name = header)
-        
-    def exp(self: CR, name: InName = None, category=&#39;relation&#39;) -&gt; CR:
-        header = self.header.exp(name, category) 
-        relation = self._relation.exp()
-        return type(self)(relation, name = header)
+        return type(self)(relation, name=header)
 
-    def diff(self: CR, name: InName = None, category=&#39;relation&#39;) -&gt; CR:
+    def exp(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+        header = self.header.exp(name, category)
+        relation = self._relation.exp()
+        return type(self)(relation, name=header)
+
+    def diff(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         header = self.header.diff(name=name, category=category)
         relation = self._relation.diff()
-        return type(self)(relation, name = header)
-    
-    def integrate(self: CR, name: InName = None, 
-                            category=&#39;relation&#39;) -&gt; CR:
-        header = self.header.integrate(name, category)  
-        relation = self._relation.integrate()
-        return type(self)(relation, name = header)
+        return type(self)(relation, name=header)
 
-    def interpolate_extrapolate(self: CR, new_x, name: InName = None, 
-                                category=&#39;relation&#39;) -&gt; CR:
-        header = self.header.interpolate_extrapolate(new_x, name, category)  
+    def integrate(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+        header = self.header.integrate(name, category)
+        relation = self._relation.integrate()
+        return type(self)(relation, name=header)
+
+    def interpolate_extrapolate(
+        self: CR, new_x, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
+        header = self.header.interpolate_extrapolate(new_x, name, category)
         relation = self._relation.interpolate_extrapolate(new_x)
         return type(self)(relation, name=header)
-    
-    def shift(self: CR, x_shift: Num = 0., name: InName = None, 
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def shift(
+        self: CR, x_shift: Num = 0.0, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
         header = self.header.shift(x_shift, name, category)
         relation = self._relation.shift(x_shift)
         return type(self)(relation, name=header)
-    
+
     @classmethod
-    def equalize(cls: Type[CR], cr1: Any, cr2: Any, name1: InName = None, 
-            name2: InName = None, category1: str = None,
-            category2: str = None) -&gt; Tuple[CR, CR2]: 
+    def equalize(
+        cls: Type[CR],
+        cr1: Any,
+        cr2: Any,
+        name1: InName = None,
+        name2: InName = None,
+        category1: str = None,
+        category2: str = None,
+    ) -&gt; Tuple[CR, CR2]:
         cr1 = cls._convert_input(cr1)
         cr2 = cls._convert_input(cr2)
         r1, r2 = Relation.equalize(cr1.relation, cr2.relation)
-        header1, header2 = HeaderRelation.equalize(cr1.header, cr2.header, r1,
-                                                    name1, name2, category1, category2)
+        header1, header2 = HeaderRelation.equalize(
+            cr1.header, cr2.header, r1, name1, name2, category1, category2
+        )
         return type(cr1)(r1, name=header1), type(cr2)(r2, name=header2)
 
     @classmethod
-    def convolve(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None, 
-            category: str = &#39;relation&#39;) -&gt; CR:
+    def convolve(
+        cls: Type[CR],
+        cr1: Any,
+        cr2: Any,
+        name: InName = None,
+        category: str = &#34;relation&#34;,
+    ) -&gt; CR:
         cr1 = cls._convert_input(cr1)
         cr2 = cls._convert_input(cr2)
         relation = Relation.convolve(cr1.relation, cr2.relation)
         header = HeaderRelation.convolve(cr1.header, cr2.header, name, category)
-        return cls(relation, name=header)    
-            
-           
+        return cls(relation, name=header)
+
     @classmethod
-    def correlate(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None, 
-            category: str = &#39;relation&#39;) -&gt; CR:
+    def correlate(
+        cls: Type[CR],
+        cr1: Any,
+        cr2: Any,
+        name: InName = None,
+        category: str = &#34;relation&#34;,
+    ) -&gt; CR:
         cr1 = cls._convert_input(cr1)
         cr2 = cls._convert_input(cr2)
         named = HeaderRelation.convolve(cr1.header, cr2.header, name, category)
-        relation = Relation.correlate(cr1.relation, cr2.relation) 
+        relation = Relation.correlate(cr1.relation, cr2.relation)
         return cls(relation, name=named)
 
     def __str__(self) -&gt; str:
         return str(self.header)
 
-    def __add__(self: CR, other: Any, name: InName = None, 
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __add__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.ADD, name, category)
-        
-    def __radd__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __radd__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RADD, name, category)
-    
-    def __sub__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __sub__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.SUB, name, category)
-    
-    def __rsub__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __rsub__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RSUB, name, category)
 
-    def __mul__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __mul__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.MUL, name, category)
 
-    def __rmul__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __rmul__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RMUL, name, category)
 
-    def __truediv__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __truediv__(
+        self: CR, other: Any, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
         return self._operate(other, MathOperation.TRUEDIV, name, category)
-    
-    def __rtruediv__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __rtruediv__(
+        self: CR, other: Any, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
         return self._operate(other, MathOperation.RTRUEDIV, name, category)
 
-    def __pow__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __pow__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.POW, name, category)
 
-    def __rpow__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __rpow__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RPOW, name, category)
 
-    def __iadd__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __iadd__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__add__(other, name, category)
-   
-    def __isub__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __isub__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__sub__(other, name, category)
 
-    def __imul__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __imul__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__mul__(other, name, category)
-    
-    def __idiv__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __idiv__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__truediv__(other, name, category)
-    
-    def __ipow__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __ipow__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__pow__(other, name, category)
 
- 
-            </code></pre>
+    def __getitem__(self, item: Union[float, slice]):
+        if isinstance(item, float):
+            x = self._relation._x 
+            idx = (np.abs(x - item)).argmin()
+            return x[idx], self._relation._y[idx]
+        if isinstance(item, slice):
+            return self.select_data(item.start, item.stop)</code></pre>
 </details>
 </section>
 <section>
@@ -257,27 +285,33 @@ class NamedRelation:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class NamedRelation:
-    
+
     extract_input_default = NamedConfig.extract_input
 
-    def __init__(self, x: Any, y: Any = None, name: InName = None, category: str = None) -&gt; None:
+    def __init__(
+        self, x: Any, y: Any = None, name: InName = None, category: str = None
+    ) -&gt; None:
 
-        x, y = NamedConfig.extract_input(x, y)        
+        x, y = NamedConfig.extract_input(x, y)
 
         if category is None:
-            category = &#39;relation&#39;
-        
+            category = &#34;relation&#34;
+
         self._relation = Relation(x, y)
-        self.header = HeaderRelation(name, category)        
+        self.header = HeaderRelation(name, category)
 
     @property
     def x(self):
         return self._relation.x
-    
+
     @property
     def y(self):
         return self._relation.y
-    
+
+    @property
+    def dx(self):
+        return self._relation.dx
+
     @property
     def relation(self):
         return self._relation
@@ -287,16 +321,22 @@ class NamedRelation:
         return self.header.category
 
     @classmethod
-    def _convert_input(cls: Type[CR], data: Any, name: InName = None) -&gt; &#39;NamedRelation&#39;:
+    def _convert_input(
+        cls: Type[CR], data: Any, name: InName = None
+    ) -&gt; &#34;NamedRelation&#34;:
         if not isinstance(data, NamedRelation):
             if not name:
                 name = default_name_composed_relation
             return NamedRelation(cls.extract_input_default(data, None), name=name)
         return data
 
-    def _operate(self: CR, other: Any, operation: MathOperation, 
-            name: Optional[InName], category: Optional[str], 
-            ) -&gt; CR:
+    def _operate(
+        self: CR,
+        other: Any,
+        operation: MathOperation,
+        name: Optional[InName],
+        category: Optional[str],
+    ) -&gt; CR:
 
         if not isinstance(other, (NamedRelation, float, int, complex)):
             other = self._convert_input(other)
@@ -307,141 +347,159 @@ class NamedRelation:
 
     def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
         return self._relation.get_data()
-        
-    def select_data(self: CR, x_start: Num = None, x_end: Num = None, 
-        name: InName = None, category: str = None) -&gt; CR:
-         
+
+    def select_data(
+        self: CR,
+        x_start: Num = None,
+        x_end: Num = None,
+        name: InName = None,
+        category: str = None,
+    ) -&gt; CR:
+
         if x_start is None:
             x_start = self._relation._x[0]
-    
+
         if x_end is None:
             x_end = self._relation._x[-1]
 
-        header = self.header.select_data(x_start, x_end, name, 
-                                                    category)
+        header = self.header.select_data(x_start, x_end, name, category)
         relation = self._relation.select_data(x_start, x_end)
-        return type(self)(relation, name = header)
-        
-    def exp(self: CR, name: InName = None, category=&#39;relation&#39;) -&gt; CR:
-        header = self.header.exp(name, category) 
-        relation = self._relation.exp()
-        return type(self)(relation, name = header)
+        return type(self)(relation, name=header)
 
-    def diff(self: CR, name: InName = None, category=&#39;relation&#39;) -&gt; CR:
+    def exp(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+        header = self.header.exp(name, category)
+        relation = self._relation.exp()
+        return type(self)(relation, name=header)
+
+    def diff(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         header = self.header.diff(name=name, category=category)
         relation = self._relation.diff()
-        return type(self)(relation, name = header)
-    
-    def integrate(self: CR, name: InName = None, 
-                            category=&#39;relation&#39;) -&gt; CR:
-        header = self.header.integrate(name, category)  
-        relation = self._relation.integrate()
-        return type(self)(relation, name = header)
+        return type(self)(relation, name=header)
 
-    def interpolate_extrapolate(self: CR, new_x, name: InName = None, 
-                                category=&#39;relation&#39;) -&gt; CR:
-        header = self.header.interpolate_extrapolate(new_x, name, category)  
+    def integrate(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+        header = self.header.integrate(name, category)
+        relation = self._relation.integrate()
+        return type(self)(relation, name=header)
+
+    def interpolate_extrapolate(
+        self: CR, new_x, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
+        header = self.header.interpolate_extrapolate(new_x, name, category)
         relation = self._relation.interpolate_extrapolate(new_x)
         return type(self)(relation, name=header)
-    
-    def shift(self: CR, x_shift: Num = 0., name: InName = None, 
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def shift(
+        self: CR, x_shift: Num = 0.0, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
         header = self.header.shift(x_shift, name, category)
         relation = self._relation.shift(x_shift)
         return type(self)(relation, name=header)
-    
+
     @classmethod
-    def equalize(cls: Type[CR], cr1: Any, cr2: Any, name1: InName = None, 
-            name2: InName = None, category1: str = None,
-            category2: str = None) -&gt; Tuple[CR, CR2]: 
+    def equalize(
+        cls: Type[CR],
+        cr1: Any,
+        cr2: Any,
+        name1: InName = None,
+        name2: InName = None,
+        category1: str = None,
+        category2: str = None,
+    ) -&gt; Tuple[CR, CR2]:
         cr1 = cls._convert_input(cr1)
         cr2 = cls._convert_input(cr2)
         r1, r2 = Relation.equalize(cr1.relation, cr2.relation)
-        header1, header2 = HeaderRelation.equalize(cr1.header, cr2.header, r1,
-                                                    name1, name2, category1, category2)
+        header1, header2 = HeaderRelation.equalize(
+            cr1.header, cr2.header, r1, name1, name2, category1, category2
+        )
         return type(cr1)(r1, name=header1), type(cr2)(r2, name=header2)
 
     @classmethod
-    def convolve(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None, 
-            category: str = &#39;relation&#39;) -&gt; CR:
+    def convolve(
+        cls: Type[CR],
+        cr1: Any,
+        cr2: Any,
+        name: InName = None,
+        category: str = &#34;relation&#34;,
+    ) -&gt; CR:
         cr1 = cls._convert_input(cr1)
         cr2 = cls._convert_input(cr2)
         relation = Relation.convolve(cr1.relation, cr2.relation)
         header = HeaderRelation.convolve(cr1.header, cr2.header, name, category)
-        return cls(relation, name=header)    
-            
-           
+        return cls(relation, name=header)
+
     @classmethod
-    def correlate(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None, 
-            category: str = &#39;relation&#39;) -&gt; CR:
+    def correlate(
+        cls: Type[CR],
+        cr1: Any,
+        cr2: Any,
+        name: InName = None,
+        category: str = &#34;relation&#34;,
+    ) -&gt; CR:
         cr1 = cls._convert_input(cr1)
         cr2 = cls._convert_input(cr2)
         named = HeaderRelation.convolve(cr1.header, cr2.header, name, category)
-        relation = Relation.correlate(cr1.relation, cr2.relation) 
+        relation = Relation.correlate(cr1.relation, cr2.relation)
         return cls(relation, name=named)
 
     def __str__(self) -&gt; str:
         return str(self.header)
 
-    def __add__(self: CR, other: Any, name: InName = None, 
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __add__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.ADD, name, category)
-        
-    def __radd__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __radd__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RADD, name, category)
-    
-    def __sub__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __sub__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.SUB, name, category)
-    
-    def __rsub__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __rsub__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RSUB, name, category)
 
-    def __mul__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __mul__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.MUL, name, category)
 
-    def __rmul__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __rmul__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RMUL, name, category)
 
-    def __truediv__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __truediv__(
+        self: CR, other: Any, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
         return self._operate(other, MathOperation.TRUEDIV, name, category)
-    
-    def __rtruediv__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __rtruediv__(
+        self: CR, other: Any, name: InName = None, category=&#34;relation&#34;
+    ) -&gt; CR:
         return self._operate(other, MathOperation.RTRUEDIV, name, category)
 
-    def __pow__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __pow__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.POW, name, category)
 
-    def __rpow__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __rpow__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self._operate(other, MathOperation.RPOW, name, category)
 
-    def __iadd__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __iadd__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__add__(other, name, category)
-   
-    def __isub__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __isub__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__sub__(other, name, category)
 
-    def __imul__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+    def __imul__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__mul__(other, name, category)
-    
-    def __idiv__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
+
+    def __idiv__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
         return self.__truediv__(other, name, category)
-    
-    def __ipow__(self: CR, other: Any, name: InName = None,
-                                category=&#39;relation&#39;) -&gt; CR:
-        return self.__pow__(other, name, category)</code></pre>
+
+    def __ipow__(self: CR, other: Any, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+        return self.__pow__(other, name, category)
+
+    def __getitem__(self, item: Union[float, slice]):
+        if isinstance(item, float):
+            x = self._relation._x 
+            idx = (np.abs(x - item)).argmin()
+            return x[idx], self._relation._y[idx]
+        if isinstance(item, slice):
+            return self.select_data(item.start, item.stop)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -460,13 +518,18 @@ class NamedRelation:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def convolve(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None, 
-        category: str = &#39;relation&#39;) -&gt; CR:
+def convolve(
+    cls: Type[CR],
+    cr1: Any,
+    cr2: Any,
+    name: InName = None,
+    category: str = &#34;relation&#34;,
+) -&gt; CR:
     cr1 = cls._convert_input(cr1)
     cr2 = cls._convert_input(cr2)
     relation = Relation.convolve(cr1.relation, cr2.relation)
     header = HeaderRelation.convolve(cr1.header, cr2.header, name, category)
-    return cls(relation, name=header)    </code></pre>
+    return cls(relation, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_relation.NamedRelation.correlate"><code class="name flex">
@@ -479,12 +542,17 @@ def convolve(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None,
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def correlate(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None, 
-        category: str = &#39;relation&#39;) -&gt; CR:
+def correlate(
+    cls: Type[CR],
+    cr1: Any,
+    cr2: Any,
+    name: InName = None,
+    category: str = &#34;relation&#34;,
+) -&gt; CR:
     cr1 = cls._convert_input(cr1)
     cr2 = cls._convert_input(cr2)
     named = HeaderRelation.convolve(cr1.header, cr2.header, name, category)
-    relation = Relation.correlate(cr1.relation, cr2.relation) 
+    relation = Relation.correlate(cr1.relation, cr2.relation)
     return cls(relation, name=named)</code></pre>
 </details>
 </dd>
@@ -498,14 +566,21 @@ def correlate(cls: Type[CR], cr1: Any, cr2: Any, name: InName = None,
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def equalize(cls: Type[CR], cr1: Any, cr2: Any, name1: InName = None, 
-        name2: InName = None, category1: str = None,
-        category2: str = None) -&gt; Tuple[CR, CR2]: 
+def equalize(
+    cls: Type[CR],
+    cr1: Any,
+    cr2: Any,
+    name1: InName = None,
+    name2: InName = None,
+    category1: str = None,
+    category2: str = None,
+) -&gt; Tuple[CR, CR2]:
     cr1 = cls._convert_input(cr1)
     cr2 = cls._convert_input(cr2)
     r1, r2 = Relation.equalize(cr1.relation, cr2.relation)
-    header1, header2 = HeaderRelation.equalize(cr1.header, cr2.header, r1,
-                                                name1, name2, category1, category2)
+    header1, header2 = HeaderRelation.equalize(
+        cr1.header, cr2.header, r1, name1, name2, category1, category2
+    )
     return type(cr1)(r1, name=header1), type(cr2)(r2, name=header2)</code></pre>
 </details>
 </dd>
@@ -522,6 +597,18 @@ def equalize(cls: Type[CR], cr1: Any, cr2: Any, name1: InName = None,
 <pre><code class="python">@property
 def category(self):
     return self.header.category</code></pre>
+</details>
+</dd>
+<dt id="sweep_design.named_signals.named_relation.NamedRelation.dx"><code class="name">var <span class="ident">dx</span></code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def dx(self):
+    return self._relation.dx</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_relation.NamedRelation.relation"><code class="name">var <span class="ident">relation</span></code></dt>
@@ -572,10 +659,10 @@ def y(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def diff(self: CR, name: InName = None, category=&#39;relation&#39;) -&gt; CR:
+<pre><code class="python">def diff(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
     header = self.header.diff(name=name, category=category)
     relation = self._relation.diff()
-    return type(self)(relation, name = header)</code></pre>
+    return type(self)(relation, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_relation.NamedRelation.exp"><code class="name flex">
@@ -587,10 +674,10 @@ def y(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def exp(self: CR, name: InName = None, category=&#39;relation&#39;) -&gt; CR:
-    header = self.header.exp(name, category) 
+<pre><code class="python">def exp(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+    header = self.header.exp(name, category)
     relation = self._relation.exp()
-    return type(self)(relation, name = header)</code></pre>
+    return type(self)(relation, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_relation.NamedRelation.extract_input_default"><code class="name flex">
@@ -603,11 +690,15 @@ def y(self):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def extract_input(x: Any, y: Any) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Simple data extraction from parameters.
-    
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;Simple data extraction from parameters.&#34;&#34;&#34;
     if y is None:
-        if isinstance(x, (tuple, list,)):
+        if isinstance(
+            x,
+            (
+                tuple,
+                list,
+            ),
+        ):
             out_x, out_y = np.array(x[0]), np.array(x[1])
         elif isinstance(x, dict):
             data = list(x.values())
@@ -615,16 +706,18 @@ def y(self):
         elif isinstance(x, RelationProtocol):
             out_x, out_y = x.get_data()
         else:
-            raise ConverError(f&#39;Unable convert data: x - {x} and y - {y}&#39;) 
+            raise ConverError(f&#34;Unable convert data: x - {x} and y - {y}&#34;)
 
     elif isinstance(y, np.ndarray) and isinstance(x, np.ndarray):
-       out_x, out_y = x, y
+        out_x, out_y = x, y
     else:
         out_x, out_y = np.array(x), np.array(y)
 
     if out_x.size != out_y.size:
-        raise BadInputError(f&#39;Lengths of array x and array y is not eqaul.\n&#39; \
-        f&#39;Size of x is {out_x.size}. Size of y is {out_y.size}.&#39;)
+        raise BadInputError(
+            f&#34;Lengths of array x and array y is not eqaul.\n&#34;
+            f&#34;Size of x is {out_x.size}. Size of y is {out_y.size}.&#34;
+        )
     return out_x, out_y</code></pre>
 </details>
 </dd>
@@ -650,11 +743,10 @@ def y(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def integrate(self: CR, name: InName = None, 
-                        category=&#39;relation&#39;) -&gt; CR:
-    header = self.header.integrate(name, category)  
+<pre><code class="python">def integrate(self: CR, name: InName = None, category=&#34;relation&#34;) -&gt; CR:
+    header = self.header.integrate(name, category)
     relation = self._relation.integrate()
-    return type(self)(relation, name = header)</code></pre>
+    return type(self)(relation, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_relation.NamedRelation.interpolate_extrapolate"><code class="name flex">
@@ -666,9 +758,10 @@ def y(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def interpolate_extrapolate(self: CR, new_x, name: InName = None, 
-                            category=&#39;relation&#39;) -&gt; CR:
-    header = self.header.interpolate_extrapolate(new_x, name, category)  
+<pre><code class="python">def interpolate_extrapolate(
+    self: CR, new_x, name: InName = None, category=&#34;relation&#34;
+) -&gt; CR:
+    header = self.header.interpolate_extrapolate(new_x, name, category)
     relation = self._relation.interpolate_extrapolate(new_x)
     return type(self)(relation, name=header)</code></pre>
 </details>
@@ -682,19 +775,23 @@ def y(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def select_data(self: CR, x_start: Num = None, x_end: Num = None, 
-    name: InName = None, category: str = None) -&gt; CR:
-     
+<pre><code class="python">def select_data(
+    self: CR,
+    x_start: Num = None,
+    x_end: Num = None,
+    name: InName = None,
+    category: str = None,
+) -&gt; CR:
+
     if x_start is None:
         x_start = self._relation._x[0]
 
     if x_end is None:
         x_end = self._relation._x[-1]
 
-    header = self.header.select_data(x_start, x_end, name, 
-                                                category)
+    header = self.header.select_data(x_start, x_end, name, category)
     relation = self._relation.select_data(x_start, x_end)
-    return type(self)(relation, name = header)</code></pre>
+    return type(self)(relation, name=header)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.named_signals.named_relation.NamedRelation.shift"><code class="name flex">
@@ -706,8 +803,9 @@ def y(self):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def shift(self: CR, x_shift: Num = 0., name: InName = None, 
-                            category=&#39;relation&#39;) -&gt; CR:
+<pre><code class="python">def shift(
+    self: CR, x_shift: Num = 0.0, name: InName = None, category=&#34;relation&#34;
+) -&gt; CR:
     header = self.header.shift(x_shift, name, category)
     relation = self._relation.shift(x_shift)
     return type(self)(relation, name=header)</code></pre>
@@ -738,6 +836,7 @@ def y(self):
 <li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.convolve" href="#sweep_design.named_signals.named_relation.NamedRelation.convolve">convolve</a></code></li>
 <li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.correlate" href="#sweep_design.named_signals.named_relation.NamedRelation.correlate">correlate</a></code></li>
 <li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.diff" href="#sweep_design.named_signals.named_relation.NamedRelation.diff">diff</a></code></li>
+<li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.dx" href="#sweep_design.named_signals.named_relation.NamedRelation.dx">dx</a></code></li>
 <li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.equalize" href="#sweep_design.named_signals.named_relation.NamedRelation.equalize">equalize</a></code></li>
 <li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.exp" href="#sweep_design.named_signals.named_relation.NamedRelation.exp">exp</a></code></li>
 <li><code><a title="sweep_design.named_signals.named_relation.NamedRelation.extract_input_default" href="#sweep_design.named_signals.named_relation.NamedRelation.extract_input_default">extract_input_default</a></code></li>

@@ -29,91 +29,132 @@
 <pre><code class="python">from typing import Any, Dict, Type
 
 from ...named_signals.named_sweep import NamedSweep
-from ..base_view.abc_common_framer_grapher.figure import (
-    CommonFigure, CommonFigureMaker)
+from ..base_view.abc_common_framer_grapher.figure import CommonFigure, CommonFigureMaker
 from ..base_view.abc_common_framer_grapher.frame import CommonFrameMaker
 from .controller import InteracterSource
 
-class ViewSource:
 
+class ViewSource:
     def __init__(
-            self,
-            grapher: Type[CommonFigureMaker],
-            framer: Type[CommonFrameMaker[CommonFigure, InteracterSource]], 
-            properties_source_figure_window: Dict[str, Any],
-            properties_source_figure_frame: Dict[str, Any],
-            properties_dropdown_signals_frame: Dict[str, Any],
-            properties_checkbox_types_signals_frame: Dict[str, Any],
-            line_properties_sweep,
-            line_properties_envelope,
-            line_properties_displacement,
-            line_properties_limits,
-            reaction_mass = 1,
-            limits = None,
-        ) -&gt; None:
+        self,
+        grapher: Type[CommonFigureMaker],
+        framer: Type[CommonFrameMaker[CommonFigure, InteracterSource]],
+        properties_source_figure_window: Dict[str, Any],
+        properties_source_figure_frame: Dict[str, Any],
+        properties_dropdown_signals_frame: Dict[str, Any],
+        properties_checkbox_types_signals_frame: Dict[str, Any],
+        line_properties_sweep,
+        line_properties_envelope,
+        line_properties_displacement,
+        line_properties_limits,
+        reaction_mass=1,
+        limits=None,
+    ) -&gt; None:
         self._line_properties_sweep = line_properties_sweep
         self._line_properties_envelope = line_properties_envelope
         self._line_properties_displacement = line_properties_displacement
         self._line_properties_limits = line_properties_limits
         controller = InteracterSource()
-        
-        source_figure = grapher.get_figure(properties_source_figure_window)
-        source_figure.add_extra_axis(properties_source_figure_window[&#39;extra_range_y_name&#39;], 
-                            properties_source_figure_window[&#39;y_axis_label_2&#39;])
-        self._source_figure_frame = framer.get_figure_frame(source_figure, properties_source_figure_frame)
-        self._dropdown_signals_frame = framer.get_dropdown_frame(properties_dropdown_signals_frame, controller)
-        self._checkbox_types_signals_frame = framer.get_checkbox_frame(properties_checkbox_types_signals_frame, controller)
 
-        result_frame = self._source_figure_frame.h_add(self._checkbox_types_signals_frame)
+        source_figure = grapher.get_figure(properties_source_figure_window)
+        source_figure.add_extra_axis(
+            properties_source_figure_window[&#34;extra_range_y_name&#34;],
+            properties_source_figure_window[&#34;y_axis_label_2&#34;],
+        )
+        self._source_figure_frame = framer.get_figure_frame(
+            source_figure, properties_source_figure_frame
+        )
+        self._dropdown_signals_frame = framer.get_dropdown_frame(
+            properties_dropdown_signals_frame, controller
+        )
+        self._checkbox_types_signals_frame = framer.get_checkbox_frame(
+            properties_checkbox_types_signals_frame, controller
+        )
+
+        result_frame = self._source_figure_frame.h_add(
+            self._checkbox_types_signals_frame
+        )
         result_frame = self._dropdown_signals_frame.v_add(result_frame)
-        
+
         self._result_frame = result_frame
 
         controller.set_controlled_objects(
             self._dropdown_signals_frame,
             self._source_figure_frame,
-            self._checkbox_types_signals_frame
+            self._checkbox_types_signals_frame,
         )
         self._controller = controller
 
         self._reaction_mass = reaction_mass
         if limits is not None:
             print(limits)
-            source_figure.add_infty_line(-abs(limits), &#39;y&#39;, &#39;bottom_limit&#39;, &#39;limits&#39;, self._line_properties_limits)
-            source_figure.add_infty_line(abs(limits), &#39;y&#39;, &#39;upper_limit&#39;, &#39;limits&#39;, self._line_properties_limits)
+            source_figure.add_infty_line(
+                -abs(limits),
+                &#34;y&#34;,
+                &#34;bottom_limit&#34;,
+                &#34;limits&#34;,
+                self._line_properties_limits,
+            )
+            source_figure.add_infty_line(
+                abs(limits), &#34;y&#34;, &#34;upper_limit&#34;, &#34;limits&#34;, self._line_properties_limits
+            )
 
-        self._checkbox_types_signals_frame.add_choise(&#39;sweep&#39;, 
-                &#39;types_signals&#39;, 
-                {&#39;color&#39;:self._line_properties_sweep[&#39;line_color&#39;]}, 
-                self._controller)
-        
-        self._checkbox_types_signals_frame.add_choise(&#39;displacement&#39;, 
-                &#39;types_signals&#39;, 
-                {&#39;color&#39;: self._line_properties_displacement[&#39;line_color&#39;] }, 
-                self._controller)
-        
-        self._checkbox_types_signals_frame.add_choise(&#39;envelope&#39;, 
-                &#39;types_signals&#39;, 
-                {&#39;color&#39;: self._line_properties_envelope[&#39;line_color&#39;]}, 
-                self._controller)
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;sweep&#34;,
+            &#34;types_signals&#34;,
+            {&#34;color&#34;: self._line_properties_sweep[&#34;line_color&#34;]},
+            self._controller,
+        )
 
-        self._checkbox_types_signals_frame.add_choise(&#39;limits&#39;, None, {&#39;color&#39;: self._line_properties_limits[&#39;line_color&#39;]}, self._controller)
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;displacement&#34;,
+            &#34;types_signals&#34;,
+            {&#34;color&#34;: self._line_properties_displacement[&#34;line_color&#34;]},
+            self._controller,
+        )
+
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;envelope&#34;,
+            &#34;types_signals&#34;,
+            {&#34;color&#34;: self._line_properties_envelope[&#34;line_color&#34;]},
+            self._controller,
+        )
+
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;limits&#34;,
+            None,
+            {&#34;color&#34;: self._line_properties_limits[&#34;line_color&#34;]},
+            self._controller,
+        )
 
     def add_signal(self, sweep_signal: NamedSweep) -&gt; None:
         plot = self._source_figure_frame.get_figure()
 
-        plot.add_line(*sweep_signal.get_data(), str(sweep_signal), 
-                  set([&#39;sweep&#39;, str(sweep_signal)]), self._line_properties_sweep)
-        
-        displacement = sweep_signal.integrate().integrate()/self._reaction_mass
+        plot.add_line(
+            *sweep_signal.get_data(),
+            str(sweep_signal),
+            set([&#34;sweep&#34;, str(sweep_signal)]),
+            self._line_properties_sweep,
+        )
 
-        plot.add_line(*displacement.get_data(), f&#39;{str(sweep_signal)}_displacement&#39;, set([&#39;displacement&#39;, str(sweep_signal)]), self._line_properties_displacement)
+        displacement = sweep_signal.integrate().integrate() / self._reaction_mass
 
-        plot.add_line(*sweep_signal.a_t.get_data(), f&#39;{str(sweep_signal)}_a_t&#39;, 
-                set([&#39;envelope&#39;, str(sweep_signal)]), self._line_properties_envelope)
+        plot.add_line(
+            *displacement.get_data(),
+            f&#34;{str(sweep_signal)}_displacement&#34;,
+            set([&#34;displacement&#34;, str(sweep_signal)]),
+            self._line_properties_displacement,
+        )
+
+        plot.add_line(
+            *sweep_signal.a_t.get_data(),
+            f&#34;{str(sweep_signal)}_a_t&#34;,
+            set([&#34;envelope&#34;, str(sweep_signal)]),
+            self._line_properties_envelope,
+        )
 
         self._dropdown_signals_frame.add_choise(str(sweep_signal))
-        
+
     def show(self):
         return self._result_frame.get_output()</code></pre>
 </details>
@@ -138,85 +179,126 @@ class ViewSource:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ViewSource:
-
     def __init__(
-            self,
-            grapher: Type[CommonFigureMaker],
-            framer: Type[CommonFrameMaker[CommonFigure, InteracterSource]], 
-            properties_source_figure_window: Dict[str, Any],
-            properties_source_figure_frame: Dict[str, Any],
-            properties_dropdown_signals_frame: Dict[str, Any],
-            properties_checkbox_types_signals_frame: Dict[str, Any],
-            line_properties_sweep,
-            line_properties_envelope,
-            line_properties_displacement,
-            line_properties_limits,
-            reaction_mass = 1,
-            limits = None,
-        ) -&gt; None:
+        self,
+        grapher: Type[CommonFigureMaker],
+        framer: Type[CommonFrameMaker[CommonFigure, InteracterSource]],
+        properties_source_figure_window: Dict[str, Any],
+        properties_source_figure_frame: Dict[str, Any],
+        properties_dropdown_signals_frame: Dict[str, Any],
+        properties_checkbox_types_signals_frame: Dict[str, Any],
+        line_properties_sweep,
+        line_properties_envelope,
+        line_properties_displacement,
+        line_properties_limits,
+        reaction_mass=1,
+        limits=None,
+    ) -&gt; None:
         self._line_properties_sweep = line_properties_sweep
         self._line_properties_envelope = line_properties_envelope
         self._line_properties_displacement = line_properties_displacement
         self._line_properties_limits = line_properties_limits
         controller = InteracterSource()
-        
-        source_figure = grapher.get_figure(properties_source_figure_window)
-        source_figure.add_extra_axis(properties_source_figure_window[&#39;extra_range_y_name&#39;], 
-                            properties_source_figure_window[&#39;y_axis_label_2&#39;])
-        self._source_figure_frame = framer.get_figure_frame(source_figure, properties_source_figure_frame)
-        self._dropdown_signals_frame = framer.get_dropdown_frame(properties_dropdown_signals_frame, controller)
-        self._checkbox_types_signals_frame = framer.get_checkbox_frame(properties_checkbox_types_signals_frame, controller)
 
-        result_frame = self._source_figure_frame.h_add(self._checkbox_types_signals_frame)
+        source_figure = grapher.get_figure(properties_source_figure_window)
+        source_figure.add_extra_axis(
+            properties_source_figure_window[&#34;extra_range_y_name&#34;],
+            properties_source_figure_window[&#34;y_axis_label_2&#34;],
+        )
+        self._source_figure_frame = framer.get_figure_frame(
+            source_figure, properties_source_figure_frame
+        )
+        self._dropdown_signals_frame = framer.get_dropdown_frame(
+            properties_dropdown_signals_frame, controller
+        )
+        self._checkbox_types_signals_frame = framer.get_checkbox_frame(
+            properties_checkbox_types_signals_frame, controller
+        )
+
+        result_frame = self._source_figure_frame.h_add(
+            self._checkbox_types_signals_frame
+        )
         result_frame = self._dropdown_signals_frame.v_add(result_frame)
-        
+
         self._result_frame = result_frame
 
         controller.set_controlled_objects(
             self._dropdown_signals_frame,
             self._source_figure_frame,
-            self._checkbox_types_signals_frame
+            self._checkbox_types_signals_frame,
         )
         self._controller = controller
 
         self._reaction_mass = reaction_mass
         if limits is not None:
             print(limits)
-            source_figure.add_infty_line(-abs(limits), &#39;y&#39;, &#39;bottom_limit&#39;, &#39;limits&#39;, self._line_properties_limits)
-            source_figure.add_infty_line(abs(limits), &#39;y&#39;, &#39;upper_limit&#39;, &#39;limits&#39;, self._line_properties_limits)
+            source_figure.add_infty_line(
+                -abs(limits),
+                &#34;y&#34;,
+                &#34;bottom_limit&#34;,
+                &#34;limits&#34;,
+                self._line_properties_limits,
+            )
+            source_figure.add_infty_line(
+                abs(limits), &#34;y&#34;, &#34;upper_limit&#34;, &#34;limits&#34;, self._line_properties_limits
+            )
 
-        self._checkbox_types_signals_frame.add_choise(&#39;sweep&#39;, 
-                &#39;types_signals&#39;, 
-                {&#39;color&#39;:self._line_properties_sweep[&#39;line_color&#39;]}, 
-                self._controller)
-        
-        self._checkbox_types_signals_frame.add_choise(&#39;displacement&#39;, 
-                &#39;types_signals&#39;, 
-                {&#39;color&#39;: self._line_properties_displacement[&#39;line_color&#39;] }, 
-                self._controller)
-        
-        self._checkbox_types_signals_frame.add_choise(&#39;envelope&#39;, 
-                &#39;types_signals&#39;, 
-                {&#39;color&#39;: self._line_properties_envelope[&#39;line_color&#39;]}, 
-                self._controller)
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;sweep&#34;,
+            &#34;types_signals&#34;,
+            {&#34;color&#34;: self._line_properties_sweep[&#34;line_color&#34;]},
+            self._controller,
+        )
 
-        self._checkbox_types_signals_frame.add_choise(&#39;limits&#39;, None, {&#39;color&#39;: self._line_properties_limits[&#39;line_color&#39;]}, self._controller)
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;displacement&#34;,
+            &#34;types_signals&#34;,
+            {&#34;color&#34;: self._line_properties_displacement[&#34;line_color&#34;]},
+            self._controller,
+        )
+
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;envelope&#34;,
+            &#34;types_signals&#34;,
+            {&#34;color&#34;: self._line_properties_envelope[&#34;line_color&#34;]},
+            self._controller,
+        )
+
+        self._checkbox_types_signals_frame.add_choise(
+            &#34;limits&#34;,
+            None,
+            {&#34;color&#34;: self._line_properties_limits[&#34;line_color&#34;]},
+            self._controller,
+        )
 
     def add_signal(self, sweep_signal: NamedSweep) -&gt; None:
         plot = self._source_figure_frame.get_figure()
 
-        plot.add_line(*sweep_signal.get_data(), str(sweep_signal), 
-                  set([&#39;sweep&#39;, str(sweep_signal)]), self._line_properties_sweep)
-        
-        displacement = sweep_signal.integrate().integrate()/self._reaction_mass
+        plot.add_line(
+            *sweep_signal.get_data(),
+            str(sweep_signal),
+            set([&#34;sweep&#34;, str(sweep_signal)]),
+            self._line_properties_sweep,
+        )
 
-        plot.add_line(*displacement.get_data(), f&#39;{str(sweep_signal)}_displacement&#39;, set([&#39;displacement&#39;, str(sweep_signal)]), self._line_properties_displacement)
+        displacement = sweep_signal.integrate().integrate() / self._reaction_mass
 
-        plot.add_line(*sweep_signal.a_t.get_data(), f&#39;{str(sweep_signal)}_a_t&#39;, 
-                set([&#39;envelope&#39;, str(sweep_signal)]), self._line_properties_envelope)
+        plot.add_line(
+            *displacement.get_data(),
+            f&#34;{str(sweep_signal)}_displacement&#34;,
+            set([&#34;displacement&#34;, str(sweep_signal)]),
+            self._line_properties_displacement,
+        )
+
+        plot.add_line(
+            *sweep_signal.a_t.get_data(),
+            f&#34;{str(sweep_signal)}_a_t&#34;,
+            set([&#34;envelope&#34;, str(sweep_signal)]),
+            self._line_properties_envelope,
+        )
 
         self._dropdown_signals_frame.add_choise(str(sweep_signal))
-        
+
     def show(self):
         return self._result_frame.get_output()</code></pre>
 </details>
@@ -234,15 +316,28 @@ class ViewSource:
 <pre><code class="python">def add_signal(self, sweep_signal: NamedSweep) -&gt; None:
     plot = self._source_figure_frame.get_figure()
 
-    plot.add_line(*sweep_signal.get_data(), str(sweep_signal), 
-              set([&#39;sweep&#39;, str(sweep_signal)]), self._line_properties_sweep)
-    
-    displacement = sweep_signal.integrate().integrate()/self._reaction_mass
+    plot.add_line(
+        *sweep_signal.get_data(),
+        str(sweep_signal),
+        set([&#34;sweep&#34;, str(sweep_signal)]),
+        self._line_properties_sweep,
+    )
 
-    plot.add_line(*displacement.get_data(), f&#39;{str(sweep_signal)}_displacement&#39;, set([&#39;displacement&#39;, str(sweep_signal)]), self._line_properties_displacement)
+    displacement = sweep_signal.integrate().integrate() / self._reaction_mass
 
-    plot.add_line(*sweep_signal.a_t.get_data(), f&#39;{str(sweep_signal)}_a_t&#39;, 
-            set([&#39;envelope&#39;, str(sweep_signal)]), self._line_properties_envelope)
+    plot.add_line(
+        *displacement.get_data(),
+        f&#34;{str(sweep_signal)}_displacement&#34;,
+        set([&#34;displacement&#34;, str(sweep_signal)]),
+        self._line_properties_displacement,
+    )
+
+    plot.add_line(
+        *sweep_signal.a_t.get_data(),
+        f&#34;{str(sweep_signal)}_a_t&#34;,
+        set([&#34;envelope&#34;, str(sweep_signal)]),
+        self._line_properties_envelope,
+    )
 
     self._dropdown_signals_frame.add_choise(str(sweep_signal))</code></pre>
 </details>

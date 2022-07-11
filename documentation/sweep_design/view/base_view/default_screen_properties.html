@@ -29,15 +29,16 @@
 <pre><code class="python">from typing import Any, Dict
 from screeninfo import get_monitors
 
-def get_screen_params(number_screens = 1) -&gt; Dict[str, Any]:
-    
+
+def get_screen_params(number_screens=1) -&gt; Dict[str, Any]:
+
     cnt = 1
     for m in get_monitors():
         if cnt == number_screens:
             break
         cnt += 1
 
-    return {&#39;height&#39;: m.height, &#39;width&#39;: m.width}</code></pre>
+    return {&#34;height&#34;: m.height, &#34;width&#34;: m.width}</code></pre>
 </details>
 </section>
 <section>
@@ -56,15 +57,15 @@ def get_screen_params(number_screens = 1) -&gt; Dict[str, Any]:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_screen_params(number_screens = 1) -&gt; Dict[str, Any]:
-    
+<pre><code class="python">def get_screen_params(number_screens=1) -&gt; Dict[str, Any]:
+
     cnt = 1
     for m in get_monitors():
         if cnt == number_screens:
             break
         cnt += 1
 
-    return {&#39;height&#39;: m.height, &#39;width&#39;: m.width}</code></pre>
+    return {&#34;height&#34;: m.height, &#34;width&#34;: m.width}</code></pre>
 </details>
 </dd>
 </dl>

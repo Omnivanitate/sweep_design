@@ -33,17 +33,24 @@ from ..base_header import HeaderBase
 Num = Union[float, int, complex]
 InName = Union[HeaderBase, str, Callable[[], str]]
 
+
 def make_name(name: Optional[InName], func: Callable[..., str], *args) -&gt; InName:
 
-    if name is not None: 
+    if name is not None:
         return name
+
     def call() -&gt; str:
         return func(*args)
+
     return call
 
-def make_category(named_relation: HeaderBase, category: Optional[str], 
-                    getter_func: Callable[[str], str] = None) -&gt; str:
-                    
+
+def make_category(
+    named_relation: HeaderBase,
+    category: Optional[str],
+    getter_func: Callable[[str], str] = None,
+) -&gt; str:
+
     if category is None:
         if getter_func is None:
             return named_relation.category
@@ -68,9 +75,12 @@ def make_category(named_relation: HeaderBase, category: Optional[str],
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def make_category(named_relation: HeaderBase, category: Optional[str], 
-                    getter_func: Callable[[str], str] = None) -&gt; str:
-                    
+<pre><code class="python">def make_category(
+    named_relation: HeaderBase,
+    category: Optional[str],
+    getter_func: Callable[[str], str] = None,
+) -&gt; str:
+
     if category is None:
         if getter_func is None:
             return named_relation.category
@@ -90,10 +100,12 @@ def make_category(named_relation: HeaderBase, category: Optional[str],
 </summary>
 <pre><code class="python">def make_name(name: Optional[InName], func: Callable[..., str], *args) -&gt; InName:
 
-    if name is not None: 
+    if name is not None:
         return name
+
     def call() -&gt; str:
         return func(*args)
+
     return call</code></pre>
 </details>
 </dd>

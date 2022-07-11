@@ -36,9 +36,9 @@ class NamedConfig:
 
     **NAMING_BY_ASSIGNMENT_CREATE**: `bool`
     &gt; If `True` then my_relation = `NamedRelation`(...) and `str`(my_relation) ==
-    &#39;my_relation&#39;, otherwise false then my_relation = `NamedRelation`(...) and 
-    `str`(my_relation) == &#39;R_1&#39; using 
-    `sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name` 
+    &#39;my_relation&#39;, otherwise false then my_relation = `NamedRelation`(...) and
+    `str`(my_relation) == &#39;R_1&#39; using
+    `sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name`
     with parameter 1.
 
     &gt; In both situations, if name param name is specified, then
@@ -54,7 +54,7 @@ class NamedConfig:
     &gt; my_relation = `NamedRelation`(..., name = &#39;MyName&#39;)
     &gt; sum_relation = my_relation + my_relation
     &gt; `str`(sum_relation) == &#39;MyName + MyName&#39;
-    using default method 
+    using default method
     `sweep_design.named_signals.header_signals.defaults.names.make_default_names_operations`
 
     &gt; otherwise if `True` then result was `str`(sum_relation) == &#39;sum_relation&#39;
@@ -68,8 +68,8 @@ class NamedConfig:
 
     **extract_input**
     &gt; The method to convert input data to tuple of `numpy.ndarray`
-    **x** and **y**.  
-    &gt; Default methods is from 
+    **x** and **y**.
+    &gt; Default methods is from
     `sweep_design.named_signals.defaults.methods.extract_input`
 
     &gt; It&#39;s a simple method, but you can override them yourself.
@@ -78,11 +78,11 @@ class NamedConfig:
     &gt;&gt; **x**: `Any`
        **y**: `Any`
 
-    &gt; **output**:  
-    &gt;&gt; `Typle`[  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-        ]  
+    &gt; **output**:
+    &gt;&gt; `Typle`[
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+        ]
 
     The above methods can be overridden with your own here, or you can import the
     class `NamedConfig` somewhere and override it there.
@@ -146,7 +146,7 @@ using default method
 <p><strong>extract_input</strong></p>
 <blockquote>
 <p>The method to convert input data to tuple of <code>numpy.ndarray</code>
-<strong>x</strong> and <strong>y</strong>.<br>
+<strong>x</strong> and <strong>y</strong>.
 Default methods is from
 <code><a title="sweep_design.named_signals.defaults.methods.extract_input" href="../named_signals/defaults/methods.html#sweep_design.named_signals.defaults.methods.extract_input">extract_input()</a></code></p>
 <p>It's a simple method, but you can override them yourself.</p>
@@ -155,14 +155,12 @@ Default methods is from
 <p><strong>x</strong>: <code>Any</code>
 <strong>y</strong>: <code>Any</code></p>
 </blockquote>
-<p><strong>output</strong>:
-</p>
+<p><strong>output</strong>:</p>
 <blockquote>
-<p><code>Typle</code>[<br>
-<strong>x</strong>: <code>numpy.ndarray</code>,<br>
-<strong>y</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p><code>Typle</code>[
+<strong>x</strong>: <code>numpy.ndarray</code>,
+<strong>y</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <p>The above methods can be overridden with your own here, or you can import the
@@ -180,9 +178,9 @@ the input and output parameters)</p></div>
 
     **NAMING_BY_ASSIGNMENT_CREATE**: `bool`
     &gt; If `True` then my_relation = `NamedRelation`(...) and `str`(my_relation) ==
-    &#39;my_relation&#39;, otherwise false then my_relation = `NamedRelation`(...) and 
-    `str`(my_relation) == &#39;R_1&#39; using 
-    `sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name` 
+    &#39;my_relation&#39;, otherwise false then my_relation = `NamedRelation`(...) and
+    `str`(my_relation) == &#39;R_1&#39; using
+    `sweep_design.named_signals.header_signals.defaults.names.make_default_relation_name`
     with parameter 1.
 
     &gt; In both situations, if name param name is specified, then
@@ -198,7 +196,7 @@ the input and output parameters)</p></div>
     &gt; my_relation = `NamedRelation`(..., name = &#39;MyName&#39;)
     &gt; sum_relation = my_relation + my_relation
     &gt; `str`(sum_relation) == &#39;MyName + MyName&#39;
-    using default method 
+    using default method
     `sweep_design.named_signals.header_signals.defaults.names.make_default_names_operations`
 
     &gt; otherwise if `True` then result was `str`(sum_relation) == &#39;sum_relation&#39;
@@ -212,8 +210,8 @@ the input and output parameters)</p></div>
 
     **extract_input**
     &gt; The method to convert input data to tuple of `numpy.ndarray`
-    **x** and **y**.  
-    &gt; Default methods is from 
+    **x** and **y**.
+    &gt; Default methods is from
     `sweep_design.named_signals.defaults.methods.extract_input`
 
     &gt; It&#39;s a simple method, but you can override them yourself.
@@ -222,11 +220,11 @@ the input and output parameters)</p></div>
     &gt;&gt; **x**: `Any`
        **y**: `Any`
 
-    &gt; **output**:  
-    &gt;&gt; `Typle`[  
-        **x**: `numpy.ndarray`,  
-        **y**: `numpy.ndarray`  
-        ]  
+    &gt; **output**:
+    &gt;&gt; `Typle`[
+        **x**: `numpy.ndarray`,
+        **y**: `numpy.ndarray`
+        ]
 
     The above methods can be overridden with your own here, or you can import the
     class `NamedConfig` somewhere and override it there.
@@ -268,11 +266,15 @@ the input and output parameters)</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def extract_input(x: Any, y: Any) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Simple data extraction from parameters.
-    
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;Simple data extraction from parameters.&#34;&#34;&#34;
     if y is None:
-        if isinstance(x, (tuple, list,)):
+        if isinstance(
+            x,
+            (
+                tuple,
+                list,
+            ),
+        ):
             out_x, out_y = np.array(x[0]), np.array(x[1])
         elif isinstance(x, dict):
             data = list(x.values())
@@ -280,16 +282,18 @@ the input and output parameters)</p></div>
         elif isinstance(x, RelationProtocol):
             out_x, out_y = x.get_data()
         else:
-            raise ConverError(f&#39;Unable convert data: x - {x} and y - {y}&#39;) 
+            raise ConverError(f&#34;Unable convert data: x - {x} and y - {y}&#34;)
 
     elif isinstance(y, np.ndarray) and isinstance(x, np.ndarray):
-       out_x, out_y = x, y
+        out_x, out_y = x, y
     else:
         out_x, out_y = np.array(x), np.array(y)
 
     if out_x.size != out_y.size:
-        raise BadInputError(f&#39;Lengths of array x and array y is not eqaul.\n&#39; \
-        f&#39;Size of x is {out_x.size}. Size of y is {out_y.size}.&#39;)
+        raise BadInputError(
+            f&#34;Lengths of array x and array y is not eqaul.\n&#34;
+            f&#34;Size of x is {out_x.size}. Size of y is {out_y.size}.&#34;
+        )
     return out_x, out_y</code></pre>
 </details>
 </dd>

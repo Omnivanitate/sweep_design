@@ -33,56 +33,66 @@ import numpy as np
 from numpy.typing import NDArray
 
 from ..config import Config
-from .defaults.base_structures import (BadInputError, MathOperation,
-                                       NotEqualError, RelationProtocol,
-                                       TypeFuncError)
+from .defaults.base_structures import (
+    BadInputError,
+    MathOperation,
+    NotEqualError,
+    RelationProtocol,
+    TypeFuncError,
+)
 
 Num = Union[float, int, complex]
-R = TypeVar(&#39;R&#39;, bound=&#39;Relation&#39;)
-R2 = TypeVar(&#39;R2&#39;, bound=&#39;Relation&#39;)
+R = TypeVar(&#34;R&#34;, bound=&#34;Relation&#34;)
+R2 = TypeVar(&#34;R2&#34;, bound=&#34;Relation&#34;)
 
 
 class Relation:
-    &#39;&#39;&#39;A representation of dependency y from x (y = f(x))
-    
-    The class describe a dependency between two sequences x, y, 
-    represented by real or complex numbers. The length of sequences must be 
+    &#34;&#34;&#34;A representation of dependency y from x (y = f(x))
+
+    The class describe a dependency between two sequences x, y,
+    represented by real or complex numbers. The length of sequences must be
     the same, and the sampling rate must not change throughout the entire
-    sequence. 
+    sequence.
 
     **Properties**:
-    &gt; **x**: `Union[RelationProtocol, NDArray]` 
-    The Relation class, or a class derived from the Relation class, or 
-    an array_like object containing numbers(real or complex). 
+    &gt; **x**: `Union[RelationProtocol, NDArray]`
+    The Relation class, or a class derived from the Relation class, or
+    an array_like object containing numbers(real or complex).
 
-    &gt; **y**: `NDArray` = None. 
+    &gt; **y**: `NDArray` = None.
     None or array_like object containing real or complex numbers.
 
-    &gt; **dx**: `float` = None.  
+    &gt; **dx**: `float` = None.
     Sample rate x-axis.
 
-    For the instance of `Relation` class, define the basic mathematical operstions: 
-    *additon (+), subtraction(-), multiplication(&#39;*&#39;), devision(/), 
+    For the instance of `Relation` class, define the basic mathematical operstions:
+    *additon (+), subtraction(-), multiplication(&#39;*&#39;), devision(/),
     expopnentiation (&#39;*&#39;&#39;*&#39;) and their unary representation (+=, -=, *=, /=).
     The result of the operation is a new instance of the Relation class.
 
-    Determined correlation and convolution between two instances 
+    Determined correlation and convolution between two instances
     (methods: correlate and convolve).
 
-    How those operations will be calculated determined by the methods described 
-    in the Config class. Methods can be overridden if necessary 
+    How those operations will be calculated determined by the methods described
+    in the Config class. Methods can be overridden if necessary
     (sweep_design.math_signals.config).
 
     WARNING!!! When inheriting the Relation class, it is important to write correctly
     constructor. It must match the constructor of the Relation class.
-    Because some methods return a type(self)(...). For example, 
+    Because some methods return a type(self)(...). For example,
     addition method (def __add__(self: R, other: Union[&#39;Relation&#39;, Num])
      -&gt; R). Or predefine these methods in the inherited class.
-    
-    &#39;&#39;&#39;
 
-    def __init__(self, x: Union[RelationProtocol, NDArray], y: NDArray = None, dx: float = None, **kwargs) -&gt; None:
-        
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        x: Union[RelationProtocol, NDArray],
+        y: NDArray = None,
+        dx: float = None,
+        **kwargs,
+    ) -&gt; None:
+
         self._math_operation = Config.math_operation
         self._interpolate_extrapolate_method = Config.interpolate_extrapolate_method
         self._integrate_one_method = Config.integrate_one_method
@@ -97,16 +107,16 @@ class Relation:
                 logging.warning(f&#39;x is instance of {type(x)}, &#34;y&#34; was ignored&#39;)
         else:
             if y is None:
-                raise BadInputError(&#39;y absent. Not enough data!&#39;)
-            
+                raise BadInputError(&#34;y absent. Not enough data!&#34;)
+
             if Config.CONVERT2ARRAY:
-                x, y  = np.array(x), np.array(y)
-            
+                x, y = np.array(x), np.array(y)
+
             if x.size != y.size:
                 raise NotEqualError(x.size, y.size)
 
             self._x, self._y = x, y
-        
+
     @property
     def x(self) -&gt; np.ndarray:
         return self._x.copy()
@@ -120,7 +130,7 @@ class Relation:
 
         num = values[np.argmax(counts)]
         if num &lt; 1:
-            self._dx = 1/round(1/num) 
+            self._dx = 1 / round(1 / num)
         else:
             self._dx = round(num)
         return self._dx
@@ -134,42 +144,39 @@ class Relation:
         return self._y.copy()
 
     def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
-        &#39;&#39;&#39;Return the data of the called object.&#39;&#39;&#39;
+        &#34;&#34;&#34;Return the data of the called object.&#34;&#34;&#34;
         return self._x.copy(), self._y.copy()
-    
+
     def max(self) -&gt; Num:
-            return self._y.max()
+        return self._y.max()
 
     def min(self) -&gt; Num:
         return self._y.min()
 
     def get_norm(self) -&gt; float:
-        &#39;&#39;&#39;Get signal rate. 
-        
-        Calculated in terms of signal energy.
-        &#39;&#39;&#39;
-        x, y = self._x, self._y
-        return self._integrate_one_method(y**2, x)/(self.dx)
+        &#34;&#34;&#34;Get signal rate.
 
-    def select_data(
-            self: R, x_start: Num = None, x_end: Num = None , **kwargs
-            ) -&gt; R:
-        &#39;&#39;&#39;Select data using x-axis.&#39;&#39;&#39;
-            
+        Calculated in terms of signal energy.
+        &#34;&#34;&#34;
+        x, y = self._x, self._y
+        return self._integrate_one_method(y**2, x) / (self.dx)
+
+    def select_data(self: R, x_start: Num = None, x_end: Num = None, **kwargs) -&gt; R:
+        &#34;&#34;&#34;Select data using x-axis.&#34;&#34;&#34;
+
         x, y = self.get_data()
-        
+
         if x_start is None:
             x_start = x[0]
-        
+
         if x_end is None:
             x_end = x[-1]
-        
-        is_selected = np.logical_and(np.greater_equal(
-            self._x, x_start), np.less_equal(self._x, x_end))
 
-        return type(self)(
-            x[is_selected], y[is_selected], **kwargs 
-            )
+        is_selected = np.logical_and(
+            np.greater_equal(self._x, x_start), np.less_equal(self._x, x_end)
+        )
+
+        return type(self)(x[is_selected], y[is_selected], **kwargs)
 
     def exp(self: R, **kwargs) -&gt; R:
         x, y = self.get_data()
@@ -182,22 +189,22 @@ class Relation:
 
     def integrate(self: R, **kwargs) -&gt; R:
         x, y = self.get_data()
-        result = self._integrate_method(x, y, self.dx)  
+        result = self._integrate_method(x, y, self.dx)
         return type(self)(*result, **kwargs)
 
     def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R:
         new_y = self._interpolate_extrapolate_method(self._x, self._y)(new_x)
         return type(self)(new_x, new_y, **kwargs)
-    
+
     def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R:
         x, y = self.get_data()
-        return type(self)(x+x_shift, y, **kwargs)
+        return type(self)(x + x_shift, y, **kwargs)
 
     @staticmethod
     def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]:
         x1, _ = r1.get_data()
         x2, _ = r2.get_data()
-        comparation = x1==x2
+        comparation = x1 == x2
         if isinstance(comparation, np.ndarray):
             if all(comparation):
                 return r1, r2
@@ -207,28 +214,29 @@ class Relation:
         return r1, r2
 
     @classmethod
-    def correlate(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwargs) -&gt; R:
+    def correlate(cls: Type[R], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;, **kwargs) -&gt; R:
 
         if isinstance(r1, Relation) and isinstance(r2, Relation):
             result = Config.correlate_method(cls, r1, r2)
             return cls(*result, **kwargs)
         else:
-            raise TypeFuncError(&#39;Correlation&#39;, type(r1), type(r2))
+            raise TypeFuncError(&#34;Correlation&#34;, type(r1), type(r2))
 
     @classmethod
-    def convolve(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwargs) -&gt; R:
-        
+    def convolve(cls: Type[R], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;, **kwargs) -&gt; R:
+
         if isinstance(r1, Relation) and isinstance(r2, Relation):
             result = Config.convolve_method(cls, r1, r2)
             return cls(*result, **kwargs)
         else:
-            raise TypeFuncError(&#39;Convolution&#39;, type(r1), type(r2))
+            raise TypeFuncError(&#34;Convolution&#34;, type(r1), type(r2))
 
     @staticmethod
-    def _operation(a: &#39;Relation&#39;, b: Union[&#39;Relation&#39;,  Num],
-                  name_operation: MathOperation) -&gt; Tuple[np.ndarray, np.ndarray]:
-        logging.debug(f&#39;Type of a: {type(a)}&#39;)
-        logging.debug(f&#39;Type of b: {type(b)}&#39;)
+    def _operation(
+        a: &#34;Relation&#34;, b: Union[&#34;Relation&#34;, Num], name_operation: MathOperation
+    ) -&gt; Tuple[np.ndarray, np.ndarray]:
+        logging.debug(f&#34;Type of a: {type(a)}&#34;)
+        logging.debug(f&#34;Type of b: {type(b)}&#34;)
         if isinstance(b, RelationProtocol):
             r1, r2 = Relation.equalize(a, b)
             x, y1 = r1.get_data()
@@ -238,61 +246,55 @@ class Relation:
             x, y = a.get_data()
             return a._math_operation(x, y, b, name_operation)
         else:
-            raise TypeFuncError(name_operation.value.strip(&#39;_&#39;), type(a), type(b))
+            raise TypeFuncError(name_operation.value.strip(&#34;_&#34;), type(a), type(b))
 
-    def __add__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-                other, MathOperation.ADD), **kwargs)
+    def __add__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.ADD), **kwargs)
 
-    def __radd__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RADD), **kwargs)
+    def __radd__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RADD), **kwargs)
 
-    def __sub__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.SUB), **kwargs)
+    def __sub__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.SUB), **kwargs)
 
-    def __rsub__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RSUB), **kwargs)
+    def __rsub__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RSUB), **kwargs)
 
-    def __mul__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.MUL), **kwargs)
+    def __mul__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.MUL), **kwargs)
 
-    def __rmul__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RMUL), **kwargs)
+    def __rmul__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RMUL), **kwargs)
 
-    def __truediv__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.TRUEDIV), **kwargs)
+    def __truediv__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(
+            *self._operation(self, other, MathOperation.TRUEDIV), **kwargs
+        )
 
-    def __rtruediv__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RTRUEDIV), **kwargs)
+    def __rtruediv__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(
+            *self._operation(self, other, MathOperation.RTRUEDIV), **kwargs
+        )
 
-    def __pow__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.POW), **kwargs)
+    def __pow__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.POW), **kwargs)
 
-    def __rpow__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RPOW), **kwargs)
+    def __rpow__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RPOW), **kwargs)
 
-    def __iadd__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __iadd__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__add__(other, **kwargs)
 
-    def __isub__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __isub__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__sub__(other, **kwargs)
 
-    def __imul__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __imul__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__mul__(other, **kwargs)
 
-    def __idiv__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __idiv__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__truediv__(other, **kwargs)
 
-    def __ipow__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __ipow__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__pow__(other, **kwargs)
 
     def __len__(self) -&gt; int:
@@ -303,8 +305,7 @@ class Relation:
             idx = (np.abs(self._x - item)).argmin()
             return self._x[idx], self._y[idx]
         if isinstance(item, slice):
-            return self.select_data(item.start, item.stop)
-        </code></pre>
+            return self.select_data(item.start, item.stop)</code></pre>
 </details>
 </section>
 <section>
@@ -325,15 +326,15 @@ class Relation:
 <p>The class describe a dependency between two sequences x, y,
 represented by real or complex numbers. The length of sequences must be
 the same, and the sampling rate must not change throughout the entire
-sequence. </p>
+sequence.</p>
 <p><strong>Properties</strong>:</p>
 <blockquote>
 <p><strong>x</strong>: <code>Union[RelationProtocol, NDArray]</code>
 The Relation class, or a class derived from the Relation class, or
-an array_like object containing numbers(real or complex). </p>
+an array_like object containing numbers(real or complex).</p>
 <p><strong>y</strong>: <code>NDArray</code> = None.
 None or array_like object containing real or complex numbers.</p>
-<p><strong>dx</strong>: <code>float</code> = None.<br>
+<p><strong>dx</strong>: <code>float</code> = None.
 Sample rate x-axis.</p>
 </blockquote>
 <p>For the instance of <code><a title="sweep_design.math_signals.math_relation.Relation" href="#sweep_design.math_signals.math_relation.Relation">Relation</a></code> class, define the basic mathematical operstions:
@@ -355,46 +356,52 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Relation:
-    &#39;&#39;&#39;A representation of dependency y from x (y = f(x))
-    
-    The class describe a dependency between two sequences x, y, 
-    represented by real or complex numbers. The length of sequences must be 
+    &#34;&#34;&#34;A representation of dependency y from x (y = f(x))
+
+    The class describe a dependency between two sequences x, y,
+    represented by real or complex numbers. The length of sequences must be
     the same, and the sampling rate must not change throughout the entire
-    sequence. 
+    sequence.
 
     **Properties**:
-    &gt; **x**: `Union[RelationProtocol, NDArray]` 
-    The Relation class, or a class derived from the Relation class, or 
-    an array_like object containing numbers(real or complex). 
+    &gt; **x**: `Union[RelationProtocol, NDArray]`
+    The Relation class, or a class derived from the Relation class, or
+    an array_like object containing numbers(real or complex).
 
-    &gt; **y**: `NDArray` = None. 
+    &gt; **y**: `NDArray` = None.
     None or array_like object containing real or complex numbers.
 
-    &gt; **dx**: `float` = None.  
+    &gt; **dx**: `float` = None.
     Sample rate x-axis.
 
-    For the instance of `Relation` class, define the basic mathematical operstions: 
-    *additon (+), subtraction(-), multiplication(&#39;*&#39;), devision(/), 
+    For the instance of `Relation` class, define the basic mathematical operstions:
+    *additon (+), subtraction(-), multiplication(&#39;*&#39;), devision(/),
     expopnentiation (&#39;*&#39;&#39;*&#39;) and their unary representation (+=, -=, *=, /=).
     The result of the operation is a new instance of the Relation class.
 
-    Determined correlation and convolution between two instances 
+    Determined correlation and convolution between two instances
     (methods: correlate and convolve).
 
-    How those operations will be calculated determined by the methods described 
-    in the Config class. Methods can be overridden if necessary 
+    How those operations will be calculated determined by the methods described
+    in the Config class. Methods can be overridden if necessary
     (sweep_design.math_signals.config).
 
     WARNING!!! When inheriting the Relation class, it is important to write correctly
     constructor. It must match the constructor of the Relation class.
-    Because some methods return a type(self)(...). For example, 
+    Because some methods return a type(self)(...). For example,
     addition method (def __add__(self: R, other: Union[&#39;Relation&#39;, Num])
      -&gt; R). Or predefine these methods in the inherited class.
-    
-    &#39;&#39;&#39;
 
-    def __init__(self, x: Union[RelationProtocol, NDArray], y: NDArray = None, dx: float = None, **kwargs) -&gt; None:
-        
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        x: Union[RelationProtocol, NDArray],
+        y: NDArray = None,
+        dx: float = None,
+        **kwargs,
+    ) -&gt; None:
+
         self._math_operation = Config.math_operation
         self._interpolate_extrapolate_method = Config.interpolate_extrapolate_method
         self._integrate_one_method = Config.integrate_one_method
@@ -409,16 +416,16 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
                 logging.warning(f&#39;x is instance of {type(x)}, &#34;y&#34; was ignored&#39;)
         else:
             if y is None:
-                raise BadInputError(&#39;y absent. Not enough data!&#39;)
-            
+                raise BadInputError(&#34;y absent. Not enough data!&#34;)
+
             if Config.CONVERT2ARRAY:
-                x, y  = np.array(x), np.array(y)
-            
+                x, y = np.array(x), np.array(y)
+
             if x.size != y.size:
                 raise NotEqualError(x.size, y.size)
 
             self._x, self._y = x, y
-        
+
     @property
     def x(self) -&gt; np.ndarray:
         return self._x.copy()
@@ -432,7 +439,7 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
 
         num = values[np.argmax(counts)]
         if num &lt; 1:
-            self._dx = 1/round(1/num) 
+            self._dx = 1 / round(1 / num)
         else:
             self._dx = round(num)
         return self._dx
@@ -446,42 +453,39 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
         return self._y.copy()
 
     def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
-        &#39;&#39;&#39;Return the data of the called object.&#39;&#39;&#39;
+        &#34;&#34;&#34;Return the data of the called object.&#34;&#34;&#34;
         return self._x.copy(), self._y.copy()
-    
+
     def max(self) -&gt; Num:
-            return self._y.max()
+        return self._y.max()
 
     def min(self) -&gt; Num:
         return self._y.min()
 
     def get_norm(self) -&gt; float:
-        &#39;&#39;&#39;Get signal rate. 
-        
-        Calculated in terms of signal energy.
-        &#39;&#39;&#39;
-        x, y = self._x, self._y
-        return self._integrate_one_method(y**2, x)/(self.dx)
+        &#34;&#34;&#34;Get signal rate.
 
-    def select_data(
-            self: R, x_start: Num = None, x_end: Num = None , **kwargs
-            ) -&gt; R:
-        &#39;&#39;&#39;Select data using x-axis.&#39;&#39;&#39;
-            
+        Calculated in terms of signal energy.
+        &#34;&#34;&#34;
+        x, y = self._x, self._y
+        return self._integrate_one_method(y**2, x) / (self.dx)
+
+    def select_data(self: R, x_start: Num = None, x_end: Num = None, **kwargs) -&gt; R:
+        &#34;&#34;&#34;Select data using x-axis.&#34;&#34;&#34;
+
         x, y = self.get_data()
-        
+
         if x_start is None:
             x_start = x[0]
-        
+
         if x_end is None:
             x_end = x[-1]
-        
-        is_selected = np.logical_and(np.greater_equal(
-            self._x, x_start), np.less_equal(self._x, x_end))
 
-        return type(self)(
-            x[is_selected], y[is_selected], **kwargs 
-            )
+        is_selected = np.logical_and(
+            np.greater_equal(self._x, x_start), np.less_equal(self._x, x_end)
+        )
+
+        return type(self)(x[is_selected], y[is_selected], **kwargs)
 
     def exp(self: R, **kwargs) -&gt; R:
         x, y = self.get_data()
@@ -494,22 +498,22 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
 
     def integrate(self: R, **kwargs) -&gt; R:
         x, y = self.get_data()
-        result = self._integrate_method(x, y, self.dx)  
+        result = self._integrate_method(x, y, self.dx)
         return type(self)(*result, **kwargs)
 
     def interpolate_extrapolate(self: R, new_x: np.ndarray, **kwargs) -&gt; R:
         new_y = self._interpolate_extrapolate_method(self._x, self._y)(new_x)
         return type(self)(new_x, new_y, **kwargs)
-    
+
     def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R:
         x, y = self.get_data()
-        return type(self)(x+x_shift, y, **kwargs)
+        return type(self)(x + x_shift, y, **kwargs)
 
     @staticmethod
     def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]:
         x1, _ = r1.get_data()
         x2, _ = r2.get_data()
-        comparation = x1==x2
+        comparation = x1 == x2
         if isinstance(comparation, np.ndarray):
             if all(comparation):
                 return r1, r2
@@ -519,28 +523,29 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
         return r1, r2
 
     @classmethod
-    def correlate(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwargs) -&gt; R:
+    def correlate(cls: Type[R], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;, **kwargs) -&gt; R:
 
         if isinstance(r1, Relation) and isinstance(r2, Relation):
             result = Config.correlate_method(cls, r1, r2)
             return cls(*result, **kwargs)
         else:
-            raise TypeFuncError(&#39;Correlation&#39;, type(r1), type(r2))
+            raise TypeFuncError(&#34;Correlation&#34;, type(r1), type(r2))
 
     @classmethod
-    def convolve(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwargs) -&gt; R:
-        
+    def convolve(cls: Type[R], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;, **kwargs) -&gt; R:
+
         if isinstance(r1, Relation) and isinstance(r2, Relation):
             result = Config.convolve_method(cls, r1, r2)
             return cls(*result, **kwargs)
         else:
-            raise TypeFuncError(&#39;Convolution&#39;, type(r1), type(r2))
+            raise TypeFuncError(&#34;Convolution&#34;, type(r1), type(r2))
 
     @staticmethod
-    def _operation(a: &#39;Relation&#39;, b: Union[&#39;Relation&#39;,  Num],
-                  name_operation: MathOperation) -&gt; Tuple[np.ndarray, np.ndarray]:
-        logging.debug(f&#39;Type of a: {type(a)}&#39;)
-        logging.debug(f&#39;Type of b: {type(b)}&#39;)
+    def _operation(
+        a: &#34;Relation&#34;, b: Union[&#34;Relation&#34;, Num], name_operation: MathOperation
+    ) -&gt; Tuple[np.ndarray, np.ndarray]:
+        logging.debug(f&#34;Type of a: {type(a)}&#34;)
+        logging.debug(f&#34;Type of b: {type(b)}&#34;)
         if isinstance(b, RelationProtocol):
             r1, r2 = Relation.equalize(a, b)
             x, y1 = r1.get_data()
@@ -550,61 +555,55 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
             x, y = a.get_data()
             return a._math_operation(x, y, b, name_operation)
         else:
-            raise TypeFuncError(name_operation.value.strip(&#39;_&#39;), type(a), type(b))
+            raise TypeFuncError(name_operation.value.strip(&#34;_&#34;), type(a), type(b))
 
-    def __add__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-                other, MathOperation.ADD), **kwargs)
+    def __add__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.ADD), **kwargs)
 
-    def __radd__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RADD), **kwargs)
+    def __radd__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RADD), **kwargs)
 
-    def __sub__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.SUB), **kwargs)
+    def __sub__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.SUB), **kwargs)
 
-    def __rsub__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RSUB), **kwargs)
+    def __rsub__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RSUB), **kwargs)
 
-    def __mul__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.MUL), **kwargs)
+    def __mul__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.MUL), **kwargs)
 
-    def __rmul__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RMUL), **kwargs)
+    def __rmul__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RMUL), **kwargs)
 
-    def __truediv__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.TRUEDIV), **kwargs)
+    def __truediv__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(
+            *self._operation(self, other, MathOperation.TRUEDIV), **kwargs
+        )
 
-    def __rtruediv__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RTRUEDIV), **kwargs)
+    def __rtruediv__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(
+            *self._operation(self, other, MathOperation.RTRUEDIV), **kwargs
+        )
 
-    def __pow__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.POW), **kwargs)
+    def __pow__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.POW), **kwargs)
 
-    def __rpow__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
-        return type(self)(*self._operation(self, 
-            other, MathOperation.RPOW), **kwargs)
+    def __rpow__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
+        return type(self)(*self._operation(self, other, MathOperation.RPOW), **kwargs)
 
-    def __iadd__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __iadd__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__add__(other, **kwargs)
 
-    def __isub__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __isub__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__sub__(other, **kwargs)
 
-    def __imul__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __imul__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__mul__(other, **kwargs)
 
-    def __idiv__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __idiv__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__truediv__(other, **kwargs)
 
-    def __ipow__(self: R, other: Union[&#39;Relation&#39;, Num], **kwargs) -&gt; R:
+    def __ipow__(self: R, other: Union[&#34;Relation&#34;, Num], **kwargs) -&gt; R:
         return self.__pow__(other, **kwargs)
 
     def __len__(self) -&gt; int:
@@ -634,13 +633,13 @@ addition method (def <strong>add</strong>(self: R, other: Union['Relation', Num]
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def convolve(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwargs) -&gt; R:
-    
+def convolve(cls: Type[R], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;, **kwargs) -&gt; R:
+
     if isinstance(r1, Relation) and isinstance(r2, Relation):
         result = Config.convolve_method(cls, r1, r2)
         return cls(*result, **kwargs)
     else:
-        raise TypeFuncError(&#39;Convolution&#39;, type(r1), type(r2))</code></pre>
+        raise TypeFuncError(&#34;Convolution&#34;, type(r1), type(r2))</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.math_relation.Relation.correlate"><code class="name flex">
@@ -653,13 +652,13 @@ def convolve(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwa
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@classmethod
-def correlate(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kwargs) -&gt; R:
+def correlate(cls: Type[R], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;, **kwargs) -&gt; R:
 
     if isinstance(r1, Relation) and isinstance(r2, Relation):
         result = Config.correlate_method(cls, r1, r2)
         return cls(*result, **kwargs)
     else:
-        raise TypeFuncError(&#39;Correlation&#39;, type(r1), type(r2))</code></pre>
+        raise TypeFuncError(&#34;Correlation&#34;, type(r1), type(r2))</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.math_relation.Relation.equalize"><code class="name flex">
@@ -675,7 +674,7 @@ def correlate(cls: Type[R], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;, **kw
 def equalize(r1: R, r2: R2) -&gt; Tuple[R, R2]:
     x1, _ = r1.get_data()
     x2, _ = r2.get_data()
-    comparation = x1==x2
+    comparation = x1 == x2
     if isinstance(comparation, np.ndarray):
         if all(comparation):
             return r1, r2
@@ -704,7 +703,7 @@ def dx(self) -&gt; float:
 
     num = values[np.argmax(counts)]
     if num &lt; 1:
-        self._dx = 1/round(1/num) 
+        self._dx = 1 / round(1 / num)
     else:
         self._dx = round(num)
     return self._dx</code></pre>
@@ -776,7 +775,7 @@ def y(self) -&gt; np.ndarray:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_data(self) -&gt; Tuple[np.ndarray, np.ndarray]:
-    &#39;&#39;&#39;Return the data of the called object.&#39;&#39;&#39;
+    &#34;&#34;&#34;Return the data of the called object.&#34;&#34;&#34;
     return self._x.copy(), self._y.copy()</code></pre>
 </details>
 </dd>
@@ -784,19 +783,19 @@ def y(self) -&gt; np.ndarray:
 <span>def <span class="ident">get_norm</span></span>(<span>self) ‑> float</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Get signal rate. </p>
+<div class="desc"><p>Get signal rate.</p>
 <p>Calculated in terms of signal energy.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_norm(self) -&gt; float:
-    &#39;&#39;&#39;Get signal rate. 
-    
+    &#34;&#34;&#34;Get signal rate.
+
     Calculated in terms of signal energy.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     x, y = self._x, self._y
-    return self._integrate_one_method(y**2, x)/(self.dx)</code></pre>
+    return self._integrate_one_method(y**2, x) / (self.dx)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.math_relation.Relation.integrate"><code class="name flex">
@@ -810,7 +809,7 @@ def y(self) -&gt; np.ndarray:
 </summary>
 <pre><code class="python">def integrate(self: R, **kwargs) -&gt; R:
     x, y = self.get_data()
-    result = self._integrate_method(x, y, self.dx)  
+    result = self._integrate_method(x, y, self.dx)
     return type(self)(*result, **kwargs)</code></pre>
 </details>
 </dd>
@@ -838,7 +837,7 @@ def y(self) -&gt; np.ndarray:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def max(self) -&gt; Num:
-        return self._y.max()</code></pre>
+    return self._y.max()</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.math_relation.Relation.min"><code class="name flex">
@@ -863,25 +862,22 @@ def y(self) -&gt; np.ndarray:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def select_data(
-        self: R, x_start: Num = None, x_end: Num = None , **kwargs
-        ) -&gt; R:
-    &#39;&#39;&#39;Select data using x-axis.&#39;&#39;&#39;
-        
+<pre><code class="python">def select_data(self: R, x_start: Num = None, x_end: Num = None, **kwargs) -&gt; R:
+    &#34;&#34;&#34;Select data using x-axis.&#34;&#34;&#34;
+
     x, y = self.get_data()
-    
+
     if x_start is None:
         x_start = x[0]
-    
+
     if x_end is None:
         x_end = x[-1]
-    
-    is_selected = np.logical_and(np.greater_equal(
-        self._x, x_start), np.less_equal(self._x, x_end))
 
-    return type(self)(
-        x[is_selected], y[is_selected], **kwargs 
-        )</code></pre>
+    is_selected = np.logical_and(
+        np.greater_equal(self._x, x_start), np.less_equal(self._x, x_end)
+    )
+
+    return type(self)(x[is_selected], y[is_selected], **kwargs)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.math_relation.Relation.shift"><code class="name flex">
@@ -895,7 +891,7 @@ def y(self) -&gt; np.ndarray:
 </summary>
 <pre><code class="python">def shift(self: R, x_shift: Num = 0, **kwargs) -&gt; R:
     x, y = self.get_data()
-    return type(self)(x+x_shift, y, **kwargs)</code></pre>
+    return type(self)(x + x_shift, y, **kwargs)</code></pre>
 </details>
 </dd>
 </dl>

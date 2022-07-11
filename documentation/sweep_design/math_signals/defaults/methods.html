@@ -27,7 +27,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">&#39;&#39;&#39;This is where defualt methods are defined.&#39;&#39;&#39;
+<pre><code class="python">&#34;&#34;&#34;This is where defualt methods are defined.&#34;&#34;&#34;
 
 from typing import Callable, Union, Any, TYPE_CHECKING, Type, Tuple
 
@@ -49,136 +49,157 @@ if TYPE_CHECKING:
 
 Number = Union[float, int, complex]
 
+
 def math_operation(
-        x: np.ndarray,
-        y1: np.ndarray,
-        y2: Union[np.ndarray, Number],
-        name_operation: MathOperation,
-    ) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Math operations.
-    
+    x: np.ndarray,
+    y1: np.ndarray,
+    y2: Union[np.ndarray, Number],
+    name_operation: MathOperation,
+) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Math operations.
+
     Using numpy math operations.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if name_operation == MathOperation.POW:
-        y = np.abs(y1).__getattribute__(name_operation.value)(y2)*np.sign(y1)
+        y = np.abs(y1).__getattribute__(name_operation.value)(y2) * np.sign(y1)
     else:
         y = y1.__getattribute__(name_operation.value)(y2)
 
     return x, y
 
-def one_integrate(y: np.ndarray, x: np.ndarray = None) -&gt; float:
-    &#39;&#39;&#39;Integration.
 
-    Taking the integral on a segment. Return of the area under the graph. 
-    &#39;&#39;&#39;
+def one_integrate(y: np.ndarray, x: np.ndarray = None) -&gt; float:
+    &#34;&#34;&#34;Integration.
+
+    Taking the integral on a segment. Return of the area under the graph.
+    &#34;&#34;&#34;
     return trapz(y, x)
 
 
 def integrate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Integration. 
-        
+    &#34;&#34;&#34;Integration.
+
     Using the scipy.integrate.cumtrapz function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if dx is None:
         dx = x[1] - x[0]
-    return x[1:], cumulative_trapezoid(y)*(dx)
+    return x[1:], cumulative_trapezoid(y) * (dx)
 
 
 def differentiate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Differentiation.
+    &#34;&#34;&#34;Differentiation.
 
-    Using the numpy.diff function.&#39;&#39;&#39;
+    Using the numpy.diff function.&#34;&#34;&#34;
     if dx is None:
         dx = x[1] - x[0]
-    return x[:-1]+(dx)/2, np.diff(y)/(dx)
+    return x[:-1] + (dx) / 2, np.diff(y) / (dx)
 
-def interpolate_extrapolate(x: np.ndarray, y: np.ndarray, bounds_error=False,
-                            fill_value=0.) -&gt; Callable[[x], y]:
-    &#39;&#39;&#39;Interpolation.
+
+def interpolate_extrapolate(
+    x: np.ndarray, y: np.ndarray, bounds_error=False, fill_value=0.0
+) -&gt; Callable[[x], y]:
+    &#34;&#34;&#34;Interpolation.
 
     Using the scyipy.interpolate.interp1d function.
     Returning function of interpolation.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     return interp1d(x, y, bounds_error=bounds_error, fill_value=fill_value)
 
-def get_common_x(x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None) -&gt; x:
-    &#39;&#39;&#39;Specifies the overall x-axis.
 
-    Finds the general sample rate and beginning and end of sequence. 
-    &#39;&#39;&#39;
+def get_common_x(
+    x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None
+) -&gt; x:
+    &#34;&#34;&#34;Specifies the overall x-axis.
+
+    Finds the general sample rate and beginning and end of sequence.
+    &#34;&#34;&#34;
     if dx1 is None:
-        dx1 = x1[1]-x1[0]
+        dx1 = x1[1] - x1[0]
     if dx2 is None:
-        dx2 = x2[1]-x2[0]
+        dx2 = x2[1] - x2[0]
     dx = dx1 if dx1 &lt;= dx2 else dx2
     x_start = x1[0] if x1[0] &lt;= x2[0] else x2[0]
     x_end = x1[-1] if x1[-1] &gt;= x2[-1] else x2[-1]
-    X = x_end-x_start
-    return np.linspace(x_start, (int(X/dx))*dx, int(X/dx)+1)
+    X = x_end - x_start
+    return np.linspace(x_start, (int(X / dx)) * dx, int(X / dx) + 1)
 
 
-def correlate(cls:  Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
-            -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Correlation.
+def correlate(cls: Type[&#34;Relation&#34;], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Correlation.
 
     Using the numpy.correlate function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     r1 = r1.shift(-r1._x[0])
     r2 = r2.shift(-r2._x[0])
     r1, r2 = cls.equalize(r1, r2)
     x, y1 = r1.get_data()
     _, y2 = r2.get_data()
-    return np.append(np.sort(-1*x)[:-1], x), np.correlate(y1, y2, &#39;full&#39;)
+    return np.append(np.sort(-1 * x)[:-1], x), np.correlate(y1, y2, &#34;full&#34;)
 
 
-def convolve(cls: Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
-            -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Convolution.
+def convolve(cls: Type[&#34;Relation&#34;], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Convolution.
 
     Using the numpy.convlove function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     r1 = r1.shift(-r1._x[0])
     r2 = r2.shift(-r2._x[0])
     r1, r2 = cls.equalize(r1, r2)
     x, y1 = r1.get_data()
     _, y2 = r2.get_data()
-    return np.append(np.sort(-1*x)[:-1], x), np.convolve(y1, y2, &#39;full&#39;)
+    return np.append(np.sort(-1 * x)[:-1], x), np.convolve(y1, y2, &#34;full&#34;)
 
-#==============================================================================
 
-def signal2spectrum(time: np.ndarray, amplitude: np.ndarray, 
-                        is_start_zero=False) -&gt; Tuple[frequency, spectrum]:
-    &#39;&#39;&#39;Forward Fourier Transform.
-    
+# ==============================================================================
+
+
+def signal2spectrum(
+    time: np.ndarray, amplitude: np.ndarray, is_start_zero=False
+) -&gt; Tuple[frequency, spectrum]:
+    &#34;&#34;&#34;Forward Fourier Transform.
+
     Using the numpy.fft.rfft function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if not is_start_zero:
-        if time[0] &gt; 0.:
-            time = np.linspace(0., time[-1], int(time[-1]/(time[1]-time[0]))+1)
-            amplitude = np.append(np.zeros(time.size-amplitude.size), amplitude)
-        elif time[-1] &lt; 0.:
-            time = np.linspace(time[0], 0., int(abs(time[0])/(time[1]-time[0]))+1)
-            amplitude = np.append(amplitude, np.zeros(time.size-amplitude.size))
-        
-        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
-    
+        if time[0] &gt; 0.0:
+            time = np.linspace(0.0, time[-1], int(time[-1] / (time[1] - time[0])) + 1)
+            amplitude = np.append(np.zeros(time.size - amplitude.size), amplitude)
+        elif time[-1] &lt; 0.0:
+            time = np.linspace(
+                time[0], 0.0, int(abs(time[0]) / (time[1] - time[0])) + 1
+            )
+            amplitude = np.append(amplitude, np.zeros(time.size - amplitude.size))
+
+        amplitude = np.append(amplitude[time &gt;= 0.0], amplitude[time &lt; 0.0])
+
     spectrum = np.fft.rfft(amplitude)
-    frequency = np.fft.rfftfreq(amplitude.size, d=(time[-1]-time[0])/(amplitude.size))
+    frequency = np.fft.rfftfreq(
+        amplitude.size, d=(time[-1] - time[0]) / (amplitude.size)
+    )
     return frequency, spectrum
 
 
-def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray, 
-                    time_start: float = None) -&gt; Tuple[time, amplitude]:
-    &#39;&#39;&#39;Inverse Fourier Transform.
-    
+def spectrum2sigmal(
+    frequency: np.ndarray, spectrum: np.ndarray, time_start: float = None
+) -&gt; Tuple[time, amplitude]:
+    &#34;&#34;&#34;Inverse Fourier Transform.
+
     Using the numpy.fft.irfft function.
-    &#39;&#39;&#39;
-    amplitude = np.fft.irfft(spectrum) # type: np.ndarray
+    &#34;&#34;&#34;
+    amplitude = np.fft.irfft(spectrum)  # type: np.ndarray
     if time_start is None:
-        time = np.linspace(0, (amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
+        time = np.linspace(
+            0,
+            (amplitude.size - 1) / (2 * (frequency[-1] - frequency[0])),
+            amplitude.size,
+        )
     else:
-        time = np.linspace(time_start, time_start+(amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
-        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
+        time = np.linspace(
+            time_start,
+            time_start + (amplitude.size - 1) / (2 * (frequency[-1] - frequency[0])),
+            amplitude.size,
+        )
+        amplitude = np.append(amplitude[time &gt;= 0.0], amplitude[time &lt; 0.0])
 
     return time, amplitude</code></pre>
 </details>
@@ -200,18 +221,17 @@ def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def convolve(cls: Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
-            -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Convolution.
+<pre><code class="python">def convolve(cls: Type[&#34;Relation&#34;], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Convolution.
 
     Using the numpy.convlove function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     r1 = r1.shift(-r1._x[0])
     r2 = r2.shift(-r2._x[0])
     r1, r2 = cls.equalize(r1, r2)
     x, y1 = r1.get_data()
     _, y2 = r2.get_data()
-    return np.append(np.sort(-1*x)[:-1], x), np.convolve(y1, y2, &#39;full&#39;)</code></pre>
+    return np.append(np.sort(-1 * x)[:-1], x), np.convolve(y1, y2, &#34;full&#34;)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.defaults.methods.correlate"><code class="name flex">
@@ -224,18 +244,17 @@ def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def correlate(cls:  Type[&#39;Relation&#39;], r1: &#39;Relation&#39;, r2: &#39;Relation&#39;) \
-            -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Correlation.
+<pre><code class="python">def correlate(cls: Type[&#34;Relation&#34;], r1: &#34;Relation&#34;, r2: &#34;Relation&#34;) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Correlation.
 
     Using the numpy.correlate function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     r1 = r1.shift(-r1._x[0])
     r2 = r2.shift(-r2._x[0])
     r1, r2 = cls.equalize(r1, r2)
     x, y1 = r1.get_data()
     _, y2 = r2.get_data()
-    return np.append(np.sort(-1*x)[:-1], x), np.correlate(y1, y2, &#39;full&#39;)</code></pre>
+    return np.append(np.sort(-1 * x)[:-1], x), np.correlate(y1, y2, &#34;full&#34;)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.defaults.methods.differentiate"><code class="name flex">
@@ -249,12 +268,12 @@ def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray,
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def differentiate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Differentiation.
+    &#34;&#34;&#34;Differentiation.
 
-    Using the numpy.diff function.&#39;&#39;&#39;
+    Using the numpy.diff function.&#34;&#34;&#34;
     if dx is None:
         dx = x[1] - x[0]
-    return x[:-1]+(dx)/2, np.diff(y)/(dx)</code></pre>
+    return x[:-1] + (dx) / 2, np.diff(y) / (dx)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.defaults.methods.get_common_x"><code class="name flex">
@@ -267,40 +286,42 @@ def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray,
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_common_x(x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None) -&gt; x:
-    &#39;&#39;&#39;Specifies the overall x-axis.
+<pre><code class="python">def get_common_x(
+    x1: np.ndarray, x2: np.ndarray, dx1: float = None, dx2: float = None
+) -&gt; x:
+    &#34;&#34;&#34;Specifies the overall x-axis.
 
-    Finds the general sample rate and beginning and end of sequence. 
-    &#39;&#39;&#39;
+    Finds the general sample rate and beginning and end of sequence.
+    &#34;&#34;&#34;
     if dx1 is None:
-        dx1 = x1[1]-x1[0]
+        dx1 = x1[1] - x1[0]
     if dx2 is None:
-        dx2 = x2[1]-x2[0]
+        dx2 = x2[1] - x2[0]
     dx = dx1 if dx1 &lt;= dx2 else dx2
     x_start = x1[0] if x1[0] &lt;= x2[0] else x2[0]
     x_end = x1[-1] if x1[-1] &gt;= x2[-1] else x2[-1]
-    X = x_end-x_start
-    return np.linspace(x_start, (int(X/dx))*dx, int(X/dx)+1)</code></pre>
+    X = x_end - x_start
+    return np.linspace(x_start, (int(X / dx)) * dx, int(X / dx) + 1)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.defaults.methods.integrate"><code class="name flex">
 <span>def <span class="ident">integrate</span></span>(<span>x: numpy.ndarray, y: numpy.ndarray, dx: float = None) ‑> Tuple[numpy.ndarray, numpy.ndarray]</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Integration. </p>
+<div class="desc"><p>Integration.</p>
 <p>Using the scipy.integrate.cumtrapz function.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def integrate(x: np.ndarray, y: np.ndarray, dx: float = None) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Integration. 
-        
+    &#34;&#34;&#34;Integration.
+
     Using the scipy.integrate.cumtrapz function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if dx is None:
         dx = x[1] - x[0]
-    return x[1:], cumulative_trapezoid(y)*(dx)</code></pre>
+    return x[1:], cumulative_trapezoid(y) * (dx)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.defaults.methods.interpolate_extrapolate"><code class="name flex">
@@ -314,13 +335,14 @@ Returning function of interpolation.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def interpolate_extrapolate(x: np.ndarray, y: np.ndarray, bounds_error=False,
-                            fill_value=0.) -&gt; Callable[[x], y]:
-    &#39;&#39;&#39;Interpolation.
+<pre><code class="python">def interpolate_extrapolate(
+    x: np.ndarray, y: np.ndarray, bounds_error=False, fill_value=0.0
+) -&gt; Callable[[x], y]:
+    &#34;&#34;&#34;Interpolation.
 
     Using the scyipy.interpolate.interp1d function.
     Returning function of interpolation.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     return interp1d(x, y, bounds_error=bounds_error, fill_value=fill_value)</code></pre>
 </details>
 </dd>
@@ -335,17 +357,17 @@ Returning function of interpolation.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def math_operation(
-        x: np.ndarray,
-        y1: np.ndarray,
-        y2: Union[np.ndarray, Number],
-        name_operation: MathOperation,
-    ) -&gt; Tuple[x, y]:
-    &#39;&#39;&#39;Math operations.
-    
+    x: np.ndarray,
+    y1: np.ndarray,
+    y2: Union[np.ndarray, Number],
+    name_operation: MathOperation,
+) -&gt; Tuple[x, y]:
+    &#34;&#34;&#34;Math operations.
+
     Using numpy math operations.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if name_operation == MathOperation.POW:
-        y = np.abs(y1).__getattribute__(name_operation.value)(y2)*np.sign(y1)
+        y = np.abs(y1).__getattribute__(name_operation.value)(y2) * np.sign(y1)
     else:
         y = y1.__getattribute__(name_operation.value)(y2)
 
@@ -363,10 +385,10 @@ Returning function of interpolation.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def one_integrate(y: np.ndarray, x: np.ndarray = None) -&gt; float:
-    &#39;&#39;&#39;Integration.
+    &#34;&#34;&#34;Integration.
 
-    Taking the integral on a segment. Return of the area under the graph. 
-    &#39;&#39;&#39;
+    Taking the integral on a segment. Return of the area under the graph.
+    &#34;&#34;&#34;
     return trapz(y, x)</code></pre>
 </details>
 </dd>
@@ -380,24 +402,29 @@ Returning function of interpolation.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def signal2spectrum(time: np.ndarray, amplitude: np.ndarray, 
-                        is_start_zero=False) -&gt; Tuple[frequency, spectrum]:
-    &#39;&#39;&#39;Forward Fourier Transform.
-    
+<pre><code class="python">def signal2spectrum(
+    time: np.ndarray, amplitude: np.ndarray, is_start_zero=False
+) -&gt; Tuple[frequency, spectrum]:
+    &#34;&#34;&#34;Forward Fourier Transform.
+
     Using the numpy.fft.rfft function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     if not is_start_zero:
-        if time[0] &gt; 0.:
-            time = np.linspace(0., time[-1], int(time[-1]/(time[1]-time[0]))+1)
-            amplitude = np.append(np.zeros(time.size-amplitude.size), amplitude)
-        elif time[-1] &lt; 0.:
-            time = np.linspace(time[0], 0., int(abs(time[0])/(time[1]-time[0]))+1)
-            amplitude = np.append(amplitude, np.zeros(time.size-amplitude.size))
-        
-        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
-    
+        if time[0] &gt; 0.0:
+            time = np.linspace(0.0, time[-1], int(time[-1] / (time[1] - time[0])) + 1)
+            amplitude = np.append(np.zeros(time.size - amplitude.size), amplitude)
+        elif time[-1] &lt; 0.0:
+            time = np.linspace(
+                time[0], 0.0, int(abs(time[0]) / (time[1] - time[0])) + 1
+            )
+            amplitude = np.append(amplitude, np.zeros(time.size - amplitude.size))
+
+        amplitude = np.append(amplitude[time &gt;= 0.0], amplitude[time &lt; 0.0])
+
     spectrum = np.fft.rfft(amplitude)
-    frequency = np.fft.rfftfreq(amplitude.size, d=(time[-1]-time[0])/(amplitude.size))
+    frequency = np.fft.rfftfreq(
+        amplitude.size, d=(time[-1] - time[0]) / (amplitude.size)
+    )
     return frequency, spectrum</code></pre>
 </details>
 </dd>
@@ -411,18 +438,27 @@ Returning function of interpolation.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def spectrum2sigmal(frequency: np.ndarray, spectrum: np.ndarray, 
-                    time_start: float = None) -&gt; Tuple[time, amplitude]:
-    &#39;&#39;&#39;Inverse Fourier Transform.
-    
+<pre><code class="python">def spectrum2sigmal(
+    frequency: np.ndarray, spectrum: np.ndarray, time_start: float = None
+) -&gt; Tuple[time, amplitude]:
+    &#34;&#34;&#34;Inverse Fourier Transform.
+
     Using the numpy.fft.irfft function.
-    &#39;&#39;&#39;
-    amplitude = np.fft.irfft(spectrum) # type: np.ndarray
+    &#34;&#34;&#34;
+    amplitude = np.fft.irfft(spectrum)  # type: np.ndarray
     if time_start is None:
-        time = np.linspace(0, (amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
+        time = np.linspace(
+            0,
+            (amplitude.size - 1) / (2 * (frequency[-1] - frequency[0])),
+            amplitude.size,
+        )
     else:
-        time = np.linspace(time_start, time_start+(amplitude.size-1)/(2*(frequency[-1]-frequency[0])), amplitude.size)
-        amplitude = np.append(amplitude[time&gt;=0.], amplitude[time&lt;0.])
+        time = np.linspace(
+            time_start,
+            time_start + (amplitude.size - 1) / (2 * (frequency[-1] - frequency[0])),
+            amplitude.size,
+        )
+        amplitude = np.append(amplitude[time &gt;= 0.0], amplitude[time &lt; 0.0])
 
     return time, amplitude</code></pre>
 </details>

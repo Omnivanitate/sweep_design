@@ -46,156 +46,188 @@ CallFtatMethod = Callable[[Spectrum], Tuple[np.ndarray, np.ndarray, np.ndarray]]
 
 
 class UncalculatedSweep:
-    &#39;&#39;&#39;The `UncalculatedSweep` class prepares for the calculation of the signal sweep (`Sweep`).
-    
-    The get_info_from_ftat function is used to extract the frequency versus 
-    `time` and amplitude versus time functions from the passed `frequency_time` 
+    &#34;&#34;&#34;The `UncalculatedSweep` class prepares for the calculation of the signal sweep (`Sweep`).
+
+    The get_info_from_ftat function is used to extract the frequency versus
+    `time` and amplitude versus time functions from the passed `frequency_time`
     and `amplitude_time` parameters.
-        
+
     **Properties**:
-    
-    &gt; **time**: `Union[RelationProtocol, NDArray]` = `None`  
-    The Relation class, or a class derived from the Relation class, or 
+
+    &gt; **time**: `Union[RelationProtocol, NDArray]` = `None`
+    The Relation class, or a class derived from the Relation class, or
     an array_like object containing numbers(real or complex).
 
-    &gt; **frequency_time**: `Ftatr` = `None`  
-    This parameter, which describes changes in frequency over time, 
-    can be either an array_like, or an object from which an instance 
-    of the `Relation` class will be created, or an instance of the 
+    &gt; **frequency_time**: `Ftatr` = `None`
+    This parameter, which describes changes in frequency over time,
+    can be either an array_like, or an object from which an instance
+    of the `Relation` class will be created, or an instance of the
     `Relation` class, or a callable object that returns a numeric sequence.
     If `None`, then the linear function f = t will be used.
 
-    &gt; **amplitude_time**: `Ftatr` = `None`  
-    This parameter, which describes changes in amplitude modulation 
-    over time, can be either an array_like, or an object from which 
-    an instance of the `Relation` class will be created, or an instance 
-    of the `Relation` class, or a callable object that 
-    returns a numeric sequence.  
-    If `None`, then the function will be assumed to be constant 
+    &gt; **amplitude_time**: `Ftatr` = `None`
+    This parameter, which describes changes in amplitude modulation
+    over time, can be either an array_like, or an object from which
+    an instance of the `Relation` class will be created, or an instance
+    of the `Relation` class, or a callable object that
+    returns a numeric sequence.
+    If `None`, then the function will be assumed to be constant
     and equal to 1.
-        
-    &#39;&#39;&#39;
-    
-    def __init__(self, time: NDArray = None, frequency_time: Union[Ftatr, NDArray] = None, 
-                                    amplitude_time: Union[Ftatr, NDArray] = None) -&gt; None:
-        
+
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        time: NDArray = None,
+        frequency_time: Union[Ftatr, NDArray] = None,
+        amplitude_time: Union[Ftatr, NDArray] = None,
+    ) -&gt; None:
+
         self._integrate_function_default = SweepConfig.integrate_function
-        
+
         time = time if time is None else np.array(time)
-        if not (isinstance(frequency_time, (np.ndarray, Relation)) or callable(frequency_time) or frequency_time is None):
+        if not (
+            isinstance(frequency_time, (np.ndarray, Relation))
+            or callable(frequency_time)
+            or frequency_time is None
+        ):
             frequency_time = np.array(frequency_time)
-        
-        if not (isinstance(amplitude_time, (np.ndarray, Relation)) or callable(amplitude_time) or amplitude_time is None):
+
+        if not (
+            isinstance(amplitude_time, (np.ndarray, Relation))
+            or callable(amplitude_time)
+            or amplitude_time is None
+        ):
             amplitude_time = np.array(amplitude_time)
 
+        (
+            self._time,
+            self._frequency_time,
+            self._amplitude_time,
+        ) = dfsm.get_info_from_ftat(time, frequency_time, amplitude_time)
 
-        self._time, self._frequency_time, self._amplitude_time \
-                                = dfsm.get_info_from_ftat(time, frequency_time, amplitude_time)
+    def __call__(self, time: NDArray = None, tht0=0.0) -&gt; Sweep:
+        &#34;&#34;&#34;Calling an instance of the class to calculate the sweep signal.
 
-    def __call__(self, time: NDArray = None, tht0=0.) -&gt; Sweep:
-        &#39;&#39;&#39;Calling an instance of the class to calculate the sweep signal.
-        
         Properties:
 
-        &gt; **time**: `NDArray` = `None`  
+        &gt; **time**: `NDArray` = `None`
         The number sequence determines the time.
 
-        &gt; **tht0**: `float` = 0.  
+        &gt; **tht0**: `float` = 0.
         Zero phase.
-        
-        Return 
-        &gt; `Sweep`  
-        Returns an instance of the Sweep class - the calculated sweep signal. 
 
-        If time is not passed or equals None, then the time sequence created 
+        Return
+        &gt; `Sweep`
+        Returns an instance of the Sweep class - the calculated sweep signal.
+
+        If time is not passed or equals None, then the time sequence created
         when the class instance was initialized will be used.
-        
-        &#39;&#39;&#39;
-        logging.info(&#39;Calling uncalculated sweep.\n&#39;\
-                    &#39;with params:\nfrequency_time={0}\namplitude_time={1}\ntime={2}&#39;\
-                    &#39;&#39;.format(self._frequency_time, self._amplitude_time, time))
+
+        &#34;&#34;&#34;
+        logging.info(
+            &#34;Calling uncalculated sweep.\n&#34;
+            &#34;with params:\nfrequency_time={0}\namplitude_time={1}\ntime={2}&#34;
+            &#34;&#34;.format(self._frequency_time, self._amplitude_time, time)
+        )
 
         if time is None and self._time is None:
-            raise BadInputError(&#39;Not enough data: time&#39;)
-        
+            raise BadInputError(&#34;Not enough data: time&#34;)
+
         elif time is None and self._time is not None:
             calc_time = self._time
-        elif time is not None: 
+        elif time is not None:
             calc_time = time
-        
+
         if self._frequency_time.__name__ == &#34;interpolate_time&#34;:
-            tht = self._array_tht(self._frequency_time(calc_time)) 
+            tht = self._array_tht(self._frequency_time(calc_time))
         else:
             tht = self._func_tht(self._frequency_time)
 
-        sweep = self._amplitude_time(calc_time)*np.sin(tht(calc_time)+tht0) 
-        
+        sweep = self._amplitude_time(calc_time) * np.sin(tht(calc_time) + tht0)
+
         amplitude_time = Relation(calc_time, self._amplitude_time(calc_time))
         frequency_time = Relation(calc_time, self._frequency_time(calc_time))
 
-        return Sweep(time=calc_time, amplitude=sweep, frequency_time=frequency_time, amplitude_time=amplitude_time)
+        return Sweep(
+            time=calc_time,
+            amplitude=sweep,
+            frequency_time=frequency_time,
+            amplitude_time=amplitude_time,
+        )
 
+    def _func_tht(
+        self, frequency_time: Callable[[np.ndarray], np.ndarray]
+    ) -&gt; Callable[[np.ndarray], np.ndarray]:
+        &#34;&#34;&#34;Functional representation of angular sweep.&#34;&#34;&#34;
 
-    def _func_tht(self, frequency_time: Callable[[np.ndarray], np.ndarray]) \
-                                    -&gt; Callable[[np.ndarray], np.ndarray]:
-        &#39;&#39;&#39;Functional representation of angular sweep.&#39;&#39;&#39;                            
         def result(time: np.ndarray) -&gt; np.ndarray:
             return self._integrate_function_default(frequency_time, time)
+
         return result
 
-    def _array_tht(self, frequency_time: np.ndarray) -&gt; Callable[[np.ndarray], np.ndarray]:
-        &#39;&#39;&#39;Angular sweep represented by a numerical sequence.&#39;&#39;&#39;
-        def result(time: np.ndarray) -&gt; np.ndarray: 
+    def _array_tht(
+        self, frequency_time: np.ndarray
+    ) -&gt; Callable[[np.ndarray], np.ndarray]:
+        &#34;&#34;&#34;Angular sweep represented by a numerical sequence.&#34;&#34;&#34;
+
+        def result(time: np.ndarray) -&gt; np.ndarray:
             frequency_time_relation = Relation(time, frequency_time)
-            return np.append(
-            [0.], 2*np.pi*frequency_time_relation.integrate().y)
+            return np.append([0.0], 2 * np.pi * frequency_time_relation.integrate().y)
+
         return result
 
 
 class ApriorUncalculatedSweep(UncalculatedSweep):
-    &#39;&#39;&#39;`ApriorUncalculatedSweep`
-    
-    Class for constructing a sweep signal from a priori data (from another 
+    &#34;&#34;&#34;`ApriorUncalculatedSweep`
+
+    Class for constructing a sweep signal from a priori data (from another
     signal or spectrum).
-    
-    The calculation of the change in frequency with time (`frequency_time`) 
-    and the amplitude envelope with time (`amplitude_time`) will depend on 
-    the a priori data (`aprior_data`) and on the method (`ftat_method`) 
+
+    The calculation of the change in frequency with time (`frequency_time`)
+    and the amplitude envelope with time (`amplitude_time`) will depend on
+    the a priori data (`aprior_data`) and on the method (`ftat_method`)
     by which they will be calculated.
 
-    If the conversion method (`ftat_method`) is not defined or `None`, 
-    then the method is taken from the `SweepConfig` class `freq2time`. 
-    Method can be overridden if necessary 
-    (`sweep_design.math_signals.config.SweepConfig.freq2time`).  
-    The extracted frequency over time (`frequency_time`) and the amplitude 
-    envelope over time (`amplitude_time`) will be send to the 
+    If the conversion method (`ftat_method`) is not defined or `None`,
+    then the method is taken from the `SweepConfig` class `freq2time`.
+    Method can be overridden if necessary
+    (`sweep_design.math_signals.config.SweepConfig.freq2time`).
+    The extracted frequency over time (`frequency_time`) and the amplitude
+    envelope over time (`amplitude_time`) will be send to the
     `UncalculatedSweep` constructor.
-    &#39;&#39;&#39;
-    
-    def __init__(self, time: Any = None, aprior_data: Any = None, 
-                 ftat_method: CallFtatMethod = None) -&gt; None:
-    
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        time: Any = None,
+        aprior_data: Any = None,
+        ftat_method: CallFtatMethod = None,
+    ) -&gt; None:
+
         if not ftat_method:
             ftat_method = SweepConfig.freq2time
 
-        frequency_time, amplitude_time, self._aprior_signal \
-            = dfsm.get_info_from_aprior_data(time, aprior_data, ftat_method)
+        (
+            frequency_time,
+            amplitude_time,
+            self._aprior_signal,
+        ) = dfsm.get_info_from_aprior_data(time, aprior_data, ftat_method)
         super().__init__(time, frequency_time, amplitude_time)
-        
-    def __call__(self, time: Any = None, tht0 = 0., is_normolize = True) -&gt; Sweep:
-        &#39;&#39;&#39;Calculate the sweep and normolise it.&#39;&#39;&#39;
-        sweep = super().__call__(time=time, tht0 = tht0)
-        
+
+    def __call__(self, time: Any = None, tht0=0.0, is_normolize=True) -&gt; Sweep:
+        &#34;&#34;&#34;Calculate the sweep and normolise it.&#34;&#34;&#34;
+        sweep = super().__call__(time=time, tht0=tht0)
+
         if is_normolize:
             norm_sweep = sweep.get_norm()
             norm_aprior = self._aprior_signal.get_norm()
-            norm = sqrt(norm_aprior)/sqrt(norm_sweep)
+            norm = sqrt(norm_aprior) / sqrt(norm_sweep)
             sweep.amplitude_time *= norm
             sweep *= norm
-    
+
         sweep.aprior_signal = self._aprior_signal
-        return sweep
-        </code></pre>
+        return sweep</code></pre>
 </details>
 </section>
 <section>
@@ -222,7 +254,7 @@ by which they will be calculated.</p>
 <p>If the conversion method (<code>ftat_method</code>) is not defined or <code>None</code>,
 then the method is taken from the <code>SweepConfig</code> class <code>freq2time</code>.
 Method can be overridden if necessary
-(<code>sweep_design.math_signals.config.SweepConfig.freq2time</code>).<br>
+(<code>sweep_design.math_signals.config.SweepConfig.freq2time</code>).
 The extracted frequency over time (<code>frequency_time</code>) and the amplitude
 envelope over time (<code>amplitude_time</code>) will be send to the
 <code><a title="sweep_design.math_signals.math_uncalcsweep.UncalculatedSweep" href="#sweep_design.math_signals.math_uncalcsweep.UncalculatedSweep">UncalculatedSweep</a></code> constructor.</p></div>
@@ -231,46 +263,53 @@ envelope over time (<code>amplitude_time</code>) will be send to the
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ApriorUncalculatedSweep(UncalculatedSweep):
-    &#39;&#39;&#39;`ApriorUncalculatedSweep`
-    
-    Class for constructing a sweep signal from a priori data (from another 
+    &#34;&#34;&#34;`ApriorUncalculatedSweep`
+
+    Class for constructing a sweep signal from a priori data (from another
     signal or spectrum).
-    
-    The calculation of the change in frequency with time (`frequency_time`) 
-    and the amplitude envelope with time (`amplitude_time`) will depend on 
-    the a priori data (`aprior_data`) and on the method (`ftat_method`) 
+
+    The calculation of the change in frequency with time (`frequency_time`)
+    and the amplitude envelope with time (`amplitude_time`) will depend on
+    the a priori data (`aprior_data`) and on the method (`ftat_method`)
     by which they will be calculated.
 
-    If the conversion method (`ftat_method`) is not defined or `None`, 
-    then the method is taken from the `SweepConfig` class `freq2time`. 
-    Method can be overridden if necessary 
-    (`sweep_design.math_signals.config.SweepConfig.freq2time`).  
-    The extracted frequency over time (`frequency_time`) and the amplitude 
-    envelope over time (`amplitude_time`) will be send to the 
+    If the conversion method (`ftat_method`) is not defined or `None`,
+    then the method is taken from the `SweepConfig` class `freq2time`.
+    Method can be overridden if necessary
+    (`sweep_design.math_signals.config.SweepConfig.freq2time`).
+    The extracted frequency over time (`frequency_time`) and the amplitude
+    envelope over time (`amplitude_time`) will be send to the
     `UncalculatedSweep` constructor.
-    &#39;&#39;&#39;
-    
-    def __init__(self, time: Any = None, aprior_data: Any = None, 
-                 ftat_method: CallFtatMethod = None) -&gt; None:
-    
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        time: Any = None,
+        aprior_data: Any = None,
+        ftat_method: CallFtatMethod = None,
+    ) -&gt; None:
+
         if not ftat_method:
             ftat_method = SweepConfig.freq2time
 
-        frequency_time, amplitude_time, self._aprior_signal \
-            = dfsm.get_info_from_aprior_data(time, aprior_data, ftat_method)
+        (
+            frequency_time,
+            amplitude_time,
+            self._aprior_signal,
+        ) = dfsm.get_info_from_aprior_data(time, aprior_data, ftat_method)
         super().__init__(time, frequency_time, amplitude_time)
-        
-    def __call__(self, time: Any = None, tht0 = 0., is_normolize = True) -&gt; Sweep:
-        &#39;&#39;&#39;Calculate the sweep and normolise it.&#39;&#39;&#39;
-        sweep = super().__call__(time=time, tht0 = tht0)
-        
+
+    def __call__(self, time: Any = None, tht0=0.0, is_normolize=True) -&gt; Sweep:
+        &#34;&#34;&#34;Calculate the sweep and normolise it.&#34;&#34;&#34;
+        sweep = super().__call__(time=time, tht0=tht0)
+
         if is_normolize:
             norm_sweep = sweep.get_norm()
             norm_aprior = self._aprior_signal.get_norm()
-            norm = sqrt(norm_aprior)/sqrt(norm_sweep)
+            norm = sqrt(norm_aprior) / sqrt(norm_sweep)
             sweep.amplitude_time *= norm
             sweep *= norm
-    
+
         sweep.aprior_signal = self._aprior_signal
         return sweep</code></pre>
 </details>
@@ -290,21 +329,21 @@ envelope over time (<code>amplitude_time</code>) will be send to the
 and <code>amplitude_time</code> parameters.</p>
 <p><strong>Properties</strong>:</p>
 <blockquote>
-<p><strong>time</strong>: <code>Union[RelationProtocol, NDArray]</code> = <code>None</code><br>
+<p><strong>time</strong>: <code>Union[RelationProtocol, NDArray]</code> = <code>None</code>
 The Relation class, or a class derived from the Relation class, or
 an array_like object containing numbers(real or complex).</p>
-<p><strong>frequency_time</strong>: <code>Ftatr</code> = <code>None</code><br>
+<p><strong>frequency_time</strong>: <code>Ftatr</code> = <code>None</code>
 This parameter, which describes changes in frequency over time,
 can be either an array_like, or an object from which an instance
 of the <code>Relation</code> class will be created, or an instance of the
 <code>Relation</code> class, or a callable object that returns a numeric sequence.
 If <code>None</code>, then the linear function f = t will be used.</p>
-<p><strong>amplitude_time</strong>: <code>Ftatr</code> = <code>None</code><br>
+<p><strong>amplitude_time</strong>: <code>Ftatr</code> = <code>None</code>
 This parameter, which describes changes in amplitude modulation
 over time, can be either an array_like, or an object from which
 an instance of the <code>Relation</code> class will be created, or an instance
 of the <code>Relation</code> class, or a callable object that
-returns a numeric sequence.<br>
+returns a numeric sequence.
 If <code>None</code>, then the function will be assumed to be constant
 and equal to 1.</p>
 </blockquote></div>
@@ -313,109 +352,135 @@ and equal to 1.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class UncalculatedSweep:
-    &#39;&#39;&#39;The `UncalculatedSweep` class prepares for the calculation of the signal sweep (`Sweep`).
-    
-    The get_info_from_ftat function is used to extract the frequency versus 
-    `time` and amplitude versus time functions from the passed `frequency_time` 
+    &#34;&#34;&#34;The `UncalculatedSweep` class prepares for the calculation of the signal sweep (`Sweep`).
+
+    The get_info_from_ftat function is used to extract the frequency versus
+    `time` and amplitude versus time functions from the passed `frequency_time`
     and `amplitude_time` parameters.
-        
+
     **Properties**:
-    
-    &gt; **time**: `Union[RelationProtocol, NDArray]` = `None`  
-    The Relation class, or a class derived from the Relation class, or 
+
+    &gt; **time**: `Union[RelationProtocol, NDArray]` = `None`
+    The Relation class, or a class derived from the Relation class, or
     an array_like object containing numbers(real or complex).
 
-    &gt; **frequency_time**: `Ftatr` = `None`  
-    This parameter, which describes changes in frequency over time, 
-    can be either an array_like, or an object from which an instance 
-    of the `Relation` class will be created, or an instance of the 
+    &gt; **frequency_time**: `Ftatr` = `None`
+    This parameter, which describes changes in frequency over time,
+    can be either an array_like, or an object from which an instance
+    of the `Relation` class will be created, or an instance of the
     `Relation` class, or a callable object that returns a numeric sequence.
     If `None`, then the linear function f = t will be used.
 
-    &gt; **amplitude_time**: `Ftatr` = `None`  
-    This parameter, which describes changes in amplitude modulation 
-    over time, can be either an array_like, or an object from which 
-    an instance of the `Relation` class will be created, or an instance 
-    of the `Relation` class, or a callable object that 
-    returns a numeric sequence.  
-    If `None`, then the function will be assumed to be constant 
+    &gt; **amplitude_time**: `Ftatr` = `None`
+    This parameter, which describes changes in amplitude modulation
+    over time, can be either an array_like, or an object from which
+    an instance of the `Relation` class will be created, or an instance
+    of the `Relation` class, or a callable object that
+    returns a numeric sequence.
+    If `None`, then the function will be assumed to be constant
     and equal to 1.
-        
-    &#39;&#39;&#39;
-    
-    def __init__(self, time: NDArray = None, frequency_time: Union[Ftatr, NDArray] = None, 
-                                    amplitude_time: Union[Ftatr, NDArray] = None) -&gt; None:
-        
+
+    &#34;&#34;&#34;
+
+    def __init__(
+        self,
+        time: NDArray = None,
+        frequency_time: Union[Ftatr, NDArray] = None,
+        amplitude_time: Union[Ftatr, NDArray] = None,
+    ) -&gt; None:
+
         self._integrate_function_default = SweepConfig.integrate_function
-        
+
         time = time if time is None else np.array(time)
-        if not (isinstance(frequency_time, (np.ndarray, Relation)) or callable(frequency_time) or frequency_time is None):
+        if not (
+            isinstance(frequency_time, (np.ndarray, Relation))
+            or callable(frequency_time)
+            or frequency_time is None
+        ):
             frequency_time = np.array(frequency_time)
-        
-        if not (isinstance(amplitude_time, (np.ndarray, Relation)) or callable(amplitude_time) or amplitude_time is None):
+
+        if not (
+            isinstance(amplitude_time, (np.ndarray, Relation))
+            or callable(amplitude_time)
+            or amplitude_time is None
+        ):
             amplitude_time = np.array(amplitude_time)
 
+        (
+            self._time,
+            self._frequency_time,
+            self._amplitude_time,
+        ) = dfsm.get_info_from_ftat(time, frequency_time, amplitude_time)
 
-        self._time, self._frequency_time, self._amplitude_time \
-                                = dfsm.get_info_from_ftat(time, frequency_time, amplitude_time)
+    def __call__(self, time: NDArray = None, tht0=0.0) -&gt; Sweep:
+        &#34;&#34;&#34;Calling an instance of the class to calculate the sweep signal.
 
-    def __call__(self, time: NDArray = None, tht0=0.) -&gt; Sweep:
-        &#39;&#39;&#39;Calling an instance of the class to calculate the sweep signal.
-        
         Properties:
 
-        &gt; **time**: `NDArray` = `None`  
+        &gt; **time**: `NDArray` = `None`
         The number sequence determines the time.
 
-        &gt; **tht0**: `float` = 0.  
+        &gt; **tht0**: `float` = 0.
         Zero phase.
-        
-        Return 
-        &gt; `Sweep`  
-        Returns an instance of the Sweep class - the calculated sweep signal. 
 
-        If time is not passed or equals None, then the time sequence created 
+        Return
+        &gt; `Sweep`
+        Returns an instance of the Sweep class - the calculated sweep signal.
+
+        If time is not passed or equals None, then the time sequence created
         when the class instance was initialized will be used.
-        
-        &#39;&#39;&#39;
-        logging.info(&#39;Calling uncalculated sweep.\n&#39;\
-                    &#39;with params:\nfrequency_time={0}\namplitude_time={1}\ntime={2}&#39;\
-                    &#39;&#39;.format(self._frequency_time, self._amplitude_time, time))
+
+        &#34;&#34;&#34;
+        logging.info(
+            &#34;Calling uncalculated sweep.\n&#34;
+            &#34;with params:\nfrequency_time={0}\namplitude_time={1}\ntime={2}&#34;
+            &#34;&#34;.format(self._frequency_time, self._amplitude_time, time)
+        )
 
         if time is None and self._time is None:
-            raise BadInputError(&#39;Not enough data: time&#39;)
-        
+            raise BadInputError(&#34;Not enough data: time&#34;)
+
         elif time is None and self._time is not None:
             calc_time = self._time
-        elif time is not None: 
+        elif time is not None:
             calc_time = time
-        
+
         if self._frequency_time.__name__ == &#34;interpolate_time&#34;:
-            tht = self._array_tht(self._frequency_time(calc_time)) 
+            tht = self._array_tht(self._frequency_time(calc_time))
         else:
             tht = self._func_tht(self._frequency_time)
 
-        sweep = self._amplitude_time(calc_time)*np.sin(tht(calc_time)+tht0) 
-        
+        sweep = self._amplitude_time(calc_time) * np.sin(tht(calc_time) + tht0)
+
         amplitude_time = Relation(calc_time, self._amplitude_time(calc_time))
         frequency_time = Relation(calc_time, self._frequency_time(calc_time))
 
-        return Sweep(time=calc_time, amplitude=sweep, frequency_time=frequency_time, amplitude_time=amplitude_time)
+        return Sweep(
+            time=calc_time,
+            amplitude=sweep,
+            frequency_time=frequency_time,
+            amplitude_time=amplitude_time,
+        )
 
+    def _func_tht(
+        self, frequency_time: Callable[[np.ndarray], np.ndarray]
+    ) -&gt; Callable[[np.ndarray], np.ndarray]:
+        &#34;&#34;&#34;Functional representation of angular sweep.&#34;&#34;&#34;
 
-    def _func_tht(self, frequency_time: Callable[[np.ndarray], np.ndarray]) \
-                                    -&gt; Callable[[np.ndarray], np.ndarray]:
-        &#39;&#39;&#39;Functional representation of angular sweep.&#39;&#39;&#39;                            
         def result(time: np.ndarray) -&gt; np.ndarray:
             return self._integrate_function_default(frequency_time, time)
+
         return result
 
-    def _array_tht(self, frequency_time: np.ndarray) -&gt; Callable[[np.ndarray], np.ndarray]:
-        &#39;&#39;&#39;Angular sweep represented by a numerical sequence.&#39;&#39;&#39;
-        def result(time: np.ndarray) -&gt; np.ndarray: 
+    def _array_tht(
+        self, frequency_time: np.ndarray
+    ) -&gt; Callable[[np.ndarray], np.ndarray]:
+        &#34;&#34;&#34;Angular sweep represented by a numerical sequence.&#34;&#34;&#34;
+
+        def result(time: np.ndarray) -&gt; np.ndarray:
             frequency_time_relation = Relation(time, frequency_time)
-            return np.append(
-            [0.], 2*np.pi*frequency_time_relation.integrate().y)
+            return np.append([0.0], 2 * np.pi * frequency_time_relation.integrate().y)
+
         return result</code></pre>
 </details>
 <h3>Subclasses</h3>

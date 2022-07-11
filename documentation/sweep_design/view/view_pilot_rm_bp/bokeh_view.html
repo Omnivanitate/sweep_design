@@ -29,42 +29,69 @@
 <pre><code class="python">from ...named_signals.named_sweep import NamedSweep
 
 from ..framemakers.ipywidgetframer.default_ipywidget_properties import (
-    get_checkbox_frame, get_dropdown_frame, get_figure_frame)
+    get_checkbox_frame,
+    get_dropdown_frame,
+    get_figure_frame,
+)
 
 from ..framemakers.ipywidgetframer.figwidget.bokehfig import (
-    BokehFigureMaker, color_palette, default_image_properties,
-    default_line_property)
+    BokehFigureMaker,
+    color_palette,
+    default_image_properties,
+    default_line_property,
+)
 
-from ..framemakers.ipywidgetframer.figwidget.default_bokeh_properties import \
-    get_figure_window
+from ..framemakers.ipywidgetframer.figwidget.default_bokeh_properties import (
+    get_figure_window,
+)
 
 from ..framemakers.ipywidgetframer.ipywidgetframe import WidgetFrameMaker
 from .pilor_bp_rm_view_builder import PilotRmBpViewBuilder
 
 
 class PilotRMBPBokehView:
+    def __init__(self, k_width=1.0, k_height=1.0) -&gt; None:
 
+        figure_frame_amplitude_phase_spectrum = get_figure_frame(
+            k_width * 0.4, k_height * 0.3
+        )
+        figure_window_amp_spectrum = get_figure_window(
+            &#34;Amplitude spectrum&#34;,
+            &#34;Frequency, Hz&#34;,
+            &#34;Amlitude, N&#34;,
+            k_width * 0.4,
+            k_height * 0.3,
+        )
 
-    def __init__(self, k_width = 1., k_height = 1.) -&gt; None:
-        
-        figure_frame_amplitude_phase_spectrum = get_figure_frame(k_width*0.4, k_height*0.3)
-        figure_window_amp_spectrum = get_figure_window(&#39;Amplitude spectrum&#39;, &#39;Frequency, Hz&#39;, &#39;Amlitude, N&#39;, k_width*0.4, k_height*0.3)
+        figure_window_phase_spectrum = get_figure_window(
+            &#34;Phase spectrum&#34;, &#34;Frequency, Hz&#34;, &#34;Phase&#34;, k_width * 0.4, k_height * 0.3
+        )
 
-        figure_window_phase_spectrum = get_figure_window(&#39;Phase spectrum&#39;,  &#39;Frequency, Hz&#39;, &#39;Phase&#39;, k_width*0.4, k_height*0.3)
+        checkbox_signals_frame = get_checkbox_frame(
+            &#34;Signals:&#34;, &#34;&#34;, k_width * 0.4, k_height * 0.3
+        )
+        checkbox_types_signals_frame = get_checkbox_frame(
+            &#34;Types signals:&#34;, &#34;&#34;, k_width * 0.4, k_height * 0.3
+        )
 
-        checkbox_signals_frame = get_checkbox_frame(&#39;Signals:&#39;, &#39;&#39;, k_width*0.4, k_height*0.3)
-        checkbox_types_signals_frame = get_checkbox_frame(&#39;Types signals:&#39;, &#39;&#39;, k_width*0.4, k_height*0.3)
-        
-        figure_frame_main_sweep_spectrogram = get_figure_frame(k_width*0.8, k_height*0.4)
-        figure_window_main_sweep = get_figure_window(&#39;Sweep&#39;, &#39;Time, s&#39;, &#39;Force, N&#39;, k_width*0.8, k_height*0.3)
+        figure_frame_main_sweep_spectrogram = get_figure_frame(
+            k_width * 0.8, k_height * 0.4
+        )
+        figure_window_main_sweep = get_figure_window(
+            &#34;Sweep&#34;, &#34;Time, s&#34;, &#34;Force, N&#34;, k_width * 0.8, k_height * 0.3
+        )
 
-        figure_window_spectrogram = get_figure_window(&#39;Spectrum&#39;, &#39;Time, s&#39;, &#39;Frequency, Hz&#39;, k_width*0.8, k_height*0.3)
+        figure_window_spectrogram = get_figure_window(
+            &#34;Spectrum&#34;, &#34;Time, s&#34;, &#34;Frequency, Hz&#34;, k_width * 0.8, k_height * 0.3
+        )
 
-        dropdown_spectrogram_frame = get_dropdown_frame(&#39;Specrograms:&#39;, &#39;No spectrogram!&#39;)
+        dropdown_spectrogram_frame = get_dropdown_frame(
+            &#34;Specrograms:&#34;, &#34;No spectrogram!&#34;
+        )
 
         self._view_builder = PilotRmBpViewBuilder(
-            BokehFigureMaker, 
-            WidgetFrameMaker, 
+            BokehFigureMaker,
+            WidgetFrameMaker,
             figure_frame_amplitude_phase_spectrum,
             figure_window_amp_spectrum,
             figure_frame_amplitude_phase_spectrum,
@@ -75,50 +102,94 @@ class PilotRMBPBokehView:
             figure_window_main_sweep,
             dropdown_spectrogram_frame,
             figure_frame_main_sweep_spectrogram,
-            figure_window_spectrogram,    
+            figure_window_spectrogram,
         )
 
+    def add_pilot_rm_bp(
+        self, pilot: NamedSweep, reaction_mass: NamedSweep, base_plate: NamedSweep
+    ) -&gt; None:
 
-    def add_pilot_rm_bp(self, pilot: NamedSweep, reaction_mass: NamedSweep, base_plate: NamedSweep) -&gt; None:
-        
         line_properties = default_line_property
-        line_properties[&#39;line_color&#39;] = next(color_palette)
+        line_properties[&#34;line_color&#34;] = next(color_palette)
 
-        self._view_builder.add_choise_sweep(f&#34;{str(pilot)}_pilot&#34;, f&#34;{str(pilot)}_pilot&#34;, {&#39;color&#39;:line_properties[&#39;line_color&#39;]})
+        self._view_builder.add_choise_sweep(
+            f&#34;{str(pilot)}_pilot&#34;,
+            f&#34;{str(pilot)}_pilot&#34;,
+            {&#34;color&#34;: line_properties[&#34;line_color&#34;]},
+        )
 
         time_spectrogram, frequency_spectrogram = pilot.f_t.get_data()
-        self._view_builder.add_line_spectrogram(time_spectrogram, frequency_spectrogram, str(pilot), set([str(pilot), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+        self._view_builder.add_line_spectrogram(
+            time_spectrogram,
+            frequency_spectrogram,
+            str(pilot),
+            set([str(pilot), f&#34;{str(pilot)}_pilot&#34;]),
+            line_properties,
+        )
 
         for signal in [pilot, reaction_mass, base_plate]:
-            
-            self._view_builder.add_choise_type_signal(str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), {&#39;color&#39;: line_properties[&#39;line_color&#39;]})
-            
-            frequency, amplitude_spectrum = signal.get_spectrum().get_amp_spectrum().get_data()
-            self._view_builder.add_amp_spectrum(frequency, amplitude_spectrum, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
 
-            frequency_phase, phase_spectrum = signal.get_spectrum().get_phase_spectrum().get_data()
-            self._view_builder.add_phase_sepctrum(frequency_phase, phase_spectrum, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+            self._view_builder.add_choise_type_signal(
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                {&#34;color&#34;: line_properties[&#34;line_color&#34;]},
+            )
+
+            frequency, amplitude_spectrum = (
+                signal.get_spectrum().get_amp_spectrum().get_data()
+            )
+            self._view_builder.add_amp_spectrum(
+                frequency,
+                amplitude_spectrum,
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                line_properties,
+            )
+
+            frequency_phase, phase_spectrum = (
+                signal.get_spectrum().get_phase_spectrum().get_data()
+            )
+            self._view_builder.add_phase_sepctrum(
+                frequency_phase,
+                phase_spectrum,
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                line_properties,
+            )
 
             time, amplitude = signal.get_data()
-            self._view_builder.add_main_sweep_signals(time, amplitude, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+            self._view_builder.add_main_sweep_signals(
+                time,
+                amplitude,
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                line_properties,
+            )
 
             spectrogram = signal.spectrogram
-            time_spectrogram, frequency_spectrogram, spectrogram = spectrogram.time, spectrogram.frequency, spectrogram.spectrogram_matrix
-                
-            self._view_builder.add_image_spectrogram(time_spectrogram,
+            time_spectrogram, frequency_spectrogram, spectrogram = (
+                spectrogram.time,
+                spectrogram.frequency,
+                spectrogram.spectrogram_matrix,
+            )
+
+            self._view_builder.add_image_spectrogram(
+                time_spectrogram,
                 frequency_spectrogram,
-                spectrogram, str(signal), set([str(signal), str(pilot), f&#39;{str(pilot)}_pilot&#39;]), default_image_properties)
+                spectrogram,
+                str(signal),
+                set([str(signal), str(pilot), f&#34;{str(pilot)}_pilot&#34;]),
+                default_image_properties,
+            )
             self._view_builder.add_choise_dropdown_spectrogram(str(signal))
-            line_properties[&#39;line_color&#39;] = next(color_palette)
-            
+            line_properties[&#34;line_color&#34;] = next(color_palette)
+
     def show(self):
         return self._view_builder.show()
 
 
-def get_pilot_rm_bp_view_bokeh_ipywidget(k_width = 1., k_height = 1.):
-    return PilotRMBPBokehView(k_width, k_height)
-        
-            </code></pre>
+def get_pilot_rm_bp_view_bokeh_ipywidget(k_width=1.0, k_height=1.0):
+    return PilotRMBPBokehView(k_width, k_height)</code></pre>
 </details>
 </section>
 <section>
@@ -137,7 +208,7 @@ def get_pilot_rm_bp_view_bokeh_ipywidget(k_width = 1., k_height = 1.):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_pilot_rm_bp_view_bokeh_ipywidget(k_width = 1., k_height = 1.):
+<pre><code class="python">def get_pilot_rm_bp_view_bokeh_ipywidget(k_width=1.0, k_height=1.0):
     return PilotRMBPBokehView(k_width, k_height)</code></pre>
 </details>
 </dd>
@@ -157,28 +228,48 @@ def get_pilot_rm_bp_view_bokeh_ipywidget(k_width = 1., k_height = 1.):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PilotRMBPBokehView:
+    def __init__(self, k_width=1.0, k_height=1.0) -&gt; None:
 
+        figure_frame_amplitude_phase_spectrum = get_figure_frame(
+            k_width * 0.4, k_height * 0.3
+        )
+        figure_window_amp_spectrum = get_figure_window(
+            &#34;Amplitude spectrum&#34;,
+            &#34;Frequency, Hz&#34;,
+            &#34;Amlitude, N&#34;,
+            k_width * 0.4,
+            k_height * 0.3,
+        )
 
-    def __init__(self, k_width = 1., k_height = 1.) -&gt; None:
-        
-        figure_frame_amplitude_phase_spectrum = get_figure_frame(k_width*0.4, k_height*0.3)
-        figure_window_amp_spectrum = get_figure_window(&#39;Amplitude spectrum&#39;, &#39;Frequency, Hz&#39;, &#39;Amlitude, N&#39;, k_width*0.4, k_height*0.3)
+        figure_window_phase_spectrum = get_figure_window(
+            &#34;Phase spectrum&#34;, &#34;Frequency, Hz&#34;, &#34;Phase&#34;, k_width * 0.4, k_height * 0.3
+        )
 
-        figure_window_phase_spectrum = get_figure_window(&#39;Phase spectrum&#39;,  &#39;Frequency, Hz&#39;, &#39;Phase&#39;, k_width*0.4, k_height*0.3)
+        checkbox_signals_frame = get_checkbox_frame(
+            &#34;Signals:&#34;, &#34;&#34;, k_width * 0.4, k_height * 0.3
+        )
+        checkbox_types_signals_frame = get_checkbox_frame(
+            &#34;Types signals:&#34;, &#34;&#34;, k_width * 0.4, k_height * 0.3
+        )
 
-        checkbox_signals_frame = get_checkbox_frame(&#39;Signals:&#39;, &#39;&#39;, k_width*0.4, k_height*0.3)
-        checkbox_types_signals_frame = get_checkbox_frame(&#39;Types signals:&#39;, &#39;&#39;, k_width*0.4, k_height*0.3)
-        
-        figure_frame_main_sweep_spectrogram = get_figure_frame(k_width*0.8, k_height*0.4)
-        figure_window_main_sweep = get_figure_window(&#39;Sweep&#39;, &#39;Time, s&#39;, &#39;Force, N&#39;, k_width*0.8, k_height*0.3)
+        figure_frame_main_sweep_spectrogram = get_figure_frame(
+            k_width * 0.8, k_height * 0.4
+        )
+        figure_window_main_sweep = get_figure_window(
+            &#34;Sweep&#34;, &#34;Time, s&#34;, &#34;Force, N&#34;, k_width * 0.8, k_height * 0.3
+        )
 
-        figure_window_spectrogram = get_figure_window(&#39;Spectrum&#39;, &#39;Time, s&#39;, &#39;Frequency, Hz&#39;, k_width*0.8, k_height*0.3)
+        figure_window_spectrogram = get_figure_window(
+            &#34;Spectrum&#34;, &#34;Time, s&#34;, &#34;Frequency, Hz&#34;, k_width * 0.8, k_height * 0.3
+        )
 
-        dropdown_spectrogram_frame = get_dropdown_frame(&#39;Specrograms:&#39;, &#39;No spectrogram!&#39;)
+        dropdown_spectrogram_frame = get_dropdown_frame(
+            &#34;Specrograms:&#34;, &#34;No spectrogram!&#34;
+        )
 
         self._view_builder = PilotRmBpViewBuilder(
-            BokehFigureMaker, 
-            WidgetFrameMaker, 
+            BokehFigureMaker,
+            WidgetFrameMaker,
             figure_frame_amplitude_phase_spectrum,
             figure_window_amp_spectrum,
             figure_frame_amplitude_phase_spectrum,
@@ -189,42 +280,88 @@ def get_pilot_rm_bp_view_bokeh_ipywidget(k_width = 1., k_height = 1.):
             figure_window_main_sweep,
             dropdown_spectrogram_frame,
             figure_frame_main_sweep_spectrogram,
-            figure_window_spectrogram,    
+            figure_window_spectrogram,
         )
 
+    def add_pilot_rm_bp(
+        self, pilot: NamedSweep, reaction_mass: NamedSweep, base_plate: NamedSweep
+    ) -&gt; None:
 
-    def add_pilot_rm_bp(self, pilot: NamedSweep, reaction_mass: NamedSweep, base_plate: NamedSweep) -&gt; None:
-        
         line_properties = default_line_property
-        line_properties[&#39;line_color&#39;] = next(color_palette)
+        line_properties[&#34;line_color&#34;] = next(color_palette)
 
-        self._view_builder.add_choise_sweep(f&#34;{str(pilot)}_pilot&#34;, f&#34;{str(pilot)}_pilot&#34;, {&#39;color&#39;:line_properties[&#39;line_color&#39;]})
+        self._view_builder.add_choise_sweep(
+            f&#34;{str(pilot)}_pilot&#34;,
+            f&#34;{str(pilot)}_pilot&#34;,
+            {&#34;color&#34;: line_properties[&#34;line_color&#34;]},
+        )
 
         time_spectrogram, frequency_spectrogram = pilot.f_t.get_data()
-        self._view_builder.add_line_spectrogram(time_spectrogram, frequency_spectrogram, str(pilot), set([str(pilot), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+        self._view_builder.add_line_spectrogram(
+            time_spectrogram,
+            frequency_spectrogram,
+            str(pilot),
+            set([str(pilot), f&#34;{str(pilot)}_pilot&#34;]),
+            line_properties,
+        )
 
         for signal in [pilot, reaction_mass, base_plate]:
-            
-            self._view_builder.add_choise_type_signal(str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), {&#39;color&#39;: line_properties[&#39;line_color&#39;]})
-            
-            frequency, amplitude_spectrum = signal.get_spectrum().get_amp_spectrum().get_data()
-            self._view_builder.add_amp_spectrum(frequency, amplitude_spectrum, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
 
-            frequency_phase, phase_spectrum = signal.get_spectrum().get_phase_spectrum().get_data()
-            self._view_builder.add_phase_sepctrum(frequency_phase, phase_spectrum, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+            self._view_builder.add_choise_type_signal(
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                {&#34;color&#34;: line_properties[&#34;line_color&#34;]},
+            )
+
+            frequency, amplitude_spectrum = (
+                signal.get_spectrum().get_amp_spectrum().get_data()
+            )
+            self._view_builder.add_amp_spectrum(
+                frequency,
+                amplitude_spectrum,
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                line_properties,
+            )
+
+            frequency_phase, phase_spectrum = (
+                signal.get_spectrum().get_phase_spectrum().get_data()
+            )
+            self._view_builder.add_phase_sepctrum(
+                frequency_phase,
+                phase_spectrum,
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                line_properties,
+            )
 
             time, amplitude = signal.get_data()
-            self._view_builder.add_main_sweep_signals(time, amplitude, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+            self._view_builder.add_main_sweep_signals(
+                time,
+                amplitude,
+                str(signal),
+                set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+                line_properties,
+            )
 
             spectrogram = signal.spectrogram
-            time_spectrogram, frequency_spectrogram, spectrogram = spectrogram.time, spectrogram.frequency, spectrogram.spectrogram_matrix
-                
-            self._view_builder.add_image_spectrogram(time_spectrogram,
+            time_spectrogram, frequency_spectrogram, spectrogram = (
+                spectrogram.time,
+                spectrogram.frequency,
+                spectrogram.spectrogram_matrix,
+            )
+
+            self._view_builder.add_image_spectrogram(
+                time_spectrogram,
                 frequency_spectrogram,
-                spectrogram, str(signal), set([str(signal), str(pilot), f&#39;{str(pilot)}_pilot&#39;]), default_image_properties)
+                spectrogram,
+                str(signal),
+                set([str(signal), str(pilot), f&#34;{str(pilot)}_pilot&#34;]),
+                default_image_properties,
+            )
             self._view_builder.add_choise_dropdown_spectrogram(str(signal))
-            line_properties[&#39;line_color&#39;] = next(color_palette)
-            
+            line_properties[&#34;line_color&#34;] = next(color_palette)
+
     def show(self):
         return self._view_builder.show()</code></pre>
 </details>
@@ -239,37 +376,84 @@ def get_pilot_rm_bp_view_bokeh_ipywidget(k_width = 1., k_height = 1.):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_pilot_rm_bp(self, pilot: NamedSweep, reaction_mass: NamedSweep, base_plate: NamedSweep) -&gt; None:
-    
-    line_properties = default_line_property
-    line_properties[&#39;line_color&#39;] = next(color_palette)
+<pre><code class="python">def add_pilot_rm_bp(
+    self, pilot: NamedSweep, reaction_mass: NamedSweep, base_plate: NamedSweep
+) -&gt; None:
 
-    self._view_builder.add_choise_sweep(f&#34;{str(pilot)}_pilot&#34;, f&#34;{str(pilot)}_pilot&#34;, {&#39;color&#39;:line_properties[&#39;line_color&#39;]})
+    line_properties = default_line_property
+    line_properties[&#34;line_color&#34;] = next(color_palette)
+
+    self._view_builder.add_choise_sweep(
+        f&#34;{str(pilot)}_pilot&#34;,
+        f&#34;{str(pilot)}_pilot&#34;,
+        {&#34;color&#34;: line_properties[&#34;line_color&#34;]},
+    )
 
     time_spectrogram, frequency_spectrogram = pilot.f_t.get_data()
-    self._view_builder.add_line_spectrogram(time_spectrogram, frequency_spectrogram, str(pilot), set([str(pilot), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+    self._view_builder.add_line_spectrogram(
+        time_spectrogram,
+        frequency_spectrogram,
+        str(pilot),
+        set([str(pilot), f&#34;{str(pilot)}_pilot&#34;]),
+        line_properties,
+    )
 
     for signal in [pilot, reaction_mass, base_plate]:
-        
-        self._view_builder.add_choise_type_signal(str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), {&#39;color&#39;: line_properties[&#39;line_color&#39;]})
-        
-        frequency, amplitude_spectrum = signal.get_spectrum().get_amp_spectrum().get_data()
-        self._view_builder.add_amp_spectrum(frequency, amplitude_spectrum, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
 
-        frequency_phase, phase_spectrum = signal.get_spectrum().get_phase_spectrum().get_data()
-        self._view_builder.add_phase_sepctrum(frequency_phase, phase_spectrum, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+        self._view_builder.add_choise_type_signal(
+            str(signal),
+            set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+            {&#34;color&#34;: line_properties[&#34;line_color&#34;]},
+        )
+
+        frequency, amplitude_spectrum = (
+            signal.get_spectrum().get_amp_spectrum().get_data()
+        )
+        self._view_builder.add_amp_spectrum(
+            frequency,
+            amplitude_spectrum,
+            str(signal),
+            set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+            line_properties,
+        )
+
+        frequency_phase, phase_spectrum = (
+            signal.get_spectrum().get_phase_spectrum().get_data()
+        )
+        self._view_builder.add_phase_sepctrum(
+            frequency_phase,
+            phase_spectrum,
+            str(signal),
+            set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+            line_properties,
+        )
 
         time, amplitude = signal.get_data()
-        self._view_builder.add_main_sweep_signals(time, amplitude, str(signal), set([str(signal), f&#39;{str(pilot)}_pilot&#39;]), line_properties)
+        self._view_builder.add_main_sweep_signals(
+            time,
+            amplitude,
+            str(signal),
+            set([str(signal), f&#34;{str(pilot)}_pilot&#34;]),
+            line_properties,
+        )
 
         spectrogram = signal.spectrogram
-        time_spectrogram, frequency_spectrogram, spectrogram = spectrogram.time, spectrogram.frequency, spectrogram.spectrogram_matrix
-            
-        self._view_builder.add_image_spectrogram(time_spectrogram,
+        time_spectrogram, frequency_spectrogram, spectrogram = (
+            spectrogram.time,
+            spectrogram.frequency,
+            spectrogram.spectrogram_matrix,
+        )
+
+        self._view_builder.add_image_spectrogram(
+            time_spectrogram,
             frequency_spectrogram,
-            spectrogram, str(signal), set([str(signal), str(pilot), f&#39;{str(pilot)}_pilot&#39;]), default_image_properties)
+            spectrogram,
+            str(signal),
+            set([str(signal), str(pilot), f&#34;{str(pilot)}_pilot&#34;]),
+            default_image_properties,
+        )
         self._view_builder.add_choise_dropdown_spectrogram(str(signal))
-        line_properties[&#39;line_color&#39;] = next(color_palette)</code></pre>
+        line_properties[&#34;line_color&#34;] = next(color_palette)</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.view_pilot_rm_bp.bokeh_view.PilotRMBPBokehView.show"><code class="name flex">

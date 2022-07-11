@@ -28,11 +28,13 @@
 </summary>
 <pre><code class="python">import numpy as np
 
-def f_t_linear_function(f_start, f_end, time):
-    return lambda t: t*(f_end-f_start)/(time[-1]-time[0])+f_start
 
-def f_t_linear_array(time: np.ndarray, f_start=0., f_end=1.):
-    return time*(f_end-f_start)/(time[-1]-time[0])+f_start</code></pre>
+def f_t_linear_function(f_start, f_end, time):
+    return lambda t: t * (f_end - f_start) / (time[-1] - time[0]) + f_start
+
+
+def f_t_linear_array(time: np.ndarray, f_start=0.0, f_end=1.0):
+    return time * (f_end - f_start) / (time[-1] - time[0]) + f_start</code></pre>
 </details>
 </section>
 <section>
@@ -51,8 +53,8 @@ def f_t_linear_array(time: np.ndarray, f_start=0., f_end=1.):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def f_t_linear_array(time: np.ndarray, f_start=0., f_end=1.):
-    return time*(f_end-f_start)/(time[-1]-time[0])+f_start</code></pre>
+<pre><code class="python">def f_t_linear_array(time: np.ndarray, f_start=0.0, f_end=1.0):
+    return time * (f_end - f_start) / (time[-1] - time[0]) + f_start</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.math_signals.utility_functions.linear_f_t.f_t_linear_function"><code class="name flex">
@@ -65,7 +67,7 @@ def f_t_linear_array(time: np.ndarray, f_start=0., f_end=1.):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def f_t_linear_function(f_start, f_end, time):
-    return lambda t: t*(f_end-f_start)/(time[-1]-time[0])+f_start</code></pre>
+    return lambda t: t * (f_end - f_start) / (time[-1] - time[0]) + f_start</code></pre>
 </details>
 </dd>
 </dl>

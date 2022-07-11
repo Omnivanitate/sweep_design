@@ -36,25 +36,26 @@ class SweepConfig:
     &gt; Several methods are defined for default calculations:
 
     **spectrogram_method_default**
-    &gt; The method by which the spectrogram will be calculated.  
+    &gt; The method by which the spectrogram will be calculated.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.get_spectrogram`
 
     &gt; **input**:
-    &gt;&gt; **time**: `numpy.ndarray`  
+    &gt;&gt; **time**: `numpy.ndarray`
     **amplitude**: np.ndarry
+    **dt**: float
 
     &gt; **output**:
-    &gt;&gt; `Tuple` [  
-    &gt;&gt; **time**: `numpy.ndarray`,  
-    &gt;&gt; **frequency**: `numpy.ndarray`,  
-    &gt;&gt; **spectrogram**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; `Tuple` [
+    &gt;&gt; **time**: `numpy.ndarray`,
+    &gt;&gt; **frequency**: `numpy.ndarray`,
+    &gt;&gt; **spectrogram**: `numpy.ndarray`
+    ]
 
     - - -
 
     **get_f_t**
-    &gt; The method by which frequency versus time will be calculated.  
+    &gt; The method by which frequency versus time will be calculated.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.get_f_t`
 
@@ -68,7 +69,7 @@ class SweepConfig:
     - - -
 
     **get_a_t**
-    &gt; The method by which the time envelope of the signal will be calculated.  
+    &gt; The method by which the time envelope of the signal will be calculated.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.get_a_t`
 
@@ -82,13 +83,13 @@ class SweepConfig:
     - - -
 
     **integrate_function**
-    &gt; A method for integrating a function rather than a sequence.  
+    &gt; A method for integrating a function rather than a sequence.
     Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.integrate_quad`
 
     &gt; **input**:
-    &gt;&gt; **f_t_function**: `Callable`[[**time**: `numpy.ndarray`], 
-    **frequency**: `numpy.ndarray`]  
+    &gt;&gt; **f_t_function**: `Callable`[[**time**: `numpy.ndarray`],
+    **frequency**: `numpy.ndarray`]
     **time**: `numpy.ndarray`
 
     &gt; **output**:
@@ -98,7 +99,7 @@ class SweepConfig:
 
     **freq2time**
     &gt; The simple method to extract the time envelope of a sweep signal and
-    the time-frequency function to generate a sweep signal from a priori data.  
+    the time-frequency function to generate a sweep signal from a priori data.
     Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.simple_freq2time`
 
@@ -106,11 +107,11 @@ class SweepConfig:
     &gt;&gt; **spectrum**: `sweep_design.math_signals.math_signal.Spectrum`
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-    &gt;&gt; **time**: `numpy.ndarray`,  
-    **frequency**: `numpy.ndarray`,  
-    **envelope**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+    &gt;&gt; **time**: `numpy.ndarray`,
+    **frequency**: `numpy.ndarray`,
+    **envelope**: `numpy.ndarray`
+    ]
 
     - - -
 
@@ -121,7 +122,7 @@ class SweepConfig:
     &#34;&#34;&#34;
 
     # Methods for Sweep.
-    spectrogram_method = dfsm.get_spectrogram()
+    spectrogram_method = dfsm.get_spectrogram
     get_f_t = dfsm.get_f_t
     get_a_t = dfsm.get_a_t
 
@@ -151,30 +152,30 @@ class SweepConfig:
 </blockquote>
 <p><strong>spectrogram_method_default</strong></p>
 <blockquote>
-<p>The method by which the spectrogram will be calculated.<br>
+<p>The method by which the spectrogram will be calculated.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_spectrogram" href="../math_signals/defaults/sweep_methods.html#sweep_design.math_signals.defaults.sweep_methods.get_spectrogram">get_spectrogram()</a></code></p>
 </blockquote>
 <p><strong>input</strong>:</p>
 <blockquote>
-<p><strong>time</strong>: <code>numpy.ndarray</code><br>
-<strong>amplitude</strong>: np.ndarry</p>
+<p><strong>time</strong>: <code>numpy.ndarray</code>
+<strong>amplitude</strong>: np.ndarry
+<strong>dt</strong>: float</p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p><code>Tuple</code> [<br>
-<strong>time</strong>: <code>numpy.ndarray</code>,<br>
-<strong>frequency</strong>: <code>numpy.ndarray</code>,<br>
-<strong>spectrogram</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p><code>Tuple</code> [
+<strong>time</strong>: <code>numpy.ndarray</code>,
+<strong>frequency</strong>: <code>numpy.ndarray</code>,
+<strong>spectrogram</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
 <p><strong>get_f_t</strong></p>
 <blockquote>
-<p>The method by which frequency versus time will be calculated.<br>
+<p>The method by which frequency versus time will be calculated.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_f_t" href="../math_signals/defaults/sweep_methods.html#sweep_design.math_signals.defaults.sweep_methods.get_f_t">get_f_t()</a></code></p>
@@ -192,7 +193,7 @@ Method derived from default function:</p>
 <hr>
 <p><strong>get_a_t</strong></p>
 <blockquote>
-<p>The method by which the time envelope of the signal will be calculated.<br>
+<p>The method by which the time envelope of the signal will be calculated.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.sweep_methods.get_a_t" href="../math_signals/defaults/sweep_methods.html#sweep_design.math_signals.defaults.sweep_methods.get_a_t">get_a_t()</a></code></p>
@@ -210,7 +211,7 @@ Method derived from default function:</p>
 <hr>
 <p><strong>integrate_function</strong></p>
 <blockquote>
-<p>A method for integrating a function rather than a sequence.<br>
+<p>A method for integrating a function rather than a sequence.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.sweep_methods.integrate_quad" href="../math_signals/defaults/sweep_methods.html#sweep_design.math_signals.defaults.sweep_methods.integrate_quad">integrate_quad()</a></code></p>
@@ -218,7 +219,7 @@ Method derived from default function:</p>
 <p><strong>input</strong>:</p>
 <blockquote>
 <p><strong>f_t_function</strong>: <code>Callable</code>[[<strong>time</strong>: <code>numpy.ndarray</code>],
-<strong>frequency</strong>: <code>numpy.ndarray</code>]<br>
+<strong>frequency</strong>: <code>numpy.ndarray</code>]
 <strong>time</strong>: <code>numpy.ndarray</code></p>
 </blockquote>
 <p><strong>output</strong>:</p>
@@ -230,7 +231,7 @@ Method derived from default function:</p>
 <p><strong>freq2time</strong></p>
 <blockquote>
 <p>The simple method to extract the time envelope of a sweep signal and
-the time-frequency function to generate a sweep signal from a priori data.<br>
+the time-frequency function to generate a sweep signal from a priori data.
 Method derived from default function:</p>
 <blockquote>
 <p><code><a title="sweep_design.math_signals.defaults.sweep_methods.simple_freq2time" href="../math_signals/defaults/sweep_methods.html#sweep_design.math_signals.defaults.sweep_methods.simple_freq2time">simple_freq2time()</a></code></p>
@@ -241,12 +242,11 @@ Method derived from default function:</p>
 </blockquote>
 <p><strong>output</strong>:</p>
 <blockquote>
-<p>Tuple [<br>
-<strong>time</strong>: <code>numpy.ndarray</code>,<br>
-<strong>frequency</strong>: <code>numpy.ndarray</code>,<br>
-<strong>envelope</strong>: <code>numpy.ndarray</code><br>
-]
-</p>
+<p>Tuple [
+<strong>time</strong>: <code>numpy.ndarray</code>,
+<strong>frequency</strong>: <code>numpy.ndarray</code>,
+<strong>envelope</strong>: <code>numpy.ndarray</code>
+]</p>
 </blockquote>
 </blockquote>
 <hr>
@@ -265,25 +265,26 @@ the input and output parameters)</p></div>
     &gt; Several methods are defined for default calculations:
 
     **spectrogram_method_default**
-    &gt; The method by which the spectrogram will be calculated.  
+    &gt; The method by which the spectrogram will be calculated.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.get_spectrogram`
 
     &gt; **input**:
-    &gt;&gt; **time**: `numpy.ndarray`  
+    &gt;&gt; **time**: `numpy.ndarray`
     **amplitude**: np.ndarry
+    **dt**: float
 
     &gt; **output**:
-    &gt;&gt; `Tuple` [  
-    &gt;&gt; **time**: `numpy.ndarray`,  
-    &gt;&gt; **frequency**: `numpy.ndarray`,  
-    &gt;&gt; **spectrogram**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; `Tuple` [
+    &gt;&gt; **time**: `numpy.ndarray`,
+    &gt;&gt; **frequency**: `numpy.ndarray`,
+    &gt;&gt; **spectrogram**: `numpy.ndarray`
+    ]
 
     - - -
 
     **get_f_t**
-    &gt; The method by which frequency versus time will be calculated.  
+    &gt; The method by which frequency versus time will be calculated.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.get_f_t`
 
@@ -297,7 +298,7 @@ the input and output parameters)</p></div>
     - - -
 
     **get_a_t**
-    &gt; The method by which the time envelope of the signal will be calculated.  
+    &gt; The method by which the time envelope of the signal will be calculated.
     &gt; Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.get_a_t`
 
@@ -311,13 +312,13 @@ the input and output parameters)</p></div>
     - - -
 
     **integrate_function**
-    &gt; A method for integrating a function rather than a sequence.  
+    &gt; A method for integrating a function rather than a sequence.
     Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.integrate_quad`
 
     &gt; **input**:
-    &gt;&gt; **f_t_function**: `Callable`[[**time**: `numpy.ndarray`], 
-    **frequency**: `numpy.ndarray`]  
+    &gt;&gt; **f_t_function**: `Callable`[[**time**: `numpy.ndarray`],
+    **frequency**: `numpy.ndarray`]
     **time**: `numpy.ndarray`
 
     &gt; **output**:
@@ -327,7 +328,7 @@ the input and output parameters)</p></div>
 
     **freq2time**
     &gt; The simple method to extract the time envelope of a sweep signal and
-    the time-frequency function to generate a sweep signal from a priori data.  
+    the time-frequency function to generate a sweep signal from a priori data.
     Method derived from default function:
     &gt;&gt; `sweep_design.math_signals.defaults.sweep_methods.simple_freq2time`
 
@@ -335,11 +336,11 @@ the input and output parameters)</p></div>
     &gt;&gt; **spectrum**: `sweep_design.math_signals.math_signal.Spectrum`
 
     &gt; **output**:
-    &gt;&gt; Tuple [  
-    &gt;&gt; **time**: `numpy.ndarray`,  
-    **frequency**: `numpy.ndarray`,  
-    **envelope**: `numpy.ndarray`  
-    ]  
+    &gt;&gt; Tuple [
+    &gt;&gt; **time**: `numpy.ndarray`,
+    **frequency**: `numpy.ndarray`,
+    **envelope**: `numpy.ndarray`
+    ]
 
     - - -
 
@@ -350,7 +351,7 @@ the input and output parameters)</p></div>
     &#34;&#34;&#34;
 
     # Methods for Sweep.
-    spectrogram_method = dfsm.get_spectrogram()
+    spectrogram_method = dfsm.get_spectrogram
     get_f_t = dfsm.get_f_t
     get_a_t = dfsm.get_a_t
 
@@ -375,9 +376,9 @@ the input and output parameters)</p></div>
 <blockquote>
 <p>Tuple [</p>
 <blockquote>
-<p>time: np.ndarray,<br>
-frequency: np.ndarray,<br>
-amplitude_modulation: np.ndarray<br>
+<p>time: np.ndarray,
+frequency: np.ndarray,
+amplitude_modulation: np.ndarray
 ]</p>
 </blockquote>
 </blockquote>
@@ -386,27 +387,29 @@ amplitude_modulation: np.ndarray<br>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def simple_freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[time, frequency, envelope]:
-    &#39;&#39;&#39;The simple method to extract frequency modulation from a prior spectrum.
-    
+<pre><code class="python">def simple_freq2time(spectrum: &#34;Spectrum&#34;) -&gt; Tuple[time, frequency, envelope]:
+    &#34;&#34;&#34;The simple method to extract frequency modulation from a prior spectrum.
+
     Properties:
     &gt; spectrum: Spectrum
-    
+
     Returns:
     &gt; Tuple [
-    &gt;&gt; time: np.ndarray,  
-    &gt;&gt; frequency: np.ndarray,  
-    &gt;&gt; amplitude_modulation: np.ndarray  
+    &gt;&gt; time: np.ndarray,
+    &gt;&gt; frequency: np.ndarray,
+    &gt;&gt; amplitude_modulation: np.ndarray
     &gt;]
 
     The amplitude modulation is constant.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     amplitude_spectrum = spectrum.get_amp_spectrum()
     frequency, amplitude = amplitude_spectrum.get_data()
-    n_spec = amplitude ** 2
-    time = np.append([0.], ((n_spec[1:]+n_spec[:-1])/(frequency[1:]-frequency[:-1])).cumsum())
+    n_spec = amplitude**2
+    time = np.append(
+        [0.0], ((n_spec[1:] + n_spec[:-1]) / (frequency[1:] - frequency[:-1])).cumsum()
+    )
     coef = amplitude_spectrum.get_norm()
-    amplitude_modulation = coef*np.ones(len(time))
+    amplitude_modulation = coef * np.ones(len(time))
     return time, frequency, amplitude_modulation</code></pre>
 </details>
 </dd>
@@ -421,10 +424,10 @@ amplitude_modulation: np.ndarray<br>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_a_t(time: np.ndarray, amplitude: np.ndarray) -&gt; Relation:
-    &#39;&#39;&#39;Get envelop from sweep signal using the Hilbert transformation.
+    &#34;&#34;&#34;Get envelop from sweep signal using the Hilbert transformation.
 
     Using the scipy.signal.hilbert function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     analytical_signal = hilbert(amplitude)
     return Relation(time, np.abs(analytical_signal))</code></pre>
 </details>
@@ -440,12 +443,17 @@ amplitude_modulation: np.ndarray<br>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_f_t(time: np.ndarray, amplitude: np.ndarray) -&gt; Relation:
-    &#39;&#39;&#39;Get time-frequency function from sweep signal using the Hilbert transformation.
+    &#34;&#34;&#34;Get time-frequency function from sweep signal using the Hilbert transformation.
 
     Using the scipy.signal.hilbert function.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     analytical_signal = hilbert(amplitude)
-    result = np.append([0.], np.diff(np.unwrap(np.angle(analytical_signal)))/(2.0*np.pi)/(time[1]-time[0]))
+    result = np.append(
+        [0.0],
+        np.diff(np.unwrap(np.angle(analytical_signal)))
+        / (2.0 * np.pi)
+        / (time[1] - time[0]),
+    )
     return Relation(time, result)</code></pre>
 </details>
 </dd>
@@ -459,17 +467,23 @@ amplitude_modulation: np.ndarray<br>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def integrate_quad(f_t_function: Callable[[time], frequency], time: np.ndarray) -&gt; theta:
-    &#39;&#39;&#39;Integration.
+<pre><code class="python">def integrate_quad(
+    f_t_function: Callable[[time], frequency], time: np.ndarray
+) -&gt; theta:
+    &#34;&#34;&#34;Integration.
 
     Integration of time-frequency function, using scipy.integrate.quad function.
-    &#39;&#39;&#39;
-    return np.append([0.], np.array(
-            [2*np.pi*integrate.quad(f_t_function, time[0], t)[0] for t in time[1:]]))    </code></pre>
+    &#34;&#34;&#34;
+    return np.append(
+        [0.0],
+        np.array(
+            [2 * np.pi * integrate.quad(f_t_function, time[0], t)[0] for t in time[1:]]
+        ),
+    )</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.config.sweep_config.SweepConfig.spectrogram_method"><code class="name flex">
-<span>def <span class="ident">spectrogram_method</span></span>(<span>time: numpy.ndarray, amplitude: numpy.ndarray) ‑> Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]</span>
+<span>def <span class="ident">spectrogram_method</span></span>(<span>time: numpy.ndarray, amplitude: numpy.ndarray, dt: float = None) ‑> Tuple[numpy.ndarray, numpy.ndarray, numpy.ndarray]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Function to get spectrogram of the sweep signal.</p>
@@ -478,16 +492,17 @@ amplitude_modulation: np.ndarray<br>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def extract(time: np.ndarray, amplitude: np.ndarray) \
-                                -&gt; Tuple[time, frequency, spectrogram_]:
-    &#39;&#39;&#39;Function to get spectrogram of the sweep signal.
-    
-    Using the scipy.signal.spectrogram function.
-    &#39;&#39;&#39;
+<pre><code class="python">def get_spectrogram(
+    time: np.ndarray, amplitude: np.ndarray, dt: float = None
+) -&gt; Tuple[time, frequency, spectrogram_]:
+    &#34;&#34;&#34;Function to get spectrogram of the sweep signal.
 
-    dt = time[1]-time[0]
-    frequency, spectrogram_time, spectrogram_ = spectrogram(amplitude, 1/(dt), nperseg=nperseg,
-                          noverlap=noverlap, nfft=nfft)
+    Using the scipy.signal.spectrogram function.
+    &#34;&#34;&#34;
+    if dt is None:
+        dt = time[1] - time[0]
+
+    frequency, spectrogram_time, spectrogram_ = spectrogram(amplitude, 1 / (dt))
 
     return spectrogram_time, frequency, spectrogram_</code></pre>
 </details>

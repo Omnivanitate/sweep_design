@@ -39,10 +39,12 @@ from bokeh.palettes import Set1_9, Set2_8
 from bokeh.plotting import Figure, figure
 from loguru import logger
 
-from ....base_view.abc_common_framer_grapher.figure import (CommonFigure,
-                                                             CommonFigureMaker,
-                                                             CommonImage,
-                                                             CommonLine)
+from ....base_view.abc_common_framer_grapher.figure import (
+    CommonFigure,
+    CommonFigureMaker,
+    CommonImage,
+    CommonLine,
+)
 
 output_notebook()
 
@@ -50,50 +52,46 @@ _colors = list(Set1_9)
 _colors.extend(list(Set2_8))
 color_palette = itertools.cycle(_colors)
 
-default_line_property = {
-        &#39;line_color&#39;: None,
-        &#39;line_width&#39;: 2,
-        &#39;line_dash&#39;: &#39;solid&#39;
-        }
+default_line_property = {&#34;line_color&#34;: None, &#34;line_width&#34;: 2, &#34;line_dash&#34;: &#34;solid&#34;}
 
-default_image_properties = {
-    &#39;palette&#39;: &#39;Viridis256&#39;,
-    &#39;level&#39;: &#39;image&#39;
-}
+default_image_properties = {&#34;palette&#34;: &#34;Viridis256&#34;, &#34;level&#34;: &#34;image&#34;}
+
 
 class BokehFigureMaker(CommonFigureMaker):
-    def __init__(self, default_line_property=default_line_property, 
-                                color_palette=color_palette) -&gt; None:
+    def __init__(
+        self, default_line_property=default_line_property, color_palette=color_palette
+    ) -&gt; None:
         self.default_line_property = default_line_property
         self.color_palette = color_palette
         self.default_image_propertis = default_image_properties
-    
+
     @staticmethod
-    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;BokehFigure&#34;:
 
         fig = figure(
-            title=figure_properties[&#39;title&#39;],
-            title_location = &#39;above&#39;,
-            plot_width=int(figure_properties[&#39;width&#39;]),
-            plot_height=int(figure_properties[&#39;height&#39;])
+            title=figure_properties[&#34;title&#34;],
+            title_location=&#34;above&#34;,
+            plot_width=int(figure_properties[&#34;width&#34;]),
+            plot_height=int(figure_properties[&#34;height&#34;]),
         )
-        fig.xaxis.axis_label = figure_properties[&#39;x_axis_label&#39;]
-        fig.yaxis.axis_label = figure_properties[&#39;y_axis_label&#39;]
+        fig.xaxis.axis_label = figure_properties[&#34;x_axis_label&#34;]
+        fig.yaxis.axis_label = figure_properties[&#34;y_axis_label&#34;]
         return BokehFigure(fig)
-    
+
     def get_next_line_properties(self) -&gt; Dict[str, Any]:
         line_properties = copy.deepcopy(self.default_line_property)
-        line_properties[&#39;line_color&#39;] = next(self.color_palette)
+        line_properties[&#34;line_color&#34;] = next(self.color_palette)
         return line_properties
 
     def get_next_image_properties(self) -&gt; Dict[str, Any]:
-        return {&#39;palette&#39;:&#34;Spectral11&#34;}
+        return {&#34;palette&#34;: &#34;Spectral11&#34;}
+
 
 class MetaFigure(type(widgets.Output), type(CommonFigure)):
     pass
 
-class BokehFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
 
+class BokehFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
     def __init__(self, figure: Figure) -&gt; None:
         super().__init__()
         self._figure = figure
@@ -112,65 +110,103 @@ class BokehFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
 
     def update(self):
         push_notebook(handle=self._handle)
-    
-    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
+
+    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#34;right&#34;) -&gt; None:
         self._figure.extra_y_ranges[axis_name] = DataRange1d()
-        self._figure.add_layout(LinearAxis(y_range_name = axis_name, axis_label = axis_label), location)
-    
-    def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
-        if type_axis == &#39;x&#39;:
+        self._figure.add_layout(
+            LinearAxis(y_range_name=axis_name, axis_label=axis_label), location
+        )
+
+    def get_axis(self, axis_name: str = None, type_axis: str = &#34;y&#34;):
+        if type_axis == &#34;x&#34;:
             if axis_name in self._figure.extra_x_ranges:
                 return self._figure.extra_x_ranges[axis_name]
             else:
                 return self._figure.x_range
-        elif type_axis == &#39;y&#39;:
+        elif type_axis == &#34;y&#34;:
             if axis_name in self._figure.extra_y_ranges:
                 return self._figure.extra_y_ranges[axis_name]
             else:
                 return self._figure.y_range
 
-    def set_limits(self, range_axis: DataRange1d, min_z=0, max_z=1,):
-        
-        range_axis.start = min_z + min_z*0.25
-        range_axis.end = max_z + max_z*0.25   
-        
-    def add_line(self, x: np.ndarray, y: np.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) -&gt; &#39;BokehLine&#39;:
-        
+    def set_limits(
+        self,
+        range_axis: DataRange1d,
+        min_z=0,
+        max_z=1,
+    ):
+
+        range_axis.start = min_z + min_z * 0.25
+        range_axis.end = max_z + max_z * 0.25
+
+    def add_line(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        name: str,
+        groups: Set[str],
+        line_property: Dict[str, Any],
+    ) -&gt; &#34;BokehLine&#34;:
+
         line = self._figure.line(x, y, **line_property)
         bokeh_line = BokehLine(line, name, groups, self.update)
         self._lines.update({name: bokeh_line})
         return bokeh_line
 
-    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) -&gt; None:
-        
+    def add_image(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        s_xy: np.ndarray,
+        unique_name: str,
+        groups: Union[str, Set[str]],
+        image_properties: Dict[str, Any],
+    ) -&gt; None:
+
         if isinstance(groups, str):
             groups = set([groups])
 
-        image = self._figure.image(image=[s_xy], x=x[0], y=y[0],
-            dw = x[-1] - x[0], dh = y[-1] - y[0], **image_properties)
-        image.level = &#39;underlay&#39;
-        self._images.update({unique_name: BokehImage(image, unique_name, groups, self.update)})
-   
-    def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+        image = self._figure.image(
+            image=[s_xy],
+            x=x[0],
+            y=y[0],
+            dw=x[-1] - x[0],
+            dh=y[-1] - y[0],
+            **image_properties
+        )
+        image.level = &#34;underlay&#34;
+        self._images.update(
+            {unique_name: BokehImage(image, unique_name, groups, self.update)}
+        )
 
-        if axis  == &#39;x&#39;:
-            line = Span(location= k, dimension=&#39;height&#39;, **line_properties)
-        elif axis == &#39;y&#39;:
-            line = Span(location=k, dimension=&#39;width&#39;, **line_properties)
+    def add_infty_line(
+        self,
+        k: np.ndarray,
+        axis: Literal[&#34;x&#34;, &#34;y&#34;],
+        unique_name: str,
+        groups: Set[str],
+        line_properties: Dict[str, Any],
+    ) -&gt; None:
+
+        if axis == &#34;x&#34;:
+            line = Span(location=k, dimension=&#34;height&#34;, **line_properties)
+        elif axis == &#34;y&#34;:
+            line = Span(location=k, dimension=&#34;width&#34;, **line_properties)
         else:
             line = None
-        
+
         self._figure.add_layout(line)
         bokeh_line = BokehLine(line, unique_name, groups, self.update)
         self._lines.update({unique_name: bokeh_line})
 
-class BokehLine(CommonLine[GlyphRenderer]):
 
-    def __init__(self, line: GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any) -&gt; None:
+class BokehLine(CommonLine[GlyphRenderer]):
+    def __init__(
+        self, line: GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any
+    ) -&gt; None:
         super().__init__(line, name, groups)
         self._update = update
-        
+
     def get_color(self) -&gt; str:
         return list(self._line.glyph.references())[0].line_color
 
@@ -178,12 +214,18 @@ class BokehLine(CommonLine[GlyphRenderer]):
         self._line.visible = check
         self._update()
 
-class BokehImage(CommonImage[GlyphRenderer]):
 
-    def __init__(self, image: GlyphRenderer, name: str, groups: Set[str], update: Callable[..., None]) -&gt; None:
+class BokehImage(CommonImage[GlyphRenderer]):
+    def __init__(
+        self,
+        image: GlyphRenderer,
+        name: str,
+        groups: Set[str],
+        update: Callable[..., None],
+    ) -&gt; None:
         super().__init__(image, name, groups)
         self._update = update
-    
+
     def set_visible(self, is_visible: bool) -&gt; None:
         self._image.visible = is_visible
         self._update()</code></pre>
@@ -233,7 +275,6 @@ def func():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class BokehFigure(widgets.Output, CommonFigure[Figure], metaclass=MetaFigure):
-
     def __init__(self, figure: Figure) -&gt; None:
         super().__init__()
         self._figure = figure
@@ -252,55 +293,91 @@ def func():
 
     def update(self):
         push_notebook(handle=self._handle)
-    
-    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
+
+    def add_extra_axis(self, axis_name: str, axis_label: str, location=&#34;right&#34;) -&gt; None:
         self._figure.extra_y_ranges[axis_name] = DataRange1d()
-        self._figure.add_layout(LinearAxis(y_range_name = axis_name, axis_label = axis_label), location)
-    
-    def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
-        if type_axis == &#39;x&#39;:
+        self._figure.add_layout(
+            LinearAxis(y_range_name=axis_name, axis_label=axis_label), location
+        )
+
+    def get_axis(self, axis_name: str = None, type_axis: str = &#34;y&#34;):
+        if type_axis == &#34;x&#34;:
             if axis_name in self._figure.extra_x_ranges:
                 return self._figure.extra_x_ranges[axis_name]
             else:
                 return self._figure.x_range
-        elif type_axis == &#39;y&#39;:
+        elif type_axis == &#34;y&#34;:
             if axis_name in self._figure.extra_y_ranges:
                 return self._figure.extra_y_ranges[axis_name]
             else:
                 return self._figure.y_range
 
-    def set_limits(self, range_axis: DataRange1d, min_z=0, max_z=1,):
-        
-        range_axis.start = min_z + min_z*0.25
-        range_axis.end = max_z + max_z*0.25   
-        
-    def add_line(self, x: np.ndarray, y: np.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) -&gt; &#39;BokehLine&#39;:
-        
+    def set_limits(
+        self,
+        range_axis: DataRange1d,
+        min_z=0,
+        max_z=1,
+    ):
+
+        range_axis.start = min_z + min_z * 0.25
+        range_axis.end = max_z + max_z * 0.25
+
+    def add_line(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        name: str,
+        groups: Set[str],
+        line_property: Dict[str, Any],
+    ) -&gt; &#34;BokehLine&#34;:
+
         line = self._figure.line(x, y, **line_property)
         bokeh_line = BokehLine(line, name, groups, self.update)
         self._lines.update({name: bokeh_line})
         return bokeh_line
 
-    def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) -&gt; None:
-        
+    def add_image(
+        self,
+        x: np.ndarray,
+        y: np.ndarray,
+        s_xy: np.ndarray,
+        unique_name: str,
+        groups: Union[str, Set[str]],
+        image_properties: Dict[str, Any],
+    ) -&gt; None:
+
         if isinstance(groups, str):
             groups = set([groups])
 
-        image = self._figure.image(image=[s_xy], x=x[0], y=y[0],
-            dw = x[-1] - x[0], dh = y[-1] - y[0], **image_properties)
-        image.level = &#39;underlay&#39;
-        self._images.update({unique_name: BokehImage(image, unique_name, groups, self.update)})
-   
-    def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-        groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+        image = self._figure.image(
+            image=[s_xy],
+            x=x[0],
+            y=y[0],
+            dw=x[-1] - x[0],
+            dh=y[-1] - y[0],
+            **image_properties
+        )
+        image.level = &#34;underlay&#34;
+        self._images.update(
+            {unique_name: BokehImage(image, unique_name, groups, self.update)}
+        )
 
-        if axis  == &#39;x&#39;:
-            line = Span(location= k, dimension=&#39;height&#39;, **line_properties)
-        elif axis == &#39;y&#39;:
-            line = Span(location=k, dimension=&#39;width&#39;, **line_properties)
+    def add_infty_line(
+        self,
+        k: np.ndarray,
+        axis: Literal[&#34;x&#34;, &#34;y&#34;],
+        unique_name: str,
+        groups: Set[str],
+        line_properties: Dict[str, Any],
+    ) -&gt; None:
+
+        if axis == &#34;x&#34;:
+            line = Span(location=k, dimension=&#34;height&#34;, **line_properties)
+        elif axis == &#34;y&#34;:
+            line = Span(location=k, dimension=&#34;width&#34;, **line_properties)
         else:
             line = None
-        
+
         self._figure.add_layout(line)
         bokeh_line = BokehLine(line, unique_name, groups, self.update)
         self._lines.update({unique_name: bokeh_line})</code></pre>
@@ -327,9 +404,11 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_extra_axis(self, axis_name: str, axis_label: str, location=&#39;right&#39;) -&gt; None:
+<pre><code class="python">def add_extra_axis(self, axis_name: str, axis_label: str, location=&#34;right&#34;) -&gt; None:
     self._figure.extra_y_ranges[axis_name] = DataRange1d()
-    self._figure.add_layout(LinearAxis(y_range_name = axis_name, axis_label = axis_label), location)</code></pre>
+    self._figure.add_layout(
+        LinearAxis(y_range_name=axis_name, axis_label=axis_label), location
+    )</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_image"><code class="name flex">
@@ -341,15 +420,31 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_image(self, x: np.ndarray, y: np.ndarray, s_xy: np.ndarray, unique_name: str, groups: Union[str, Set[str]], image_properties: Dict[str, Any]) -&gt; None:
-    
+<pre><code class="python">def add_image(
+    self,
+    x: np.ndarray,
+    y: np.ndarray,
+    s_xy: np.ndarray,
+    unique_name: str,
+    groups: Union[str, Set[str]],
+    image_properties: Dict[str, Any],
+) -&gt; None:
+
     if isinstance(groups, str):
         groups = set([groups])
 
-    image = self._figure.image(image=[s_xy], x=x[0], y=y[0],
-        dw = x[-1] - x[0], dh = y[-1] - y[0], **image_properties)
-    image.level = &#39;underlay&#39;
-    self._images.update({unique_name: BokehImage(image, unique_name, groups, self.update)})</code></pre>
+    image = self._figure.image(
+        image=[s_xy],
+        x=x[0],
+        y=y[0],
+        dw=x[-1] - x[0],
+        dh=y[-1] - y[0],
+        **image_properties
+    )
+    image.level = &#34;underlay&#34;
+    self._images.update(
+        {unique_name: BokehImage(image, unique_name, groups, self.update)}
+    )</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.add_infty_line"><code class="name flex">
@@ -361,16 +456,22 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_infty_line(self, k: np.ndarray, axis: Literal[&#39;x&#39;, &#39;y&#39;], unique_name: str, 
-    groups: Set[str], line_properties: Dict[str, Any]) -&gt; None:
+<pre><code class="python">def add_infty_line(
+    self,
+    k: np.ndarray,
+    axis: Literal[&#34;x&#34;, &#34;y&#34;],
+    unique_name: str,
+    groups: Set[str],
+    line_properties: Dict[str, Any],
+) -&gt; None:
 
-    if axis  == &#39;x&#39;:
-        line = Span(location= k, dimension=&#39;height&#39;, **line_properties)
-    elif axis == &#39;y&#39;:
-        line = Span(location=k, dimension=&#39;width&#39;, **line_properties)
+    if axis == &#34;x&#34;:
+        line = Span(location=k, dimension=&#34;height&#34;, **line_properties)
+    elif axis == &#34;y&#34;:
+        line = Span(location=k, dimension=&#34;width&#34;, **line_properties)
     else:
         line = None
-    
+
     self._figure.add_layout(line)
     bokeh_line = BokehLine(line, unique_name, groups, self.update)
     self._lines.update({unique_name: bokeh_line})</code></pre>
@@ -385,8 +486,15 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_line(self, x: np.ndarray, y: np.ndarray, name: str, groups: Set[str], line_property: Dict[str, Any]) -&gt; &#39;BokehLine&#39;:
-    
+<pre><code class="python">def add_line(
+    self,
+    x: np.ndarray,
+    y: np.ndarray,
+    name: str,
+    groups: Set[str],
+    line_property: Dict[str, Any],
+) -&gt; &#34;BokehLine&#34;:
+
     line = self._figure.line(x, y, **line_property)
     bokeh_line = BokehLine(line, name, groups, self.update)
     self._lines.update({name: bokeh_line})
@@ -402,13 +510,13 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_axis(self, axis_name: str = None, type_axis: str = &#39;y&#39;):
-    if type_axis == &#39;x&#39;:
+<pre><code class="python">def get_axis(self, axis_name: str = None, type_axis: str = &#34;y&#34;):
+    if type_axis == &#34;x&#34;:
         if axis_name in self._figure.extra_x_ranges:
             return self._figure.extra_x_ranges[axis_name]
         else:
             return self._figure.x_range
-    elif type_axis == &#39;y&#39;:
+    elif type_axis == &#34;y&#34;:
         if axis_name in self._figure.extra_y_ranges:
             return self._figure.extra_y_ranges[axis_name]
         else:
@@ -452,10 +560,15 @@ def func():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_limits(self, range_axis: DataRange1d, min_z=0, max_z=1,):
-    
-    range_axis.start = min_z + min_z*0.25
-    range_axis.end = max_z + max_z*0.25   </code></pre>
+<pre><code class="python">def set_limits(
+    self,
+    range_axis: DataRange1d,
+    min_z=0,
+    max_z=1,
+):
+
+    range_axis.start = min_z + min_z * 0.25
+    range_axis.end = max_z + max_z * 0.25</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigure.update"><code class="name flex">
@@ -484,32 +597,33 @@ def func():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class BokehFigureMaker(CommonFigureMaker):
-    def __init__(self, default_line_property=default_line_property, 
-                                color_palette=color_palette) -&gt; None:
+    def __init__(
+        self, default_line_property=default_line_property, color_palette=color_palette
+    ) -&gt; None:
         self.default_line_property = default_line_property
         self.color_palette = color_palette
         self.default_image_propertis = default_image_properties
-    
+
     @staticmethod
-    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
+    def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;BokehFigure&#34;:
 
         fig = figure(
-            title=figure_properties[&#39;title&#39;],
-            title_location = &#39;above&#39;,
-            plot_width=int(figure_properties[&#39;width&#39;]),
-            plot_height=int(figure_properties[&#39;height&#39;])
+            title=figure_properties[&#34;title&#34;],
+            title_location=&#34;above&#34;,
+            plot_width=int(figure_properties[&#34;width&#34;]),
+            plot_height=int(figure_properties[&#34;height&#34;]),
         )
-        fig.xaxis.axis_label = figure_properties[&#39;x_axis_label&#39;]
-        fig.yaxis.axis_label = figure_properties[&#39;y_axis_label&#39;]
+        fig.xaxis.axis_label = figure_properties[&#34;x_axis_label&#34;]
+        fig.yaxis.axis_label = figure_properties[&#34;y_axis_label&#34;]
         return BokehFigure(fig)
-    
+
     def get_next_line_properties(self) -&gt; Dict[str, Any]:
         line_properties = copy.deepcopy(self.default_line_property)
-        line_properties[&#39;line_color&#39;] = next(self.color_palette)
+        line_properties[&#34;line_color&#34;] = next(self.color_palette)
         return line_properties
 
     def get_next_image_properties(self) -&gt; Dict[str, Any]:
-        return {&#39;palette&#39;:&#34;Spectral11&#34;}</code></pre>
+        return {&#34;palette&#34;: &#34;Spectral11&#34;}</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -527,16 +641,16 @@ def func():
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
+def get_figure(figure_properties: Dict[str, Any]) -&gt; &#34;BokehFigure&#34;:
 
     fig = figure(
-        title=figure_properties[&#39;title&#39;],
-        title_location = &#39;above&#39;,
-        plot_width=int(figure_properties[&#39;width&#39;]),
-        plot_height=int(figure_properties[&#39;height&#39;])
+        title=figure_properties[&#34;title&#34;],
+        title_location=&#34;above&#34;,
+        plot_width=int(figure_properties[&#34;width&#34;]),
+        plot_height=int(figure_properties[&#34;height&#34;]),
     )
-    fig.xaxis.axis_label = figure_properties[&#39;x_axis_label&#39;]
-    fig.yaxis.axis_label = figure_properties[&#39;y_axis_label&#39;]
+    fig.xaxis.axis_label = figure_properties[&#34;x_axis_label&#34;]
+    fig.yaxis.axis_label = figure_properties[&#34;y_axis_label&#34;]
     return BokehFigure(fig)</code></pre>
 </details>
 </dd>
@@ -553,7 +667,7 @@ def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_next_image_properties(self) -&gt; Dict[str, Any]:
-    return {&#39;palette&#39;:&#34;Spectral11&#34;}</code></pre>
+    return {&#34;palette&#34;: &#34;Spectral11&#34;}</code></pre>
 </details>
 </dd>
 <dt id="sweep_design.view.framemakers.ipywidgetframer.figwidget.bokehfig.BokehFigureMaker.get_next_line_properties"><code class="name flex">
@@ -567,7 +681,7 @@ def get_figure(figure_properties: Dict[str, Any]) -&gt; &#39;BokehFigure&#39;:
 </summary>
 <pre><code class="python">def get_next_line_properties(self) -&gt; Dict[str, Any]:
     line_properties = copy.deepcopy(self.default_line_property)
-    line_properties[&#39;line_color&#39;] = next(self.color_palette)
+    line_properties[&#34;line_color&#34;] = next(self.color_palette)
     return line_properties</code></pre>
 </details>
 </dd>
@@ -597,11 +711,16 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class BokehImage(CommonImage[GlyphRenderer]):
-
-    def __init__(self, image: GlyphRenderer, name: str, groups: Set[str], update: Callable[..., None]) -&gt; None:
+    def __init__(
+        self,
+        image: GlyphRenderer,
+        name: str,
+        groups: Set[str],
+        update: Callable[..., None],
+    ) -&gt; None:
         super().__init__(image, name, groups)
         self._update = update
-    
+
     def set_visible(self, is_visible: bool) -&gt; None:
         self._image.visible = is_visible
         self._update()</code></pre>
@@ -654,11 +773,12 @@ return default</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class BokehLine(CommonLine[GlyphRenderer]):
-
-    def __init__(self, line: GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any) -&gt; None:
+    def __init__(
+        self, line: GlyphRenderer, name: str, groups: Union[str, Set[str]], update: Any
+    ) -&gt; None:
         super().__init__(line, name, groups)
         self._update = update
-        
+
     def get_color(self) -&gt; str:
         return list(self._line.glyph.references())[0].line_color
 

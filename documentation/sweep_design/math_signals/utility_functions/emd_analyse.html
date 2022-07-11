@@ -33,36 +33,44 @@ from ..math_signal import Signal
 
 
 def get_IMFs_ceemdan(
-        data: Signal, 
-        number_seedman = 30,
-        epsilon = 0.005,
-        ext_EMD: Any = None,
-        parallel = False,
-        processes = None,
-        noise_scale = 1,
-        noise_kind = &#34;normal&#34;,
-        range_thr = 0.01,
-        total_power_thr = 0.05
-        ) -&gt; List[Signal]:
-    &#39;&#39;&#39;Empirical mode decomposition (EMD).
-    
-    Using CEEMDAN from PyEMD (https://pyemd.readthedocs.io/) to calulate IMFs 
+    data: Signal,
+    number_seedman=30,
+    epsilon=0.005,
+    ext_EMD: Any = None,
+    parallel=False,
+    processes=None,
+    noise_scale=1,
+    noise_kind=&#34;normal&#34;,
+    range_thr=0.01,
+    total_power_thr=0.05,
+) -&gt; List[Signal]:
+    &#34;&#34;&#34;Empirical mode decomposition (EMD).
+
+    Using CEEMDAN from PyEMD (https://pyemd.readthedocs.io/) to calulate IMFs
     and return them as a list of Signals.
 
-    About empirical mode decomposition on 
+    About empirical mode decomposition on
     https://en.wikipedia.org/wiki/Hilbert%E2%80%93Huang_transform#Techniques
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     x, y = data.get_data()
-    emd = CEEMDAN(number_seedman, epsilon, ext_EMD, parallel, processes=processes, noise_scale=noise_scale, noise_kind = noise_kind, range_thr = range_thr, total_power_thr = total_power_thr)
+    emd = CEEMDAN(
+        number_seedman,
+        epsilon,
+        ext_EMD,
+        parallel,
+        processes=processes,
+        noise_scale=noise_scale,
+        noise_kind=noise_kind,
+        range_thr=range_thr,
+        total_power_thr=total_power_thr,
+    )
     IMFs = emd(y)
     result = [Signal(x, k) for k in IMFs]
     return result
 
 
-def get_IMFs_emd(
-    data: Signal
-    ) -&gt; List[Signal]:
-    
+def get_IMFs_emd(data: Signal) -&gt; List[Signal]:
+
     x, y = data.get_data()
     emd = EMD()
     IMFs = emd(y)
@@ -91,27 +99,37 @@ and return them as a list of Signals.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def get_IMFs_ceemdan(
-        data: Signal, 
-        number_seedman = 30,
-        epsilon = 0.005,
-        ext_EMD: Any = None,
-        parallel = False,
-        processes = None,
-        noise_scale = 1,
-        noise_kind = &#34;normal&#34;,
-        range_thr = 0.01,
-        total_power_thr = 0.05
-        ) -&gt; List[Signal]:
-    &#39;&#39;&#39;Empirical mode decomposition (EMD).
-    
-    Using CEEMDAN from PyEMD (https://pyemd.readthedocs.io/) to calulate IMFs 
+    data: Signal,
+    number_seedman=30,
+    epsilon=0.005,
+    ext_EMD: Any = None,
+    parallel=False,
+    processes=None,
+    noise_scale=1,
+    noise_kind=&#34;normal&#34;,
+    range_thr=0.01,
+    total_power_thr=0.05,
+) -&gt; List[Signal]:
+    &#34;&#34;&#34;Empirical mode decomposition (EMD).
+
+    Using CEEMDAN from PyEMD (https://pyemd.readthedocs.io/) to calulate IMFs
     and return them as a list of Signals.
 
-    About empirical mode decomposition on 
+    About empirical mode decomposition on
     https://en.wikipedia.org/wiki/Hilbert%E2%80%93Huang_transform#Techniques
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     x, y = data.get_data()
-    emd = CEEMDAN(number_seedman, epsilon, ext_EMD, parallel, processes=processes, noise_scale=noise_scale, noise_kind = noise_kind, range_thr = range_thr, total_power_thr = total_power_thr)
+    emd = CEEMDAN(
+        number_seedman,
+        epsilon,
+        ext_EMD,
+        parallel,
+        processes=processes,
+        noise_scale=noise_scale,
+        noise_kind=noise_kind,
+        range_thr=range_thr,
+        total_power_thr=total_power_thr,
+    )
     IMFs = emd(y)
     result = [Signal(x, k) for k in IMFs]
     return result</code></pre>
@@ -126,10 +144,8 @@ and return them as a list of Signals.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_IMFs_emd(
-    data: Signal
-    ) -&gt; List[Signal]:
-    
+<pre><code class="python">def get_IMFs_emd(data: Signal) -&gt; List[Signal]:
+
     x, y = data.get_data()
     emd = EMD()
     IMFs = emd(y)

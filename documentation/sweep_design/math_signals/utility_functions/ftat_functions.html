@@ -34,52 +34,53 @@ from scipy import integrate
 
 from ..math_signal import Spectrum
 
-def simple_freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    &#39;&#39;&#39;Convert spectrum to frequency-time and amplitude-time arrays.
 
-    A function to get frequency versus time and amplitude versus time changes 
-    from an a priori spectrum to create a sweep signal. **In this implementation, 
-    the amplitude of change over time is a constant.** The spectrum of the 
+def simple_freq2time(spectrum: &#34;Spectrum&#34;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    &#34;&#34;&#34;Convert spectrum to frequency-time and amplitude-time arrays.
+
+    A function to get frequency versus time and amplitude versus time changes
+    from an a priori spectrum to create a sweep signal. **In this implementation,
+    the amplitude of change over time is a constant.** The spectrum of the
     resulting sweep signal will be equal to the prior spectrum.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     f, a_f = spectrum.get_amp_spectrum().get_data()
-    n_spec = a_f ** 2
-    n_t = np.append([0.], ((n_spec[1:]+n_spec[:-1])/(f[1:]-f[:-1])).cumsum())
+    n_spec = a_f**2
+    n_t = np.append([0.0], ((n_spec[1:] + n_spec[:-1]) / (f[1:] - f[:-1])).cumsum())
     coef = integrate.trapz(n_spec, f)
-    a_t = sqrt(coef*2)*np.ones(len(n_t))
+    a_t = sqrt(coef * 2) * np.ones(len(n_t))
     return n_t, f, a_t
 
+
 def dwell(f_start: float = None, f_end: float = None, fc: float = None):
-    &#39;&#39;&#39;Convert spectrum to frequency-time and amplitude-time arrays.
-    
-    A function to get frequency versus time and amplitude versus time changes 
-    from an a priori spectrum to create a sweep signal. **In this 
-    implementation, the amplitude of the envelope monotonously increases 
-    in proportion to the change in frequency up to the cutoff frequency fc, 
-    after which the amplitude of the envelope is constant.** The spectrum of the 
+    &#34;&#34;&#34;Convert spectrum to frequency-time and amplitude-time arrays.
+
+    A function to get frequency versus time and amplitude versus time changes
+    from an a priori spectrum to create a sweep signal. **In this
+    implementation, the amplitude of the envelope monotonously increases
+    in proportion to the change in frequency up to the cutoff frequency fc,
+    after which the amplitude of the envelope is constant.** The spectrum of the
     resulting sweep signal will be equal to the prior spectrum.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
 
+    def freq2time(spectrum: &#34;Spectrum&#34;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
 
-    def freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        
         f, a_f = spectrum.select_data(f_start, f_end).get_amp_spectrum().get_data()
 
-        f_c = fc if fc else f[0] 
+        f_c = fc if fc else f[0]
 
         freq = f[f &lt;= f_c]
 
         freq_ratio = np.divide(
-            freq[1:], freq[:-1], out=np.ones_like(freq[1:]), where=freq[:-1] != 0)
-        dur = np.cumprod(1/(freq_ratio**4))
-        energy = a_f[f &lt;= f_c][:-1]**2
-        nT = np.append([0.], dur*energy).cumsum()
-        nT2 = np.append(nT[-1], dur[-1]*(a_f[f &gt; f_c]**2)).cumsum()
+            freq[1:], freq[:-1], out=np.ones_like(freq[1:]), where=freq[:-1] != 0
+        )
+        dur = np.cumprod(1 / (freq_ratio**4))
+        energy = a_f[f &lt;= f_c][:-1] ** 2
+        nT = np.append([0.0], dur * energy).cumsum()
+        nT2 = np.append(nT[-1], dur[-1] * (a_f[f &gt; f_c] ** 2)).cumsum()
         nT = np.append(nT, nT2[1:])
 
-        a_t = np.cumprod(np.append([1.], freq_ratio**2))
-        a_t = np.append(a_t, [a_t[-1]]
-                            * (len(a_f)-len(a_t)))
+        a_t = np.cumprod(np.append([1.0], freq_ratio**2))
+        a_t = np.append(a_t, [a_t[-1]] * (len(a_f) - len(a_t)))
 
         return nT, f, a_t
 
@@ -109,36 +110,35 @@ resulting sweep signal will be equal to the prior spectrum.</p></div>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def dwell(f_start: float = None, f_end: float = None, fc: float = None):
-    &#39;&#39;&#39;Convert spectrum to frequency-time and amplitude-time arrays.
-    
-    A function to get frequency versus time and amplitude versus time changes 
-    from an a priori spectrum to create a sweep signal. **In this 
-    implementation, the amplitude of the envelope monotonously increases 
-    in proportion to the change in frequency up to the cutoff frequency fc, 
-    after which the amplitude of the envelope is constant.** The spectrum of the 
+    &#34;&#34;&#34;Convert spectrum to frequency-time and amplitude-time arrays.
+
+    A function to get frequency versus time and amplitude versus time changes
+    from an a priori spectrum to create a sweep signal. **In this
+    implementation, the amplitude of the envelope monotonously increases
+    in proportion to the change in frequency up to the cutoff frequency fc,
+    after which the amplitude of the envelope is constant.** The spectrum of the
     resulting sweep signal will be equal to the prior spectrum.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
 
+    def freq2time(spectrum: &#34;Spectrum&#34;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
 
-    def freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        
         f, a_f = spectrum.select_data(f_start, f_end).get_amp_spectrum().get_data()
 
-        f_c = fc if fc else f[0] 
+        f_c = fc if fc else f[0]
 
         freq = f[f &lt;= f_c]
 
         freq_ratio = np.divide(
-            freq[1:], freq[:-1], out=np.ones_like(freq[1:]), where=freq[:-1] != 0)
-        dur = np.cumprod(1/(freq_ratio**4))
-        energy = a_f[f &lt;= f_c][:-1]**2
-        nT = np.append([0.], dur*energy).cumsum()
-        nT2 = np.append(nT[-1], dur[-1]*(a_f[f &gt; f_c]**2)).cumsum()
+            freq[1:], freq[:-1], out=np.ones_like(freq[1:]), where=freq[:-1] != 0
+        )
+        dur = np.cumprod(1 / (freq_ratio**4))
+        energy = a_f[f &lt;= f_c][:-1] ** 2
+        nT = np.append([0.0], dur * energy).cumsum()
+        nT2 = np.append(nT[-1], dur[-1] * (a_f[f &gt; f_c] ** 2)).cumsum()
         nT = np.append(nT, nT2[1:])
 
-        a_t = np.cumprod(np.append([1.], freq_ratio**2))
-        a_t = np.append(a_t, [a_t[-1]]
-                            * (len(a_f)-len(a_t)))
+        a_t = np.cumprod(np.append([1.0], freq_ratio**2))
+        a_t = np.append(a_t, [a_t[-1]] * (len(a_f) - len(a_t)))
 
         return nT, f, a_t
 
@@ -158,19 +158,19 @@ resulting sweep signal will be equal to the prior spectrum.</p></div>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def simple_freq2time(spectrum: &#39;Spectrum&#39;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
-    &#39;&#39;&#39;Convert spectrum to frequency-time and amplitude-time arrays.
+<pre><code class="python">def simple_freq2time(spectrum: &#34;Spectrum&#34;) -&gt; Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    &#34;&#34;&#34;Convert spectrum to frequency-time and amplitude-time arrays.
 
-    A function to get frequency versus time and amplitude versus time changes 
-    from an a priori spectrum to create a sweep signal. **In this implementation, 
-    the amplitude of change over time is a constant.** The spectrum of the 
+    A function to get frequency versus time and amplitude versus time changes
+    from an a priori spectrum to create a sweep signal. **In this implementation,
+    the amplitude of change over time is a constant.** The spectrum of the
     resulting sweep signal will be equal to the prior spectrum.
-    &#39;&#39;&#39;
+    &#34;&#34;&#34;
     f, a_f = spectrum.get_amp_spectrum().get_data()
-    n_spec = a_f ** 2
-    n_t = np.append([0.], ((n_spec[1:]+n_spec[:-1])/(f[1:]-f[:-1])).cumsum())
+    n_spec = a_f**2
+    n_t = np.append([0.0], ((n_spec[1:] + n_spec[:-1]) / (f[1:] - f[:-1])).cumsum())
     coef = integrate.trapz(n_spec, f)
-    a_t = sqrt(coef*2)*np.ones(len(n_t))
+    a_t = sqrt(coef * 2) * np.ones(len(n_t))
     return n_t, f, a_t</code></pre>
 </details>
 </dd>
