@@ -44,6 +44,10 @@ class NamedRelation:
         return self._relation.y
 
     @property
+    def dx(self):
+        return self._relation.dx
+
+    @property
     def relation(self):
         return self._relation
 
