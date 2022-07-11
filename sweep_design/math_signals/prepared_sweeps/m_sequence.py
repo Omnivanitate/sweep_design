@@ -63,8 +63,6 @@ def get_m_sequence(
     if is_full:
         return result_signal
 
-    print((len_seq - 1) * dt)
-
     return result_signal.select_data(x_end=(len_seq - 1) * dt)
 
 

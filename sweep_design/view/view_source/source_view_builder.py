@@ -59,7 +59,6 @@ class ViewSource:
 
         self._reaction_mass = reaction_mass
         if limits is not None:
-            print(limits)
             source_figure.add_infty_line(
                 -abs(limits),
                 "y",

@@ -76,7 +76,6 @@ def convert_freq2time(
 ) -> Tuple[InterpolateTime, InterpolateTime]:
     """The method consists in obtaining the functions of frequency and amplitude modulation."""
     nT, f, a_t = convert_method(spectrum)
-    # print(a_t)
     return pre_interpolate_time(nT, f), pre_interpolate_time(nT, a_t)
 
 

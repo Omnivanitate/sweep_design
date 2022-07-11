@@ -17,7 +17,6 @@ def get_code_zinger(
     new_sweep_period = new_sweep
 
     for period in range(periods - 1):
-        print(period)
         new_sweep_period += new_sweep.shift(
             (period + 1) * new_sweep_period.x[-1] + (period + 1) * new_sweep_period.dx
         )

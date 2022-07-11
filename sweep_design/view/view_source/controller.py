@@ -50,12 +50,6 @@ class InteracterSource(CommonController):
             if obj in self._checkbox_types_signals_frame.get_checkboxs().values():
                 self._call_checkbox_types_signals(obj.get_name(), value)
 
-                # line = self._signal_figure_frame.get_figure().get_line(obj.get_name())
-                # print(line)
-                # print(obj.get_name())
-                # if line:
-                #     line.set_visible(value['new'])
-
         return listner
 
     def _call_checkbox_types_signals(self, group: str, value: bool):
