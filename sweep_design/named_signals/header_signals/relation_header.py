@@ -24,6 +24,7 @@ def _get_name_by_trace(position: int) -> str:
     frames_callers = inspect.stack()
     for n, k in enumerate(frames_callers):
         if "IPython" in k.filename:
+            position = position + 1
             break
 
         names = frames_callers[n].frame.f_code.co_names
@@ -34,7 +35,7 @@ def _get_name_by_trace(position: int) -> str:
     return name
 
 
-def set_name_by_trace(name: Optional[str], is_set=False, position=-1):
+def set_name_by_trace(name: Optional[str], is_set=False, position=-2):
     if name is None:
         if is_set:
             name = _get_name_by_trace(position)
@@ -55,7 +56,7 @@ class HeaderRelation(HeaderBase):
                 name = type(self)._make_default_name(HeaderRelation._quantity)
                 type(self)._quantity += 1
             else:
-                name = _get_name_by_trace(-1)
+                name = _get_name_by_trace(-2)
         if category is None:
             category = "relation"
 
